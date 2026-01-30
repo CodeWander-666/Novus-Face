@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & METADATA -->
+    <title>NovusFace | Free AI Face Swap & 4K Photo Reface</title>
+    <meta name="description" content="NovusFace is a free, limitless AI face swap tool featuring 4K Upscaling, Identity Locking, and Cinematic Mastering. Run directly in your browser.">
+    <meta name="keywords" content="NovusFace, face swap, deepfake, ai photo editor, 4k upscaling, free ai tool, gfpgan, insightface">
+    <meta name="author" content="NovusFace AI">
+    <meta name="robots" content="index, follow">
+    
+    <!-- SOCIAL CARDS -->
+    <meta property="og:title" content="NovusFace - Hyper-Realistic AI Face Swap">
+    <meta property="og:description" content="Instant 4K Face Swapping with Identity Protection. Try it for free.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/novus-face">
+
+    <!-- LIBRARIES -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- DARK MATTER THEME CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        :root {
+            --neon-cyan: #06b6d4;
+            --neon-indigo: #6366f1;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body { 
+            background-color: #020617; 
+            color: #f8fafc; 
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #020617 50%);
+            min-height: 100vh;
+        }
+
+        .glass-panel { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #334155;
+            border-radius: 2px;
+        }
+
+        /* Neon Button */
+        .neon-btn {
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-indigo));
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .neon-btn:hover {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+            transform: translateY(-1px);
+        }
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, var(--neon-indigo), var(--neon-cyan));
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .neon-btn:hover::before { opacity: 1; }
+
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex flex-col items-center p-4 md:p-8">
+
+    <!-- HEADER -->
+    <header class="text-center mb-10 mt-4 animate-fade-in">
+        <div class="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full glass-panel text-xs font-mono text-cyan-400 border-cyan-900/50">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> SYSTEM ONLINE
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-2">
+            NOVUS<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500">FACE</span>
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl font-light tracking-wide">
+            Quantum-Accelerated Biometric Reconstruction
+        </p>
+    </header>
+
+    <!-- MAIN INTERFACE -->
+    <main class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT COLUMN: CONTROLS (5 Columns) -->
+        <div class="lg:col-span-5 space-y-6">
+            
+            <!-- 1. UPLOADS -->
+            <div class="glass-panel rounded-2xl p-6">
+                <div class="flex items-center gap-2 mb-4 text-cyan-400 font-bold text-sm tracking-wider">
+                    <i class="fas fa-fingerprint"></i> 1. IDENTITY ASSETS
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- Source Upload -->
+                    <div class="relative group">
+                        <label class="block text-xs text-slate-400 mb-1 uppercase">Source Face</label>
+                        <input type="file" id="src-upload" accept="image/*" class="w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-cyan-400 hover:file:bg-slate-700 cursor-pointer bg-slate-900/50 rounded-lg border border-slate-700 p-1">
+                        <div class="absolute top-1 right-2 w-8 h-8 rounded-full overflow-hidden border border-slate-600 hidden group-hover:block" id="src-thumb-container">
+                            <img id="src-thumb" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Target Upload -->
+                    <div class="relative group">
+                        <label class="block text-xs text-slate-400 mb-1 uppercase">Target Body/Scene</label>
+                        <input type="file" id="tgt-upload" accept="image/*" class="w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-indigo-400 hover:file:bg-slate-700 cursor-pointer bg-slate-900/50 rounded-lg border border-slate-700 p-1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ENGINEERING CONSOLE -->
+            <div class="glass-panel rounded-2xl p-6">
+                <div class="flex items-center gap-2 mb-4 text-indigo-400 font-bold text-sm tracking-wider">
+                    <i class="fas fa-sliders-h"></i> 2. ENGINEERING CONSOLE
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Likeness Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-2">
+                            <span class="text-slate-300">Identity Depth (Passes)</span>
+                            <span id="passes-val" class="text-cyan-400 font-mono">2</span>
+                        </div>
+                        <input type="range" id="passes-input" min="1" max="3" step="1" value="2">
+                        <p class="text-[10px] text-slate-500 mt-1">Higher = Stronger Likeness. Lower = Faster.</p>
+                    </div>
+
+                    <!-- Texture Slider -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-2">
+                            <span class="text-slate-300">Texture Detail (GFPGAN)</span>
+                            <span id="texture-val" class="text-cyan-400 font-mono">80%</span>
+                        </div>
+                        <input type="range" id="texture-input" min="0" max="1" step="0.1" value="0.8">
+                    </div>
+
+                    <!-- 4K Toggle -->
+                    <div class="flex items-center justify-between bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold text-white">Smart 4K Upscale</span>
+                            <span class="text-[10px] text-slate-500">Optical Sharpening (3840px)</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="hd-input" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTON -->
+            <button id="run-btn" onclick="runSwap()" class="neon-btn w-full py-5 rounded-xl font-bold text-lg uppercase tracking-widest text-white shadow-xl flex items-center justify-center gap-3">
+                <i class="fas fa-bolt"></i>
+                <span id="btn-text">INITIALIZE RENDER</span>
+                <div id="loading-spinner" class="spinner hidden"></div>
+            </button>
+            <p class="text-center text-[10px] text-slate-600 font-mono">Running on Cloud CPU • Est. Time: 30-60s</p>
+
+        </div>
+
+        <!-- RIGHT COLUMN: OUTPUT (7 Columns) -->
+        <div class="lg:col-span-7">
+            <div class="glass-panel rounded-2xl h-full min-h-[500px] flex flex-col relative overflow-hidden">
+                <!-- Header -->
+                <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center z-10 bg-gradient-to-b from-black/80 to-transparent">
+                    <div class="text-xs font-mono text-slate-400">
+                        <i class="fas fa-desktop"></i> QUANTUM VIEWPORT
+                    </div>
+                    <a id="download-btn" href="#" download="novus_face.png" class="hidden px-4 py-1.5 bg-white/10 hover:bg-white/20 rounded-full text-xs text-white backdrop-blur-md transition">
+                        <i class="fas fa-download mr-1"></i> SAVE 4K
+                    </a>
+                </div>
+
+                <!-- Canvas -->
+                <div class="flex-grow flex items-center justify-center p-2 bg-black/40" id="output-container">
+                    <!-- Placeholder -->
+                    <div id="placeholder" class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-slate-800/50 mx-auto mb-4 flex items-center justify-center border border-slate-700">
+                            <i class="fas fa-image text-3xl text-slate-600"></i>
+                        </div>
+                        <h3 class="text-slate-300 font-medium">Ready to Render</h3>
+                        <p class="text-slate-500 text-sm mt-1">Upload images to begin sequence</p>
+                    </div>
+                    
+                    <!-- Result Image -->
+                    <img id="result-img" class="max-w-full max-h-[600px] object-contain rounded shadow-2xl hidden cursor-zoom-in" onclick="window.open(this.src)">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 mb-6 text-center">
+        <p class="text-slate-600 text-xs font-mono">NovusFace v2.0 • Powered by Gradio & Hugging Face</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script type="module">
+        import { client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+
+        // ==========================================
+        // CONFIGURATION: SET YOUR SPACE URL HERE
+        // Example: "johnsmith/novus-velocity"
+        // ==========================================
+        const SPACE_URL = "YOUR_HUGGING_FACE_USERNAME/novus-velocity"; 
+
+        // Elements
+        const srcInput = document.getElementById('src-upload');
+        const tgtInput = document.getElementById('tgt-upload');
+        const passesInput = document.getElementById('passes-input');
+        const textureInput = document.getElementById('texture-input');
+        const hdInput = document.getElementById('hd-input');
+        
+        const passesVal = document.getElementById('passes-val');
+        const textureVal = document.getElementById('texture-val');
+        
+        const resultImg = document.getElementById('result-img');
+        const downloadBtn = document.getElementById('download-btn');
+        const placeholder = document.getElementById('placeholder');
+        const btnText = document.getElementById('btn-text');
+        const spinner = document.getElementById('loading-spinner');
+        const runBtn = document.getElementById('run-btn');
+
+        // UI Updates
+        passesInput.addEventListener('input', (e) => passesVal.innerText = e.target.value);
+        textureInput.addEventListener('input', (e) => textureVal.innerText = Math.round(e.target.value * 100) + "%");
+
+        // Image Preview Handlers
+        srcInput.addEventListener('change', function(e) {
+            if(this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('src-thumb').src = e.target.result;
+                    document.getElementById('src-thumb-container').classList.remove('hidden');
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Main Logic
+        window.runSwap = async function() {
+            if (!srcInput.files[0] || !tgtInput.files[0]) {
+                alert("⚠️ Missing Data: Please upload both Source and Target images.");
+                return;
+            }
+
+            // Set Loading State
+            runBtn.disabled = true;
+            runBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerText = "PROCESSING...";
+            spinner.classList.remove('hidden');
+            
+            try {
+                // Initialize Client
+                const app = await client(SPACE_URL);
+                
+                // Get Settings
+                const passes = parseInt(passesInput.value);
+                const texture = parseFloat(textureInput.value);
+                const is4k = hdInput.checked;
+
+                // Call API
+                const result = await app.predict("/predict", [
+                    srcInput.files[0], 
+                    tgtInput.files[0], 
+                    passes, 
+                    texture, 
+                    is4k
+                ]);
+
+                // Handle Success
+                if (result.data && result.data[0]) {
+                    const imgUrl = result.data[0].url;
+                    resultImg.src = imgUrl;
+                    downloadBtn.href = imgUrl;
+                    
+                    resultImg.classList.remove('hidden');
+                    downloadBtn.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                } else {
+                    throw new Error("No data received from backend.");
+                }
+
+            } catch (error) {
+                console.error("Swap Failed:", error);
+                alert("Error: Could not connect to NovusFace Engine. \n1. Check your Hugging Face Space URL in the code.\n2. Ensure the Space is 'Public'.\n3. The server might be waking up (try again in 30s).");
+            } finally {
+                // Reset State
+                runBtn.disabled = false;
+                runBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.innerText = "INITIALIZE RENDER";
+                spinner.classList.add('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
