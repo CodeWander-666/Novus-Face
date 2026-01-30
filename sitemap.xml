@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+   
    <url>
-      <loc>https://novusfaceai.github.io/Novus-Face/</loc>
+      <loc>https://codewander-666.github.io/Novus-Face/</loc>
       <lastmod>2026-01-30</lastmod>
-      <changefreq>weekly</changefreq>
+      <changefreq>daily</changefreq>
       <priority>1.0</priority>
+      
+      <image:image>
+         <image:loc>https://codewander-666.github.io/Novus-Face/preview.jpg</image:loc>
+         <image:title>NovusFace - Free Reface Imaging &amp; AI Face Swap</image:title>
+         <image:caption>Instant 4K Reface Imaging tool. 100% Free, No Signup required. Powered by NovusFace AI.</image:caption>
+      </image:image>
    </url>
+
 </urlset>
