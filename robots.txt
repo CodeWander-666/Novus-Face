@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://novusfaceai.github.io/Novus-Face/sitemap.xml
