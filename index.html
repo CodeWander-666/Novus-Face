@@ -2,15 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVUSFACE AI // PROTOCOL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NOVUSFACE AI | Next-Gen Face Swap Protocol</title>
+    
+    <meta name="description" content="NovusFace AI is the world's most advanced free online face swap engine. Features 8-layer deep refacing, 4K resolution, and unlimited batch processing. Developed by Nikhil Singh.">
+    <meta name="keywords" content="AI Face Swap, Deepfake Online, Free Face Changer, NovusFace, Nikhil Singh, InsightFace, Batch Swap, 4K AI">
+    <meta name="author" content="Nikhil Singh">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0b0f19">
+
+    <meta property="og:title" content="NOVUSFACE AI - The Ultimate Swap Engine">
+    <meta property="og:description" content="Experience 4K Deep Refacing technology. Unlimited, Free, and Private. Developed by Nikhil Singh.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="NovusFace AI">
+
     <style>
-        /* --- CYBERPUNK CORE STYLES --- */
+        /* --- NEXT-GEN CYBERPUNK THEME --- */
         :root {
             --neon-cyan: #00ffcc;
             --neon-pink: #ff00ff;
+            --neon-blue: #00aaff;
             --dark-bg: #050a14;
-            --glass-bg: rgba(10, 20, 30, 0.85);
+            --glass-bg: rgba(10, 20, 30, 0.6);
+            --border-glow: rgba(0, 255, 204, 0.5);
         }
 
         body {
@@ -23,478 +37,96 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            /* Animated Grid Background */
+            /* Advanced Parallax Grid */
             background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridScroll 20s linear infinite;
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 60px 60px, 60px 60px;
+            animation: gridScroll 30s linear infinite;
         }
 
         @keyframes gridScroll {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 500px; }
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 0 0, 0 600px, 0 600px; }
         }
 
-        /* --- POWERFUL BRANDING --- */
+        /* --- TITLE & BRANDING --- */
         .brand-container {
-            margin-top: 40px;
-            text-align: center;
-            position: relative;
-        }
-
-        h1.power-title {
-            font-size: 4rem;
-            margin: 0;
-            letter-spacing: 8px;
-            color: #fff;
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-            animation: pulseGlow 3s infinite alternate;
-        }
-
-        h1.power-title::before {
-            content: "NOVUSFACE AI";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            overflow: hidden;
-            color: var(--neon-pink);
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            animation: glitch 2s infinite linear alternate-reverse;
-            opacity: 0.7;
-        }
-
-        @keyframes pulseGlow {
-            0% { text-shadow: 0 0 10px var(--neon-cyan); }
-            100% { text-shadow: 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-cyan); }
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        /* --- MENU SYSTEM --- */
-        .nav-deck {
-            display: flex;
-            gap: 20px;
-            margin: 40px 0;
-            z-index: 10;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-
-        /* --- MAIN INTERFACE PANELS --- */
-        .cyber-container {
-            width: 90%;
-            max-width: 600px;
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            display: none; /* Hidden by default */
-            animation: slideUp 0.5s ease-out;
-        }
-
-        .cyber-container.active { display: block; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- UPLOAD ZONES --- */
-        .upload-zone {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .upload-zone:hover {
-            border-color: var(--neon-pink);
-            background: rgba(255, 0, 255, 0.05);
-        }
-
-        .preview-img {
-            max-width: 100%;
-            height: 150px;
-            object-fit: contain;
-            display: none;
-            margin-top: 10px;
-            border: 1px solid var(--neon-cyan);
-        }
-
-        /* --- ACTION BUTTON --- */
-        .action-btn {
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(90deg, #00ffcc, #009977);
-            border: none;
-            color: #000;
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            cursor: pointer;
-            text-transform: uppercase;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: transform 0.1s;
-        }
-
-        .action-btn:active { transform: scale(0.98); }
-
-        /* --- BATCH GALLERY --- */
-        .batch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .batch-item {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border: 1px solid var(--neon-cyan);
-        }
-
-        /* --- STATUS LOG --- */
-        .status-log {
-            font-family: 'Courier New', monospace;
-            color: var(--neon-cyan);
-            margin-top: 15px;
-            font-size: 0.9rem;
-            min-height: 20px;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="brand-container">
-        <h1 class="power-title">NOVUSFACE AI</h1>
-        <p style="letter-spacing: 5px; opacity: 0.7; color: var(--neon-pink);">NEURAL ENGINE V2.0</p>
-    </div>
-
-    <div class="nav-deck">
-        <button class="nav-btn active" onclick="switchMode('single')">SINGLE PROTOCOL</button>
-        <button class="nav-btn" onclick="switchMode('batch')">BATCH PROTOCOL</button>
-    </div>
-
-    <div id="single-panel" class="cyber-container active">
-        <h3 style="color: var(--neon-cyan); border-bottom: 1px solid #333; padding-bottom: 10px;">>> SINGLE TARGET INJECTION</h3>
-        
-        <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
-            <p>1. UPLOAD SOURCE FACE</p>
-            <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
-            <img id="srcPrev" class="preview-img">
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
-            <p>2. UPLOAD TARGET PHOTO</p>
-            <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
-            <img id="tgtPrev" class="preview-img">
-        </div>
-
-        <div style="margin: 20px 0;">
-            <label><input type="checkbox" id="single4k"> Force 4K Resolution</label>
-        </div>
-
-        <button class="action-btn" onclick="runSingleSwap()">INITIALIZE</button>
-        <div id="singleStatus" class="status-log"></div>
-
-        <div id="singleResult" style="display:none; margin-top: 20px; text-align: center;">
-            <img id="finalSingle" style="max-width: 100%; border: 2px solid var(--neon-pink);">
-            <br><br>
-            <a id="dlSingle" download="Novus_Result.png" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px 20px;">DOWNLOAD</a>
-        </div>
-    </div>
-
-    <div id="batch-panel" class="cyber-container">
-        <h3 style="color: var(--neon-pink); border-bottom: 1px solid #333; padding-bottom: 10px;">>> MULTI-THREAD BATCHING</h3>
-        
-        <div class="upload-zone" onclick="document.getElementById('batchSrc').click()">
-            <p>1. UPLOAD MASTER FACE</p>
-            <input type="file" id="batchSrc" hidden accept="image/*" onchange="preview(this, 'batchSrcPrev')">
-            <img id="batchSrcPrev" class="preview-img">
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('batchFiles').click()" style="border-color: var(--neon-pink);">
-            <p>2. UPLOAD MULTIPLE TARGETS (Select All)</p>
-            <input type="file" id="batchFiles" hidden accept="image/*" multiple onchange="updateBatchCount(this)">
-            <p id="batchCount" style="color: var(--neon-pink); margin-top: 5px;"></p>
-        </div>
-
-        <button class="action-btn" style="background: linear-gradient(90deg, #ff00ff, #aa00aa);" onclick="runBatchSwap()">RUN BATCH CYCLE</button>
-        
-        <div id="batchStatus" class="status-log"></div>
-        
-        <div id="batchGallery" class="batch-grid"></div>
-    </div>
-
-    <script>
-        // --- CONFIGURATION ---
-        const API_URL = "https://codewander-666-novusface-backend.hf.space/swap";
-
-        // --- UI LOGIC ---
-        function switchMode(mode) {
-            // Toggle Buttons
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Toggle Panels
-            document.getElementById('single-panel').classList.remove('active');
-            document.getElementById('batch-panel').classList.remove('active');
-
-            if(mode === 'single') document.getElementById('single-panel').classList.add('active');
-            if(mode === 'batch') document.getElementById('batch-panel').classList.add('active');
-        }
-
-        function preview(input, id) {
-            if(input.files && input.files[0]) {
-                const img = document.getElementById(id);
-                img.src = URL.createObjectURL(input.files[0]);
-                img.style.display = 'block';
-            }
-        }
-
-        function updateBatchCount(input) {
-            document.getElementById('batchCount').innerText = `[ ${input.files.length} FILES SELECTED ]`;
-        }
-
-        // --- SINGLE SWAP LOGIC ---
-        async function runSingleSwap() {
-            const src = document.getElementById('srcFile').files[0];
-            const tgt = document.getElementById('tgtFile').files[0];
-            const status = document.getElementById('singleStatus');
-
-            if(!src || !tgt) { status.innerText = ">> ERROR: MISSING DATA"; return; }
-
-            status.innerText = ">> UPLOADING TO NEURAL NET...";
-            
-            const formData = new FormData();
-            formData.append('source', src);
-            formData.append('target', tgt);
-            formData.append('enable_4k', document.getElementById('single4k').checked);
-            formData.append('enhance', 1.0);
-
-            try {
-                const res = await fetch(API_URL, { method: 'POST', body: formData });
-                if(res.ok) {
-                    const blob = await res.blob();
-                    const url = URL.createObjectURL(blob);
-                    document.getElementById('finalSingle').src = url;
-                    document.getElementById('dlSingle').href = url;
-                    document.getElementById('singleResult').style.display = 'block';
-                    status.innerText = ">> RENDER COMPLETE";
-                } else {
-                    status.innerText = ">> SERVER ERROR";
-                }
-            } catch(e) { status.innerText = ">> CONNECTION FAILED"; }
-        }
-
-        // --- BATCH SWAP LOGIC (Client-Side Loop) ---
-        async function runBatchSwap() {
-            const src = document.getElementById('batchSrc').files[0];
-            const files = document.getElementById('batchFiles').files;
-            const status = document.getElementById('batchStatus');
-            const gallery = document.getElementById('batchGallery');
-
-            if(!src || files.length === 0) { status.innerText = ">> ERROR: MISSING BATCH DATA"; return; }
-
-            gallery.innerHTML = ""; // Clear old results
-            status.innerText = ">> STARTING BATCH CYCLE...";
-
-            // Loop through each file and send individually
-            for(let i=0; i<files.length; i++) {
-                status.innerText = `>> PROCESSING IMAGE ${i+1}/${files.length}...`;
-                
-                const formData = new FormData();
-                formData.append('source', src);
-                formData.append('target', files[i]);
-                formData.append('enable_4k', false); // Disable 4K for batch speed
-                formData.append('enhance', 1.0);
-
-                try {
-                    const res = await fetch(API_URL, { method: 'POST', body: formData });
-                    if(res.ok) {
-                        const blob = await res.blob();
-                        const url = URL.createObjectURL(blob);
-                        
-                        // Create Thumbnail
-                        const img = document.createElement('img');
-                        img.src = url;
-                        img.className = 'batch-item';
-                        
-                        // Make it downloadable on click
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = `Batch_Result_${i}.png`;
-                        link.appendChild(img);
-                        
-                        gallery.appendChild(link);
-                    }
-                } catch(e) { console.log("Skipped failed image"); }
-            }
-            status.innerText = ">> BATCH CYCLE COMPLETE";
-        }
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVUSFACE AI // PROTOCOL</title>
-    <style>
-        /* --- CORE CYBERPUNK THEME --- */
-        :root {
-            --neon-cyan: #00ffcc;
-            --neon-pink: #ff00ff;
-            --dark-bg: #050a14;
-            --glass-bg: rgba(10, 20, 30, 0.95);
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: #fff;
-            font-family: 'Segoe UI', 'Courier New', monospace;
-            margin: 0;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            /* Animated Infinite Grid */
-            background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: gridScroll 20s linear infinite;
-        }
-
-        @keyframes gridScroll {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 400px; }
-        }
-
-        /* --- POWERFUL BRANDING (GLITCH & LOOP) --- */
-        .brand-container {
-            margin-top: 30px;
+            margin-top: 50px;
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
         .mega-title {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin: 0;
             font-weight: 900;
-            letter-spacing: 5px;
-            color: #fff;
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 2px 2px 0px var(--neon-pink), -2px -2px 0px var(--neon-cyan);
-            animation: noise 2s infinite linear alternate-reverse;
+            letter-spacing: 6px;
+            background: linear-gradient(90deg, #fff, var(--neon-cyan), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            animation: shimmer 5s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200%; }
+            100% { background-position: 200%; }
         }
 
         .subtitle {
-            font-size: 0.9rem;
-            color: var(--neon-cyan);
+            font-size: 0.8rem;
+            color: var(--neon-pink);
             letter-spacing: 8px;
             margin-top: 5px;
             text-transform: uppercase;
-            animation: blink 2s infinite;
+            font-weight: bold;
+            opacity: 0.9;
         }
 
-        @keyframes noise {
-            0% { transform: translate(0,0); }
-            10% { transform: translate(-2px,-2px); }
-            20% { transform: translate(2px,2px); }
-            30% { transform: translate(-2px,2px); }
-            40% { transform: translate(2px,-2px); }
-            50% { transform: translate(0,0); }
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        /* --- THE MENU BUTTON SYSTEM --- */
+        /* --- MENU SYSTEM (RGB EDGES) --- */
         .menu-wrapper {
-            margin: 30px 0;
+            margin: 40px 0;
             position: relative;
             z-index: 20;
-            width: 100%;
+            width: 90%;
             max-width: 500px;
             text-align: center;
         }
 
-        /* The Main "Menu" Trigger */
         .menu-trigger {
-            background: rgba(0,0,0,0.8);
-            border: 2px solid var(--neon-cyan);
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--neon-cyan);
             color: var(--neon-cyan);
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 18px 40px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            letter-spacing: 3px;
-            box-shadow: 0 0 15px var(--neon-cyan);
-            transition: 0.3s;
+            letter-spacing: 4px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
             clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
         }
 
         .menu-trigger:hover {
             background: var(--neon-cyan);
             color: #000;
-            box-shadow: 0 0 30px var(--neon-cyan);
+            box-shadow: 0 0 40px var(--neon-cyan);
+            transform: scale(1.05);
         }
 
-        /* The Dropdown Options */
         .menu-options {
-            display: none; /* Hidden by default */
-            margin-top: 10px;
-            display: flex;
+            display: none;
+            margin-top: 15px;
             justify-content: center;
             gap: 15px;
-            animation: slideDown 0.3s ease-out forwards;
-            opacity: 0;
-            pointer-events: none;
+            animation: slideDown 0.4s ease-out forwards;
         }
         
-        .menu-wrapper.open .menu-options {
-            opacity: 1;
-            pointer-events: all;
-        }
+        .menu-wrapper.open .menu-options { display: flex; }
 
         @keyframes slideDown {
             from { transform: translateY(-20px); opacity: 0; }
@@ -502,113 +134,152 @@
         }
 
         .option-btn {
-            background: #111;
-            border: 1px solid var(--neon-pink);
+            background: rgba(20, 20, 30, 0.9);
+            border: 1px solid var(--neon-blue);
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 25px;
             cursor: pointer;
-            width: 150px;
-            transition: 0.2s;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
-        .option-btn:hover, .option-btn.active {
-            background: var(--neon-pink);
-            color: #000;
-            box-shadow: 0 0 15px var(--neon-pink);
-        }
+        .option-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
 
-        /* --- WIDGET CONTAINERS --- */
+        /* --- MAIN WIDGETS (GLASSMORPHISM) --- */
         .cyber-widget {
             width: 90%;
-            max-width: 600px;
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.7);
-            display: none; /* Hidden until mode selected */
+            max-width: 650px;
+            background: linear-gradient(145deg, rgba(20,30,40,0.9), rgba(10,15,20,0.95));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 255, 204, 0.5);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            display: none;
             position: relative;
+            overflow: hidden;
         }
         
-        .cyber-widget.active { display: block; animation: hologramPop 0.4s ease-out; }
+        .cyber-widget.active { display: block; animation: hologramPop 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
 
-        @keyframes hologramPop {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        /* Light Sweep Effect */
+        .cyber-widget::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: sweep 3s infinite;
         }
 
-        /* Widget Header */
+        @keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        @keyframes hologramPop { 0% { transform: scale(0.95) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+
         .widget-header {
-            border-bottom: 2px solid #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #222;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .widget-title { color: var(--neon-cyan); margin: 0; letter-spacing: 2px; }
+        .widget-title { color: var(--neon-cyan); margin: 0; letter-spacing: 3px; font-size: 1.2rem; }
 
         /* --- UPLOAD ZONES --- */
         .upload-zone {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            padding: 20px;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            padding: 25px;
             margin-bottom: 20px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
         }
-        .upload-zone:hover { border-color: var(--neon-cyan); background: rgba(0, 255, 204, 0.05); }
+        .upload-zone:hover { 
+            border-color: var(--neon-cyan); 
+            background: rgba(0, 255, 204, 0.05); 
+            transform: translateY(-2px);
+        }
 
         .preview-img {
-            max-width: 100%; height: 150px; object-fit: contain;
-            display: none; margin-top: 10px; border: 1px solid var(--neon-cyan);
+            max-width: 100%; height: 160px; object-fit: contain;
+            display: none; margin-top: 15px; 
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
         }
 
-        /* --- ACTION BUTTON --- */
+        /* --- ACTION BUTTONS --- */
         .run-btn {
             width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
+            padding: 18px;
+            font-size: 1.1rem;
             font-weight: 900;
             border: none;
             cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: 0.3s;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .btn-cyan { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px rgba(0, 255, 204, 0.4); }
+        .btn-pink { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px rgba(255, 0, 255, 0.4); }
+        
+        .run-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+
+        /* --- FOOTER --- */
+        .footer {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.8rem;
             letter-spacing: 2px;
-            transition: 0.2s;
-            margin-top: 10px;
+            text-transform: uppercase;
+            text-align: center;
+            opacity: 0.6;
+            transition: 0.3s;
         }
-        .btn-cyan { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
-        .btn-pink { background: var(--neon-pink); color: #000; box-shadow: 0 0 15px var(--neon-pink); }
-        .run-btn:active { transform: scale(0.98); }
+        .footer:hover { opacity: 1; color: var(--neon-cyan); }
 
-        /* --- BATCH GRID --- */
-        .batch-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;
-        }
-        .batch-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #555; }
-
-        /* --- LOGS --- */
+        /* --- BATCH & LOGS --- */
+        .batch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 20px; }
+        .batch-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #444; border-radius: 4px; transition: 0.2s; }
+        .batch-thumb:hover { border-color: #fff; transform: scale(1.1); z-index: 10; }
+        
         .log-screen {
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--neon-cyan);
-            margin-top: 15px;
-            min-height: 20px;
+            margin-top: 20px;
+            min-height: 25px;
+            border-left: 3px solid var(--neon-cyan);
+            padding-left: 10px;
         }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .mega-title { font-size: 2.5rem; }
+            .cyber-widget { width: 95%; padding: 20px; }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="brand-container">
-        <h1 class="mega-title">NOVUSFACE AI</h1>
-        <div class="subtitle">/// NEURAL PROTOCOL ONLINE ///</div>
+        <h1 class="mega-title">NOVUSFACE</h1>
+        <div class="subtitle">/// NOVUSFACE AI ENGINE ///</div>
     </div>
 
     <div class="menu-wrapper" id="menuWrapper">
-        <button class="menu-trigger" onclick="toggleMenu()">>> ACCESS SYSTEM MENU <<</button>
-        
-        <div class="menu-options" id="menuOptions">
+        <button class="menu-trigger" onclick="toggleMenu()">>> SYSTEM MENU <<</button>
+        <div class="menu-options">
             <button class="option-btn" onclick="selectMode('single')">SINGLE SWAP</button>
             <button class="option-btn" onclick="selectMode('batch')">BATCH SWAP</button>
         </div>
@@ -616,82 +287,78 @@
 
     <div id="singleWidget" class="cyber-widget active">
         <div class="widget-header">
-            <h3 class="widget-title">SINGLE INJECTION</h3>
-            <span style="color:var(--neon-cyan)">● ONLINE</span>
+            <h3 class="widget-title">SINGLE PROTOCOL</h3>
+            <span style="color:var(--neon-cyan); font-size:10px;">● READY</span>
         </div>
 
         <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
-            <p>📂 1. UPLOAD SOURCE FACE</p>
+            <p>1. UPLOAD SOURCE ID</p>
             <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
             <img id="srcPrev" class="preview-img">
         </div>
 
         <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
-            <p>📂 2. UPLOAD TARGET PHOTO</p>
+            <p>2. UPLOAD TARGET DATA</p>
             <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
             <img id="tgtPrev" class="preview-img">
         </div>
 
-        <label style="color:#aaa; font-size: 0.9rem;">
-            <input type="checkbox" id="single4k"> Force 4K High-Res
-        </label>
+        <div style="display:flex; gap:20px; justify-content:center; margin:15px 0;">
+            <label style="color:#ccc; font-size: 0.9rem; cursor:pointer;">
+                <input type="checkbox" id="single4k"> Force 4K Render
+            </label>
+        </div>
 
-        <button class="run-btn btn-cyan" onclick="runSingle()">INITIALIZE RENDER</button>
+        <button class="run-btn btn-cyan" onclick="runSingle()">INITIALIZE SWAP</button>
         <div id="singleLog" class="log-screen"></div>
 
-        <div id="singleResult" style="display:none; text-align: center; margin-top: 20px;">
-            <img id="finalSingle" style="max-width: 100%; border: 2px solid var(--neon-cyan);">
+        <div id="singleResult" style="display:none; text-align: center; margin-top: 25px; animation: hologramPop 0.5s;">
+            <img id="finalSingle" style="max-width: 100%; border: 1px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.3);">
             <br><br>
-            <a id="dlSingle" download="Novus_Result.png" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 8px 20px;">DOWNLOAD</a>
+            <a id="dlSingle" download="Novus_Result.png" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px 30px; border-radius: 30px;">DOWNLOAD RESULT</a>
         </div>
     </div>
 
     <div id="batchWidget" class="cyber-widget">
         <div class="widget-header">
-            <h3 class="widget-title" style="color:var(--neon-pink)">MULTI-THREAD BATCH</h3>
-            <span style="color:var(--neon-pink)">● STANDBY</span>
+            <h3 class="widget-title" style="color:var(--neon-pink)">BATCH PROTOCOL</h3>
+            <span style="color:var(--neon-pink); font-size:10px;">● STANDBY</span>
         </div>
 
-        <div class="upload-zone" onclick="document.getElementById('batchSrc').click()" style="border-color: var(--neon-pink)">
-            <p>📂 1. UPLOAD MASTER FACE</p>
+        <div class="upload-zone" onclick="document.getElementById('batchSrc').click()" style="border-color: rgba(255,0,255,0.3);">
+            <p>1. UPLOAD MASTER ID</p>
             <input type="file" id="batchSrc" hidden accept="image/*" onchange="preview(this, 'batchSrcPrev')">
-            <img id="batchSrcPrev" class="preview-img">
+            <img id="batchSrcPrev" class="preview-img" style="border-color:var(--neon-pink);">
         </div>
 
         <div class="upload-zone" onclick="document.getElementById('batchFiles').click()">
-            <p>📂 2. UPLOAD MULTIPLE TARGETS (Select All)</p>
+            <p>2. UPLOAD TARGET QUEUE (Multi-Select)</p>
             <input type="file" id="batchFiles" hidden accept="image/*" multiple onchange="updateCount(this)">
-            <div id="fileCount" style="color:var(--neon-pink); margin-top:5px;"></div>
+            <div id="fileCount" style="color:var(--neon-pink); margin-top:5px; font-weight:bold;"></div>
         </div>
 
         <button class="run-btn btn-pink" onclick="runBatch()">EXECUTE BATCH CYCLE</button>
-        <div id="batchLog" class="log-screen" style="color:var(--neon-pink)"></div>
-
+        <div id="batchLog" class="log-screen" style="color:var(--neon-pink); border-color:var(--neon-pink);"></div>
         <div id="batchGallery" class="batch-grid"></div>
     </div>
 
+    <div class="footer">
+        DEVELOPED BY NIKHIL SINGH © 2026
+    </div>
+
     <script>
-        // CONFIG
         const API_URL = "https://codewander-666-novusface-backend.hf.space/swap";
 
-        // MENU LOGIC
-        function toggleMenu() {
-            document.getElementById('menuWrapper').classList.toggle('open');
-        }
+        function toggleMenu() { document.getElementById('menuWrapper').classList.toggle('open'); }
 
         function selectMode(mode) {
-            // Hide Menu
             document.getElementById('menuWrapper').classList.remove('open');
-            
-            // Switch Widgets
             document.getElementById('singleWidget').classList.remove('active');
             document.getElementById('batchWidget').classList.remove('active');
-
             if(mode === 'single') document.getElementById('singleWidget').classList.add('active');
             if(mode === 'batch') document.getElementById('batchWidget').classList.add('active');
         }
 
-        // PREVIEW LOGIC
         function preview(input, id) {
             if(input.files && input.files[0]) {
                 const img = document.getElementById(id);
@@ -704,21 +371,20 @@
             document.getElementById('fileCount').innerText = `[ ${input.files.length} FILES QUEUED ]`;
         }
 
-        // --- API LOGIC: SINGLE ---
         async function runSingle() {
             const src = document.getElementById('srcFile').files[0];
             const tgt = document.getElementById('tgtFile').files[0];
             const log = document.getElementById('singleLog');
-
-            if(!src || !tgt) { log.innerText = ">> ERROR: MISSING DATA"; return; }
-
-            log.innerText = ">> UPLOADING TO NEURAL ENGINE...";
             
+            if(!src || !tgt) { log.innerText = ">> ERROR: INPUT MISSING"; return; }
+            log.innerText = ">> UPLOADING TO NOVUSFACE ENGINE...";
+
             const formData = new FormData();
             formData.append('source', src);
             formData.append('target', tgt);
             formData.append('enable_4k', document.getElementById('single4k').checked);
             formData.append('enhance', 1.0);
+            formData.append('passes', 8); // DEFAULT 8-LAYER
 
             try {
                 const res = await fetch(API_URL, { method: 'POST', body: formData });
@@ -728,30 +394,28 @@
                     document.getElementById('finalSingle').src = url;
                     document.getElementById('dlSingle').href = url;
                     document.getElementById('singleResult').style.display = 'block';
-                    log.innerText = ">> PROCESS COMPLETE";
+                    log.innerText = ">> SWAP SUCCESSFUL";
                 } else { log.innerText = ">> SERVER ERROR"; }
             } catch(e) { log.innerText = ">> CONNECTION FAILED"; }
         }
 
-        // --- API LOGIC: BATCH ---
         async function runBatch() {
             const src = document.getElementById('batchSrc').files[0];
             const files = document.getElementById('batchFiles').files;
             const log = document.getElementById('batchLog');
             const gallery = document.getElementById('batchGallery');
 
-            if(!src || files.length === 0) { log.innerText = ">> ERROR: EMPTY BATCH"; return; }
+            if(!src || files.length === 0) { log.innerText = ">> ERROR: EMPTY QUEUE"; return; }
 
             gallery.innerHTML = "";
-            log.innerText = ">> STARTING BATCH CYCLE...";
+            log.innerText = ">> INITIALIZING BATCH...";
 
             for(let i=0; i<files.length; i++) {
                 log.innerText = `>> PROCESSING ${i+1}/${files.length}...`;
-                
                 const formData = new FormData();
                 formData.append('source', src);
                 formData.append('target', files[i]);
-                formData.append('enable_4k', false); 
+                formData.append('passes', 4); // Faster batch
                 formData.append('enhance', 1.0);
 
                 try {
@@ -759,23 +423,19 @@
                     if(res.ok) {
                         const blob = await res.blob();
                         const url = URL.createObjectURL(blob);
-                        
                         const a = document.createElement('a');
                         a.href = url;
                         a.download = `Batch_${i}.png`;
-                        
                         const img = document.createElement('img');
                         img.src = url;
                         img.className = 'batch-thumb';
-                        
                         a.appendChild(img);
                         gallery.appendChild(a);
                     }
-                } catch(e) { console.log('Skipped'); }
+                } catch(e) { console.log('Err'); }
             }
-            log.innerText = ">> ALL CYCLES COMPLETE";
+            log.innerText = ">> BATCH COMPLETE";
         }
     </script>
-
 </body>
 </html>
