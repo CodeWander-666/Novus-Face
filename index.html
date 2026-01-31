@@ -3,115 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovusFace Custom UI</title>
+    <title>NOVUS // PROTOCOL</title>
     <style>
-        body { background: #0b0f19; color: white; font-family: sans-serif; padding: 20px; text-align: center; }
-        .container { max-width: 600px; margin: 0 auto; }
+        /* --- CORE CYBERPUNK STYLING --- */
+        :root {
+            --neon-cyan: #00ffcc;
+            --neon-pink: #ff00ff;
+            --dark-bg: #050a14;
+            --panel-bg: rgba(10, 20, 30, 0.85);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Courier New', monospace; /* Hacker font */
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            /* Animated Grid Background */
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 400px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            margin-top: 50px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- GLITCH TITLE EFFECT --- */
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan);
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            animation: glitch 1s infinite alternate;
+        }
+
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-2deg); }
+            40% { transform: skew(2deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* --- NEON PANELS --- */
+        .cyber-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            position: relative;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
         
-        .upload-box { 
-            border: 2px dashed #00ffcc; padding: 20px; margin: 10px 0; border-radius: 10px;
+        .cyber-panel:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
+            border-color: #fff;
+        }
+
+        /* Decorative Corners */
+        .cyber-panel::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px;
+            width: 20px; height: 20px;
+            border-top: 2px solid var(--neon-pink);
+            border-left: 2px solid var(--neon-pink);
+        }
+        .cyber-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; right: -2px;
+            width: 20px; height: 20px;
+            border-bottom: 2px solid var(--neon-pink);
+            border-right: 2px solid var(--neon-pink);
+        }
+
+        /* --- UPLOAD BOXES --- */
+        .upload-zone {
+            border: 2px dashed rgba(0, 255, 204, 0.5);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-zone:hover {
             background: rgba(0, 255, 204, 0.1);
+            border-color: var(--neon-cyan);
         }
+        .upload-zone p { margin: 0; color: #aaa; font-size: 0.9rem; }
         
-        img { max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        
-        button {
-            background: #00ffcc; color: black; border: none; padding: 15px 30px; 
-            font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 30px;
-            margin-top: 20px; width: 100%;
+        img.preview {
+            max-width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid var(--neon-pink);
+            margin-top: 10px;
+            display: none;
+            box-shadow: 0 0 10px var(--neon-pink);
         }
-        button:hover { background: #00ccaa; }
-        
-        .loader { display: none; color: #00ffcc; margin-top: 10px; }
+
+        /* --- THE BIG BUTTON --- */
+        .cyber-btn {
+            background: transparent;
+            color: var(--neon-cyan);
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            border: 2px solid var(--neon-cyan);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .cyber-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 40px var(--neon-cyan);
+        }
+
+        /* --- LOADER --- */
+        .loader-bar {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            margin-top: 20px;
+            position: relative;
+            display: none;
+        }
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+            animation: load 2s infinite ease-in-out;
+        }
+        @keyframes load {
+            0% { width: 0%; margin-left: 0; }
+            50% { width: 100%; margin-left: 0; }
+            100% { width: 0%; margin-left: 100%; }
+        }
+
+        /* --- RESULT --- */
+        #resultArea { display: none; text-align: center; animation: fadeIn 1s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #finalImage {
+            width: 100%;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+        }
+
+        .status-text {
+            color: var(--neon-pink);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>NOVUS//FACE <span style="color:#00ffcc">CUSTOM</span></h1>
-
-        <div class="upload-box">
-            <h3>1. Upload Your Face</h3>
-            <input type="file" id="sourceFile" accept="image/*">
-            <div id="srcPreview"></div>
+        <h1>NOVUS<span style="color:var(--neon-pink)">//</span>FACE</h1>
+        <div style="text-align: center; margin-bottom: 20px; opacity: 0.7;">
+            [ SYSTEM STATUS: ONLINE ]<br>
+            [ ENGINE: NEURAL_V4 ]
         </div>
 
-        <div class="upload-box">
-            <h3>2. Upload Target Image</h3>
-            <input type="file" id="targetFile" accept="image/*">
-            <div id="tgtPreview"></div>
+        <div class="cyber-panel">
+            <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
+                <p>> UPLOAD SOURCE ID <</p>
+                <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
+                <img id="srcPrev" class="preview">
+            </div>
         </div>
 
-        <div style="margin: 20px 0; text-align: left;">
-            <label><input type="checkbox" id="chk4k"> Force 4K Quality</label>
+        <div class="cyber-panel">
+            <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
+                <p>> UPLOAD TARGET DATA <</p>
+                <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
+                <img id="tgtPrev" class="preview">
+            </div>
         </div>
 
-        <button onclick="runSwap()">⚡ SWAP FACE NOW</button>
-        
-        <div class="loader" id="loader">Processing... Please wait 10-20 seconds...</div>
+        <div class="cyber-panel" style="display: flex; justify-content: space-between; align-items: center;">
+            <label style="cursor: pointer;">
+                <input type="checkbox" id="chk4k"> <span style="text-shadow: 0 0 5px white;">FORCE 4K RENDER</span>
+            </label>
+            <span style="color: var(--neon-cyan); font-size: 20px;">⚡</span>
+        </div>
 
-        <div id="resultArea" style="display:none; margin-top: 30px;">
-            <h3>Result:</h3>
-            <img id="finalImage" src="" />
+        <button class="cyber-btn" onclick="runSwap()">INITIALIZE SWAP</button>
+
+        <div id="loader" class="loader-bar"><div class="loader-progress"></div></div>
+        <p id="statusMsg" class="status-text"></p>
+
+        <div id="resultArea">
+            <h3 style="color: var(--neon-cyan); letter-spacing: 3px;">// RENDER COMPLETE //</h3>
+            <img id="finalImage" src="">
             <br><br>
-            <a id="dlBtn" href="#" download="NovusSwap.png" style="color: #00ffcc;">Download Image</a>
+            <a id="dlLink" href="#" download="Novus_Result.png">
+                <button class="cyber-btn" style="border-color: var(--neon-pink); color: var(--neon-pink);">DOWNLOAD DATA</button>
+            </a>
         </div>
     </div>
 
     <script>
-        // REPLACE THIS WITH YOUR HUGGING FACE URL (Must end with no slash)
-        const API_URL = "https://codewander-666-novusface-backend.hf.space";
+        // *** CONNECTION SETTINGS ***
+        const API_URL = "https://codewander-666-novusface-backend.hf.space/swap";
 
-        // Simple preview logic
-        document.getElementById('sourceFile').onchange = function(e) {
-            document.getElementById('srcPreview').innerHTML = `<img src="${URL.createObjectURL(e.target.files[0])}" height="100">`;
-        };
-        document.getElementById('targetFile').onchange = function(e) {
-            document.getElementById('tgtPreview').innerHTML = `<img src="${URL.createObjectURL(e.target.files[0])}" height="100">`;
-        };
+        function preview(input, id) {
+            const file = input.files[0];
+            if (file) {
+                const img = document.getElementById(id);
+                img.src = URL.createObjectURL(file);
+                img.style.display = "block";
+                playSound('hover'); // Imaginary sound trigger
+            }
+        }
 
         async function runSwap() {
-            const src = document.getElementById('sourceFile').files[0];
-            const tgt = document.getElementById('targetFile').files[0];
-            const is4k = document.getElementById('chk4k').checked;
-            
-            if(!src || !tgt) { alert("Please upload both images!"); return; }
+            const src = document.getElementById('srcFile').files[0];
+            const tgt = document.getElementById('tgtFile').files[0];
+            const status = document.getElementById('statusMsg');
+            const loader = document.getElementById('loader');
+            const resultArea = document.getElementById('resultArea');
 
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('resultArea').style.display = 'none';
+            if (!src || !tgt) {
+                status.innerText = ">> ERROR: MISSING INPUT DATA <<";
+                status.style.color = "red";
+                return;
+            }
 
-            // Prepare Data for API
+            // UI UPDATES
+            resultArea.style.display = 'none';
+            loader.style.display = 'block';
+            status.innerText = ">> UPLOADING TO NEURAL NET... <<";
+            status.style.color = "#00ffcc";
+
+            // DATA PREP
             const formData = new FormData();
-            formData.append('source', src);
-            formData.append('target', tgt);
-            formData.append('enable_4k', is4k);
-            formData.append('enhance', 1.0); // Default enhancement
+            formData.append("source", src);
+            formData.append("target", tgt);
+            formData.append("enable_4k", document.getElementById('chk4k').checked);
+            formData.append("passes", 1);
+            formData.append("detail", 0.5);
 
             try {
-                // Call the Backend
-                const response = await fetch(`${API_URL}/swap`, {
-                    method: 'POST',
+                const response = await fetch(API_URL, {
+                    method: "POST",
                     body: formData
                 });
 
                 if (response.ok) {
-                    // Convert Response Blob to Image
+                    status.innerText = ">> PROCESSING COMPLETE <<";
                     const blob = await response.blob();
                     const url = URL.createObjectURL(blob);
                     
                     document.getElementById('finalImage').src = url;
-                    document.getElementById('dlBtn').href = url;
-                    document.getElementById('resultArea').style.display = 'block';
+                    document.getElementById('dlLink').href = url;
+                    resultArea.style.display = 'block';
                 } else {
-                    alert("Server Error: " + await response.text());
+                    const txt = await response.text();
+                    status.innerText = ">> CRITICAL SERVER ERROR: " + txt;
+                    status.style.color = "red";
                 }
-            } catch (err) {
-                alert("Connection Failed. Is the server running? " + err);
+            } catch (error) {
+                status.innerText = ">> CONNECTION FAILED: BACKEND OFFLINE <<";
+                status.style.color = "red";
             } finally {
-                document.getElementById('loader').style.display = 'none';
+                loader.style.display = 'none';
             }
         }
     </script>
-
 </body>
 </html>
