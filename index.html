@@ -2,119 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>NovusFace AI | Free Unlimited 4K Face Swap Engine</title>
-    <meta name="description" content="NovusFace AI is the most powerful free online face swap tool. Features: Batch processing, 4K resolution, unlimited swaps, and no watermarks. Powered by InsightFace & GFPGAN.">
-    <meta name="keywords" content="AI Face Swap, Free Deepfake, Face Changer Online, 4K Face Swap, Batch Face Swap, NovusFace, InsightFace, Remini Alternative, Novus AI">
-    <meta name="author" content="NovusFace Team">
-    <meta name="robots" content="index, follow">
-
-    <meta property="og:title" content="NovusFace AI - The Ultimate Face Swap Engine">
-    <meta property="og:description" content="Swap faces in 4K resolution instantly. Supports single and batch images. 100% Free. Try it now.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://codewander-666.github.io/Novus-Face/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovusFace Custom UI</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b0f19; color: white; font-family: sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; }
         
-        body, html {
-            height: 100%;
-            width: 100%;
-            background-color: #0b0f19; /* Matches your App Theme */
-            overflow: hidden; /* Prevents double scrollbars */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .upload-box { 
+            border: 2px dashed #00ffcc; padding: 20px; margin: 10px 0; border-radius: 10px;
+            background: rgba(0, 255, 204, 0.1);
         }
-
-        /* The Fullscreen Portal */
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100%;
-            display: block;
-            opacity: 0; /* Hidden until loaded */
-            transition: opacity 1s ease-in;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
+        
+        img { max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        
+        button {
+            background: #00ffcc; color: black; border: none; padding: 15px 30px; 
+            font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 30px;
+            margin-top: 20px; width: 100%;
         }
-
-        /* "Wake Up" Loading Screen */
-        .loader-container {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #0b0f19 0%, #1a2236 100%);
-            z-index: 5;
-            color: #fff;
-            text-align: center;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 255, 204, 0.1);
-            border-top: 4px solid #00ffcc;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
-        }
-
-        .status-text {
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            color: #00ffcc;
-            animation: pulse 2s infinite;
-        }
-
-        .sub-text {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #888;
-            max-width: 80%;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-
+        button:hover { background: #00ccaa; }
+        
+        .loader { display: none; color: #00ffcc; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="loader-container" id="loader">
-        <div class="spinner"></div>
-        <div class="status-text">INITIALIZING ENGINE</div>
-        <div class="sub-text">Connecting to Novus Neural Network...<br>This may take 30s if servers are sleeping.</div>
+    <div class="container">
+        <h1>NOVUS//FACE <span style="color:#00ffcc">CUSTOM</span></h1>
+
+        <div class="upload-box">
+            <h3>1. Upload Your Face</h3>
+            <input type="file" id="sourceFile" accept="image/*">
+            <div id="srcPreview"></div>
+        </div>
+
+        <div class="upload-box">
+            <h3>2. Upload Target Image</h3>
+            <input type="file" id="targetFile" accept="image/*">
+            <div id="tgtPreview"></div>
+        </div>
+
+        <div style="margin: 20px 0; text-align: left;">
+            <label><input type="checkbox" id="chk4k"> Force 4K Quality</label>
+        </div>
+
+        <button onclick="runSwap()">⚡ SWAP FACE NOW</button>
+        
+        <div class="loader" id="loader">Processing... Please wait 10-20 seconds...</div>
+
+        <div id="resultArea" style="display:none; margin-top: 30px;">
+            <h3>Result:</h3>
+            <img id="finalImage" src="" />
+            <br><br>
+            <a id="dlBtn" href="#" download="NovusSwap.png" style="color: #00ffcc;">Download Image</a>
+        </div>
     </div>
 
-    <iframe 
-        id="app-frame"
-        src="https://codewander-666-novusface-backend.hf.space"
-        allow="camera; microphone; clipboard-read; clipboard-write; download"
-        allowfullscreen>
-    </iframe>
-
     <script>
-        const iframe = document.getElementById('app-frame');
-        const loader = document.getElementById('loader');
+        // REPLACE THIS WITH YOUR HUGGING FACE URL (Must end with no slash)
+        const API_URL = "https://codewander-666-novusface-backend.hf.space";
 
-        // When the iframe reports it has loaded content
-        iframe.onload = function() {
-            // Fade out loader
-            loader.style.opacity = '0';
-            // Fade in iframe
-            iframe.style.opacity = '1';
-            
-            // Remove loader from DOM after animation
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 1000);
+        // Simple preview logic
+        document.getElementById('sourceFile').onchange = function(e) {
+            document.getElementById('srcPreview').innerHTML = `<img src="${URL.createObjectURL(e.target.files[0])}" height="100">`;
         };
+        document.getElementById('targetFile').onchange = function(e) {
+            document.getElementById('tgtPreview').innerHTML = `<img src="${URL.createObjectURL(e.target.files[0])}" height="100">`;
+        };
+
+        async function runSwap() {
+            const src = document.getElementById('sourceFile').files[0];
+            const tgt = document.getElementById('targetFile').files[0];
+            const is4k = document.getElementById('chk4k').checked;
+            
+            if(!src || !tgt) { alert("Please upload both images!"); return; }
+
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('resultArea').style.display = 'none';
+
+            // Prepare Data for API
+            const formData = new FormData();
+            formData.append('source', src);
+            formData.append('target', tgt);
+            formData.append('enable_4k', is4k);
+            formData.append('enhance', 1.0); // Default enhancement
+
+            try {
+                // Call the Backend
+                const response = await fetch(`${API_URL}/swap`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Convert Response Blob to Image
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    
+                    document.getElementById('finalImage').src = url;
+                    document.getElementById('dlBtn').href = url;
+                    document.getElementById('resultArea').style.display = 'block';
+                } else {
+                    alert("Server Error: " + await response.text());
+                }
+            } catch (err) {
+                alert("Connection Failed. Is the server running? " + err);
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
+        }
     </script>
 
 </body>
