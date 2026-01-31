@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NOVUSFACE AI | Next-Gen Face Swap Protocol</title>
     
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23050a14'/%3E%3Ctext x='50' y='72' font-family='Arial, sans-serif' font-weight='900' font-size='60' fill='none' stroke='%2300ffcc' stroke-width='4' text-anchor='middle' style='filter: drop-shadow(0 0 5px %2300ffcc);'%3ENF%3C/text%3E%3C/svg%3E">
+
     <meta name="description" content="NovusFace AI is the world's most advanced free online face swap engine. Features 8-layer deep refacing, 4K resolution, and unlimited batch processing. Developed by Nikhil Singh.">
     <meta name="keywords" content="AI Face Swap, Deepfake Online, Free Face Changer, NovusFace, Nikhil Singh, InsightFace, Batch Swap, 4K AI">
     <meta name="author" content="Nikhil Singh">
@@ -57,6 +59,36 @@
             text-align: center;
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* The Visual "NF" Emblem on Page */
+        .nf-logo {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--neon-cyan);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--dark-bg);
+            text-shadow: 
+                -1px -1px 0 var(--neon-cyan),  
+                1px -1px 0 var(--neon-cyan),
+                -1px 1px 0 var(--neon-cyan),
+                1px 1px 0 var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 10px var(--neon-cyan);
+            margin-bottom: 20px;
+            animation: floatLogo 4s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 20px var(--neon-cyan); }
+            50% { transform: translateY(-10px); box-shadow: 0 0 40px var(--neon-cyan); }
         }
 
         .mega-title {
@@ -273,6 +305,8 @@
 <body>
 
     <div class="brand-container">
+        <div class="nf-logo">NF</div>
+        
         <h1 class="mega-title">NOVUSFACE</h1>
         <div class="subtitle">/// NOVUSFACE AI ENGINE ///</div>
     </div>
