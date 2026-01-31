@@ -2,397 +2,483 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NOVUSFACE AI | Next-Gen Face Swap Protocol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVUSFACE AI // ULTIMATE</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23050a14'/%3E%3Ctext x='50' y='72' font-family='Arial, sans-serif' font-weight='900' font-size='60' fill='none' stroke='%2300ffcc' stroke-width='4' text-anchor='middle' style='filter: drop-shadow(0 0 5px %2300ffcc);'%3ENF%3C/text%3E%3C/svg%3E">
-
-    <meta name="description" content="NovusFace AI is the world's most advanced free online face swap engine. Features 8-layer deep refacing, 4K resolution, and unlimited batch processing. Developed by Nikhil Singh.">
-    <meta name="keywords" content="AI Face Swap, Deepfake Online, Free Face Changer, NovusFace, Nikhil Singh, InsightFace, Batch Swap, 4K AI">
-    <meta name="author" content="Nikhil Singh">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0b0f19">
-
-    <meta property="og:title" content="NOVUSFACE AI - The Ultimate Swap Engine">
-    <meta property="og:description" content="Experience 4K Deep Refacing technology. Unlimited, Free, and Private. Developed by Nikhil Singh.">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="NovusFace AI">
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- NEXT-GEN CYBERPUNK THEME --- */
+        /* --- CORE SYSTEM VARIABLES --- */
         :root {
-            --neon-cyan: #00ffcc;
-            --neon-pink: #ff00ff;
-            --neon-blue: #00aaff;
-            --dark-bg: #050a14;
-            --glass-bg: rgba(10, 20, 30, 0.6);
-            --border-glow: rgba(0, 255, 204, 0.5);
+            --primary: #00ffcc;
+            --accent: #ff00ff;
+            --bg: #050505;
+            --panel-bg: rgba(20, 20, 20, 0.6);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --font-head: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --radius: 12px;
+            --blur: 20px;
+            --shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; outline: none; -webkit-font-smoothing: antialiased; }
+        
         body {
-            background-color: var(--dark-bg);
+            background: var(--bg);
             color: #fff;
-            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-family: var(--font-body);
             margin: 0;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             min-height: 100vh;
-            /* Advanced Parallax Grid */
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
-                linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 60px 60px, 60px 60px;
-            animation: gridScroll 30s linear infinite;
-        }
-
-        @keyframes gridScroll {
-            0% { background-position: 0 0, 0 0, 0 0; }
-            100% { background-position: 0 0, 0 600px, 0 600px; }
-        }
-
-        /* --- TITLE & BRANDING --- */
-        .brand-container {
-            margin-top: 50px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
+            transition: background 0.5s ease;
         }
 
-        /* The Visual "NF" Emblem on Page */
-        .nf-logo {
-            width: 80px;
-            height: 80px;
-            border: 3px solid var(--neon-cyan);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--dark-bg);
-            text-shadow: 
-                -1px -1px 0 var(--neon-cyan),  
-                1px -1px 0 var(--neon-cyan),
-                -1px 1px 0 var(--neon-cyan),
-                1px 1px 0 var(--neon-cyan);
-            box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 10px var(--neon-cyan);
-            margin-bottom: 20px;
-            animation: floatLogo 4s ease-in-out infinite;
+        /* --- 4D BACKGROUND ENGINE --- */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); box-shadow: 0 0 20px var(--neon-cyan); }
-            50% { transform: translateY(-10px); box-shadow: 0 0 40px var(--neon-cyan); }
+        /* --- UI CONTAINER --- */
+        .stage {
+            width: 100%; max-width: 1200px;
+            padding: 2rem;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; z-index: 10;
         }
 
-        .mega-title {
-            font-size: 4rem;
-            margin: 0;
-            font-weight: 900;
-            letter-spacing: 6px;
-            background: linear-gradient(90deg, #fff, var(--neon-cyan), #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-            animation: shimmer 5s infinite linear;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200%; }
-            100% { background-position: 200%; }
-        }
-
-        .subtitle {
-            font-size: 0.8rem;
-            color: var(--neon-pink);
-            letter-spacing: 8px;
-            margin-top: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-            opacity: 0.9;
-        }
-
-        /* --- MENU SYSTEM (RGB EDGES) --- */
-        .menu-wrapper {
-            margin: 40px 0;
-            position: relative;
-            z-index: 20;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .menu-trigger {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 18px 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            letter-spacing: 4px;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
-        }
-
-        .menu-trigger:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 40px var(--neon-cyan);
-            transform: scale(1.05);
-        }
-
-        .menu-options {
-            display: none;
-            margin-top: 15px;
-            justify-content: center;
-            gap: 15px;
-            animation: slideDown 0.4s ease-out forwards;
+        /* --- HEADER SECTION --- */
+        .brand-header {
+            text-align: center; margin-bottom: 3rem; position: relative;
         }
         
-        .menu-wrapper.open .menu-options { display: flex; }
-
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .option-btn {
-            background: rgba(20, 20, 30, 0.9);
-            border: 1px solid var(--neon-blue);
-            color: #fff;
-            padding: 12px 25px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-        }
-        .option-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
-
-        /* --- MAIN WIDGETS (GLASSMORPHISM) --- */
-        .cyber-widget {
-            width: 90%;
-            max-width: 650px;
-            background: linear-gradient(145deg, rgba(20,30,40,0.9), rgba(10,15,20,0.95));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(0, 255, 204, 0.5);
-            backdrop-filter: blur(20px);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            display: none;
-            position: relative;
-            overflow: hidden;
+        .logo-mark {
+            font-family: var(--font-head); font-size: 3.5rem; font-weight: 900;
+            color: #fff; letter-spacing: 4px; line-height: 1;
+            text-shadow: 0 0 30px var(--primary);
+            margin-bottom: 0.5rem;
         }
         
-        .cyber-widget.active { display: block; animation: hologramPop 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-
-        /* Light Sweep Effect */
-        .cyber-widget::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            animation: sweep 3s infinite;
+        .tagline {
+            font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: var(--accent);
+            letter-spacing: 6px; text-transform: uppercase; font-weight: 700;
         }
 
-        @keyframes sweep { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-        @keyframes hologramPop { 0% { transform: scale(0.95) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-
-        .widget-header {
-            border-bottom: 2px solid #222;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* --- MAIN INTERFACE PANEL --- */
+        .interface-panel {
+            width: 100%; max-width: 650px;
+            background: var(--panel-bg);
+            border: var(--border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(var(--blur));
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .widget-title { color: var(--neon-cyan); margin: 0; letter-spacing: 3px; font-size: 1.2rem; }
+
+        /* --- NAVIGATION TABS --- */
+        .nav-tabs {
+            display: flex; gap: 10px; margin-bottom: 2rem;
+            background: rgba(0,0,0,0.2); padding: 5px; border-radius: var(--radius);
+        }
+        
+        .tab-btn {
+            flex: 1; padding: 12px; border: none; background: transparent;
+            color: #888; font-family: var(--font-head); font-weight: 700;
+            font-size: 0.9rem; cursor: pointer; border-radius: calc(var(--radius) - 4px);
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary);
+        }
 
         /* --- UPLOAD ZONES --- */
+        .zone-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+        
         .upload-zone {
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            padding: 25px;
-            margin-bottom: 20px;
-            text-align: center;
-            cursor: pointer;
+            position: relative; height: 120px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: var(--radius);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; overflow: hidden;
+            background: rgba(255,255,255,0.02);
             transition: 0.3s;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
         }
-        .upload-zone:hover { 
-            border-color: var(--neon-cyan); 
-            background: rgba(0, 255, 204, 0.05); 
-            transform: translateY(-2px);
+        
+        .upload-zone:hover {
+            border-color: var(--primary); background: rgba(0, 255, 204, 0.05);
         }
-
+        
+        .zone-content { text-align: center; pointer-events: none; z-index: 2; }
+        .zone-label { font-size: 0.8rem; font-weight: 700; color: #aaa; letter-spacing: 2px; }
         .preview-img {
-            max-width: 100%; height: 160px; object-fit: contain;
-            display: none; margin-top: 15px; 
-            border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.6; z-index: 1; display: none;
         }
 
-        /* --- ACTION BUTTONS --- */
+        /* --- CONTROLS --- */
+        .controls-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin: 1.5rem 0; font-size: 0.85rem; color: #ccc;
+        }
+        
         .run-btn {
-            width: 100%;
-            padding: 18px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            width: 100%; padding: 18px;
+            background: var(--primary); color: #000;
+            border: none; border-radius: var(--radius);
+            font-family: var(--font-head); font-weight: 900; font-size: 1.1rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        
+        .run-btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--primary); }
+        .run-btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* --- LOGS & RESULTS --- */
+        .console-log {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+            color: var(--primary); margin-top: 1rem; min-height: 20px;
+        }
+        
+        .result-stage {
+            margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem; display: none; text-align: center;
+            animation: slideUp 0.5s ease;
+        }
+        
+        .final-image {
+            max-width: 100%; border-radius: var(--radius);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5); border: 1px solid var(--primary);
+        }
+
+        .dl-btn {
+            display: inline-block; margin-top: 1rem; padding: 10px 30px;
+            border: 1px solid #fff; color: #fff; text-decoration: none;
+            border-radius: 30px; font-size: 0.8rem; font-weight: 700;
             transition: 0.3s;
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 5px;
         }
-        
-        .btn-cyan { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px rgba(0, 255, 204, 0.4); }
-        .btn-pink { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px rgba(255, 0, 255, 0.4); }
-        
-        .run-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+        .dl-btn:hover { background: #fff; color: #000; }
 
-        /* --- FOOTER --- */
-        .footer {
-            margin-top: 50px;
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
-            opacity: 0.6;
-            transition: 0.3s;
+        /* --- BATCH GRID --- */
+        .batch-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px; margin-top: 1rem;
         }
-        .footer:hover { opacity: 1; color: var(--neon-cyan); }
+        .batch-item {
+            aspect-ratio: 1; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);
+            position: relative; transition: 0.3s;
+        }
+        .batch-item img { width: 100%; height: 100%; object-fit: cover; }
+        .batch-item:hover { transform: scale(1.1); z-index: 10; border-color: var(--primary); }
 
-        /* --- BATCH & LOGS --- */
-        .batch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 20px; }
-        .batch-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #444; border-radius: 4px; transition: 0.2s; }
-        .batch-thumb:hover { border-color: #fff; transform: scale(1.1); z-index: 10; }
+        /* --- SIDEBAR MENU --- */
+        .menu-toggle {
+            position: fixed; top: 2rem; right: 2rem; z-index: 100;
+            width: 50px; height: 50px; background: rgba(0,0,0,0.5);
+            border: 1px solid var(--primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
+        }
+        .menu-toggle:hover { background: var(--primary); transform: rotate(90deg); }
+        .menu-toggle svg { width: 24px; height: 24px; stroke: var(--primary); }
+        .menu-toggle:hover svg { stroke: #000; }
+
+        .sidebar {
+            position: fixed; top: 0; right: 0; width: 320px; height: 100vh;
+            background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(30px);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 99; padding: 2rem; display: flex; flex-direction: column;
+        }
+        .sidebar.active { transform: translateX(0); }
         
-        .log-screen {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            color: var(--neon-cyan);
-            margin-top: 20px;
-            min-height: 25px;
-            border-left: 3px solid var(--neon-cyan);
-            padding-left: 10px;
+        .sidebar h3 { font-family: var(--font-head); color: #fff; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 2rem; }
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .theme-btn {
+            padding: 15px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+            color: #aaa; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+            text-align: center; border-radius: 6px; transition: 0.2s;
+        }
+        .theme-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .theme-btn.active { border-color: var(--primary); background: rgba(0, 255, 204, 0.1); color: var(--primary); }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           SCHEMATICS (11 THEMES)
+           ========================================= */
+
+        /* 1. ORIGIN (Novus Default) */
+        [data-theme="origin"] {
+            --primary: #00ffcc; --bg: #050a14; --panel-bg: rgba(10, 20, 30, 0.7);
+            --font-head: 'Orbitron'; --radius: 16px;
         }
 
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 600px) {
-            .mega-title { font-size: 2.5rem; }
-            .cyber-widget { width: 95%; padding: 20px; }
+        /* 2. AERO (Glass OS) */
+        [data-theme="aero"] {
+            --primary: #007aff; --bg: #f0f2f5; --panel-bg: rgba(255, 255, 255, 0.6);
+            --border: 1px solid rgba(255,255,255,0.4); --font-head: 'Inter'; --font-body: 'Inter';
+            --radius: 24px; --shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
+        [data-theme="aero"] body { color: #333; background: #e0e5ec; }
+        [data-theme="aero"] .logo-mark { color: #333; text-shadow: none; }
+        [data-theme="aero"] .tagline { color: #007aff; }
+        [data-theme="aero"] .tab-btn.active { color: #fff; }
+        [data-theme="aero"] .upload-zone { border-color: #ccc; background: rgba(255,255,255,0.5); }
+        [data-theme="aero"] .controls-row { color: #666; }
+
+        /* 3. TERMINAL (Retro DOS) */
+        [data-theme="terminal"] {
+            --primary: #0f0; --bg: #000; --panel-bg: #000;
+            --border: 2px solid #0f0; --font-head: 'JetBrains Mono'; --font-body: 'JetBrains Mono';
+            --radius: 0px; --shadow: none; --blur: 0px;
+        }
+        [data-theme="terminal"] .run-btn { background: transparent; border: 2px solid #0f0; color: #0f0; }
+        [data-theme="terminal"] .run-btn:hover { background: #0f0; color: #000; }
+        [data-theme="terminal"] .upload-zone { border-style: dotted; }
+
+        /* 4. BRUTAL (Neo-Brutalism) */
+        [data-theme="brutal"] {
+            --primary: #ff5e00; --bg: #fff; --panel-bg: #fff;
+            --border: 4px solid #000; --radius: 0px; --font-head: 'Inter';
+            --shadow: 15px 15px 0px #000;
+        }
+        [data-theme="brutal"] body { color: #000; }
+        [data-theme="brutal"] .logo-mark { color: #000; text-shadow: none; font-style: italic; }
+        [data-theme="brutal"] .tagline { background: #000; color: #fff; padding: 5px; display: inline-block; }
+        [data-theme="brutal"] .upload-zone { border: 3px solid #000; background: #eee; }
+        [data-theme="brutal"] .run-btn { background: #000; color: #fff; border-radius: 0; box-shadow: 5px 5px 0 var(--primary); transform: translate(-5px, -5px); }
+        [data-theme="brutal"] .run-btn:hover { transform: translate(0,0); box-shadow: none; }
+        [data-theme="brutal"] .controls-row { color: #000; font-weight: bold; }
+
+        /* 5. CYBERDECK (Sci-Fi) */
+        [data-theme="cyberdeck"] {
+            --primary: #ff0055; --bg: #1a0b1e; --panel-bg: rgba(20, 0, 10, 0.9);
+            --border: 1px solid #ff0055; --radius: 2px;
+        }
+        [data-theme="cyberdeck"] .interface-panel {
+            clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+            border-left: 5px solid var(--primary);
+        }
+
+        /* 6. ZEN (Minimal) */
+        [data-theme="zen"] {
+            --primary: #333; --bg: #fdfdfd; --panel-bg: transparent;
+            --border: none; --shadow: none; --font-head: 'Inter';
+        }
+        [data-theme="zen"] body { color: #333; }
+        [data-theme="zen"] .logo-mark { color: #333; text-shadow: none; letter-spacing: 10px; font-weight: 300; }
+        [data-theme="zen"] .upload-zone { border: 1px solid #eee; background: #fff; border-radius: 50%; width: 150px; height: 150px; margin: 0 auto 1rem auto; }
+        [data-theme="zen"] .run-btn { border-radius: 50px; background: #333; color: #fff; width: auto; padding: 15px 50px; }
+        [data-theme="zen"] .controls-row { color: #999; }
+
+        /* 7. VAPOR (Synthwave) */
+        [data-theme="vapor"] {
+            --primary: #00f3ff; --accent: #ff00ff; --bg: #2b003b; 
+            --panel-bg: linear-gradient(135deg, rgba(43,0,59,0.8), rgba(20,0,40,0.8));
+            --border: 1px solid #ff00ff; --shadow: 0 0 30px #ff00ff;
+        }
+        [data-theme="vapor"] .logo-mark {
+            background: linear-gradient(to bottom, #00f3ff, #ff00ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none;
+        }
+
+        /* 8. VOID (Dark Mode Ultra) */
+        [data-theme="void"] {
+            --primary: #fff; --bg: #000; --panel-bg: #000;
+            --border: 1px solid #333; --radius: 0; --shadow: none;
+        }
+        [data-theme="void"] .run-btn { background: #fff; color: #000; border-radius: 0; }
+        [data-theme="void"] .logo-mark { color: #fff; text-shadow: none; letter-spacing: 2px; }
+
+        /* 9. SOLAR (Organic) */
+        [data-theme="solar"] {
+            --primary: #ffbd00; --bg: #001f3f; --panel-bg: rgba(0, 31, 63, 0.8);
+            --border: 1px solid #ffbd00; --radius: 30px;
+        }
+
+        /* 10. GLITCH (Chaos) */
+        [data-theme="glitch"] {
+            --primary: #f0f; --bg: #111; --panel-bg: rgba(20,20,20,0.95);
+            --border: 1px solid #fff; --font-head: 'Rubik Glitch', cursive;
+        }
+        [data-theme="glitch"] .interface-panel { border: 2px solid red; box-shadow: -5px 0 blue, 5px 0 red; }
+        [data-theme="glitch"] .run-btn:hover { animation: shake 0.2s infinite; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 100% { transform: translate(-1px, -1px); } }
+
+        /* 11. PAPER (Clean) */
+        [data-theme="paper"] {
+            --primary: #333; --bg: #f4f4f4; --panel-bg: #fff;
+            --border: 1px solid #ddd; --radius: 2px; --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --font-head: 'Georgia', serif;
+        }
+        [data-theme="paper"] body { color: #333; }
+        [data-theme="paper"] .logo-mark { color: #333; text-shadow: none; font-weight: normal; }
+        [data-theme="paper"] .upload-zone { background: #fafafa; border: 1px solid #ccc; }
 
     </style>
 </head>
-<body>
+<body data-theme="origin">
 
-    <div class="brand-container">
-        <div class="nf-logo">NF</div>
-        
-        <h1 class="mega-title">NOVUSFACE</h1>
-        <div class="subtitle">/// NOVUSFACE AI ENGINE ///</div>
+    <!-- BACKGROUND CANVAS -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- MENU TOGGLE -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </div>
 
-    <div class="menu-wrapper" id="menuWrapper">
-        <button class="menu-trigger" onclick="toggleMenu()">>> SYSTEM MENU <<</button>
-        <div class="menu-options">
-            <button class="option-btn" onclick="selectMode('single')">SINGLE SWAP</button>
-            <button class="option-btn" onclick="selectMode('batch')">BATCH SWAP</button>
-        </div>
-    </div>
-
-    <div id="singleWidget" class="cyber-widget active">
-        <div class="widget-header">
-            <h3 class="widget-title">SINGLE PROTOCOL</h3>
-            <span style="color:var(--neon-cyan); font-size:10px;">● READY</span>
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
-            <p>1. UPLOAD SOURCE ID</p>
-            <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
-            <img id="srcPrev" class="preview-img">
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
-            <p>2. UPLOAD TARGET DATA</p>
-            <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
-            <img id="tgtPrev" class="preview-img">
-        </div>
-
-        <div style="display:flex; gap:20px; justify-content:center; margin:15px 0;">
-            <label style="color:#ccc; font-size: 0.9rem; cursor:pointer;">
-                <input type="checkbox" id="single4k"> Force 4K Render
-            </label>
-        </div>
-
-        <button class="run-btn btn-cyan" onclick="runSingle()">INITIALIZE SWAP</button>
-        <div id="singleLog" class="log-screen"></div>
-
-        <div id="singleResult" style="display:none; text-align: center; margin-top: 25px; animation: hologramPop 0.5s;">
-            <img id="finalSingle" style="max-width: 100%; border: 1px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,255,204,0.3);">
-            <br><br>
-            <a id="dlSingle" download="Novus_Result.png" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px 30px; border-radius: 30px;">DOWNLOAD RESULT</a>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <h3>SCHEMATIC SELECT</h3>
+        <div class="theme-grid">
+            <div class="theme-btn active" onclick="setTheme('origin', this)">ORIGIN</div>
+            <div class="theme-btn" onclick="setTheme('aero', this)">AERO GLASS</div>
+            <div class="theme-btn" onclick="setTheme('terminal', this)">TERMINAL</div>
+            <div class="theme-btn" onclick="setTheme('brutal', this)">BRUTALIST</div>
+            <div class="theme-btn" onclick="setTheme('cyberdeck', this)">CYBERDECK</div>
+            <div class="theme-btn" onclick="setTheme('zen', this)">ZEN MODE</div>
+            <div class="theme-btn" onclick="setTheme('vapor', this)">VAPORWAVE</div>
+            <div class="theme-btn" onclick="setTheme('void', this)">THE VOID</div>
+            <div class="theme-btn" onclick="setTheme('solar', this)">SOLARPUNK</div>
+            <div class="theme-btn" onclick="setTheme('glitch', this)">GLITCH</div>
+            <div class="theme-btn" onclick="setTheme('paper', this)">PAPER</div>
         </div>
     </div>
 
-    <div id="batchWidget" class="cyber-widget">
-        <div class="widget-header">
-            <h3 class="widget-title" style="color:var(--neon-pink)">BATCH PROTOCOL</h3>
-            <span style="color:var(--neon-pink); font-size:10px;">● STANDBY</span>
+    <!-- MAIN STAGE -->
+    <div class="stage">
+        <header class="brand-header">
+            <div class="logo-mark">NOVUSFACE</div>
+            <div class="tagline">ULTIMATE AI SWAP ENGINE</div>
+        </header>
+
+        <div class="interface-panel">
+            <!-- TABS -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="setMode('single', this)">SINGLE SWAP</button>
+                <button class="tab-btn" onclick="setMode('batch', this)">BATCH QUEUE</button>
+            </div>
+
+            <!-- SINGLE SWAP UI -->
+            <div id="view-single">
+                <div class="zone-wrapper">
+                    <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
+                        <div class="zone-content">
+                            <div class="zone-label">1. UPLOAD SOURCE ID</div>
+                        </div>
+                        <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
+                        <img id="srcPrev" class="preview-img">
+                    </div>
+
+                    <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
+                        <div class="zone-content">
+                            <div class="zone-label">2. UPLOAD TARGET MEDIA</div>
+                        </div>
+                        <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
+                        <img id="tgtPrev" class="preview-img">
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <label style="display:flex; align-items:center; cursor:pointer">
+                        <input type="checkbox" id="single4k" style="margin-right:8px"> FORCE 4K RENDER
+                    </label>
+                </div>
+
+                <button class="run-btn" id="runSingleBtn" onclick="runSingle()">INITIALIZE PROTOCOL</button>
+                <div id="singleLog" class="console-log">>> SYSTEM READY</div>
+            </div>
+
+            <!-- BATCH SWAP UI -->
+            <div id="view-batch" style="display:none">
+                <div class="zone-wrapper">
+                    <div class="upload-zone" onclick="document.getElementById('batchSrc').click()" style="border-color: var(--accent)">
+                        <div class="zone-content">
+                            <div class="zone-label" style="color:var(--accent)">1. UPLOAD MASTER ID</div>
+                        </div>
+                        <input type="file" id="batchSrc" hidden accept="image/*" onchange="preview(this, 'batchSrcPrev')">
+                        <img id="batchSrcPrev" class="preview-img">
+                    </div>
+
+                    <div class="upload-zone" onclick="document.getElementById('batchFiles').click()">
+                        <div class="zone-content">
+                            <div class="zone-label">2. SELECT TARGET QUEUE</div>
+                            <div id="fileCount" style="font-size:0.7rem; margin-top:5px; color:#fff"></div>
+                        </div>
+                        <input type="file" id="batchFiles" hidden accept="image/*" multiple onchange="updateBatchCount(this)">
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <span>BATCH MODE ACTIVE</span>
+                </div>
+
+                <button class="run-btn" id="runBatchBtn" onclick="runBatch()" style="background: var(--accent); color:#fff">EXECUTE BATCH</button>
+                <div id="batchLog" class="console-log" style="color: var(--accent)">>> BATCH STANDBY</div>
+            </div>
+
+            <!-- RESULTS -->
+            <div id="resultsArea" class="result-stage">
+                <!-- Single Result -->
+                <div id="singleResult">
+                    <img id="finalImg" class="final-image">
+                    <br>
+                    <a id="dlLink" class="dl-btn" download="Novus_Result.png">DOWNLOAD RESULT</a>
+                </div>
+                <!-- Batch Result -->
+                <div id="batchResult" class="batch-grid" style="display:none"></div>
+            </div>
+
         </div>
-
-        <div class="upload-zone" onclick="document.getElementById('batchSrc').click()" style="border-color: rgba(255,0,255,0.3);">
-            <p>1. UPLOAD MASTER ID</p>
-            <input type="file" id="batchSrc" hidden accept="image/*" onchange="preview(this, 'batchSrcPrev')">
-            <img id="batchSrcPrev" class="preview-img" style="border-color:var(--neon-pink);">
-        </div>
-
-        <div class="upload-zone" onclick="document.getElementById('batchFiles').click()">
-            <p>2. UPLOAD TARGET QUEUE (Multi-Select)</p>
-            <input type="file" id="batchFiles" hidden accept="image/*" multiple onchange="updateCount(this)">
-            <div id="fileCount" style="color:var(--neon-pink); margin-top:5px; font-weight:bold;"></div>
-        </div>
-
-        <button class="run-btn btn-pink" onclick="runBatch()">EXECUTE BATCH CYCLE</button>
-        <div id="batchLog" class="log-screen" style="color:var(--neon-pink); border-color:var(--neon-pink);"></div>
-        <div id="batchGallery" class="batch-grid"></div>
-    </div>
-
-    <div class="footer">
-        DEVELOPED BY NIKHIL SINGH © 2026
     </div>
 
     <script>
+        // --- LOGIC KERNEL ---
         const API_URL = "https://codewander-666-novusface-backend.hf.space/swap";
 
-        function toggleMenu() { document.getElementById('menuWrapper').classList.toggle('open'); }
-
-        function selectMode(mode) {
-            document.getElementById('menuWrapper').classList.remove('open');
-            document.getElementById('singleWidget').classList.remove('active');
-            document.getElementById('batchWidget').classList.remove('active');
-            if(mode === 'single') document.getElementById('singleWidget').classList.add('active');
-            if(mode === 'batch') document.getElementById('batchWidget').classList.add('active');
+        // THEME ENGINE
+        function setTheme(name, btn) {
+            document.body.setAttribute('data-theme', name);
+            // Update Canvas Colors based on theme
+            updateCanvasColors(name);
+            // Button State
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
+        // MENU SYSTEM
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // TAB SWITCHER
+        function setMode(mode, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.getElementById('view-single').style.display = 'none';
+            document.getElementById('view-batch').style.display = 'none';
+            document.getElementById('resultsArea').style.display = 'none';
+            
+            if(mode === 'single') {
+                document.getElementById('view-single').style.display = 'block';
+            } else {
+                document.getElementById('view-batch').style.display = 'block';
+            }
+        }
+
+        // NOVUSFACE FUNCTIONS
         function preview(input, id) {
             if(input.files && input.files[0]) {
                 const img = document.getElementById(id);
@@ -401,55 +487,72 @@
             }
         }
 
-        function updateCount(input) {
-            document.getElementById('fileCount').innerText = `[ ${input.files.length} FILES QUEUED ]`;
+        function updateBatchCount(input) {
+            document.getElementById('fileCount').innerText = `[ ${input.files.length} FILES LOADED ]`;
         }
 
         async function runSingle() {
             const src = document.getElementById('srcFile').files[0];
             const tgt = document.getElementById('tgtFile').files[0];
             const log = document.getElementById('singleLog');
-            
-            if(!src || !tgt) { log.innerText = ">> ERROR: INPUT MISSING"; return; }
-            log.innerText = ">> UPLOADING TO NOVUSFACE ENGINE...";
+            const btn = document.getElementById('runSingleBtn');
+            const resultArea = document.getElementById('resultsArea');
+
+            if(!src || !tgt) { log.innerText = ">> ERROR: INPUTS MISSING"; return; }
+
+            log.innerText = ">> UPLOADING TO NEURAL CORE...";
+            btn.disabled = true;
+            btn.innerText = "PROCESSING...";
+            resultArea.style.display = 'none';
 
             const formData = new FormData();
             formData.append('source', src);
             formData.append('target', tgt);
             formData.append('enable_4k', document.getElementById('single4k').checked);
             formData.append('enhance', 1.0);
-            formData.append('passes', 8); // DEFAULT 8-LAYER
+            formData.append('passes', 8);
 
             try {
                 const res = await fetch(API_URL, { method: 'POST', body: formData });
                 if(res.ok) {
                     const blob = await res.blob();
                     const url = URL.createObjectURL(blob);
-                    document.getElementById('finalSingle').src = url;
-                    document.getElementById('dlSingle').href = url;
+                    
+                    document.getElementById('finalImg').src = url;
+                    document.getElementById('dlLink').href = url;
                     document.getElementById('singleResult').style.display = 'block';
-                    log.innerText = ">> SWAP SUCCESSFUL";
-                } else { log.innerText = ">> SERVER ERROR"; }
-            } catch(e) { log.innerText = ">> CONNECTION FAILED"; }
+                    document.getElementById('batchResult').style.display = 'none';
+                    resultArea.style.display = 'block';
+                    log.innerText = ">> PROTOCOL COMPLETE.";
+                } else { log.innerText = ">> SERVER ERROR."; }
+            } catch(e) { log.innerText = ">> CONNECTION FAILED."; }
+            finally { btn.disabled = false; btn.innerText = "INITIALIZE PROTOCOL"; }
         }
 
         async function runBatch() {
             const src = document.getElementById('batchSrc').files[0];
             const files = document.getElementById('batchFiles').files;
             const log = document.getElementById('batchLog');
-            const gallery = document.getElementById('batchGallery');
+            const gallery = document.getElementById('batchResult');
+            const btn = document.getElementById('runBatchBtn');
+            const resultArea = document.getElementById('resultsArea');
 
-            if(!src || files.length === 0) { log.innerText = ">> ERROR: EMPTY QUEUE"; return; }
+            if(!src || files.length === 0) { log.innerText = ">> ERROR: QUEUE EMPTY"; return; }
 
             gallery.innerHTML = "";
-            log.innerText = ">> INITIALIZING BATCH...";
+            document.getElementById('singleResult').style.display = 'none';
+            document.getElementById('batchResult').style.display = 'grid';
+            resultArea.style.display = 'block';
+            
+            log.innerText = ">> STARTING BATCH CYCLE...";
+            btn.disabled = true;
 
             for(let i=0; i<files.length; i++) {
-                log.innerText = `>> PROCESSING ${i+1}/${files.length}...`;
+                log.innerText = `>> PROCESSING ${i+1} / ${files.length}`;
                 const formData = new FormData();
                 formData.append('source', src);
                 formData.append('target', files[i]);
-                formData.append('passes', 4); // Faster batch
+                formData.append('passes', 4);
                 formData.append('enhance', 1.0);
 
                 try {
@@ -457,19 +560,90 @@
                     if(res.ok) {
                         const blob = await res.blob();
                         const url = URL.createObjectURL(blob);
+                        
                         const a = document.createElement('a');
                         a.href = url;
                         a.download = `Batch_${i}.png`;
+                        a.className = 'batch-item';
+                        
                         const img = document.createElement('img');
                         img.src = url;
-                        img.className = 'batch-thumb';
+                        
                         a.appendChild(img);
                         gallery.appendChild(a);
                     }
                 } catch(e) { console.log('Err'); }
             }
-            log.innerText = ">> BATCH COMPLETE";
+            log.innerText = ">> BATCH SEQUENCE FINISHED.";
+            btn.disabled = false;
         }
+
+        // --- BACKGROUND FX ENGINE ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, stars = [];
+        let starColor = "0, 255, 204"; // Default cyan
+
+        function resize() {
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Star {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = (Math.random() - 0.5) * width;
+                this.y = (Math.random() - 0.5) * height;
+                this.z = Math.random() * width; this.pz = this.z;
+            }
+            update() {
+                this.z -= 15;
+                if(this.z < 1) { this.reset(); this.z = width; this.pz = this.z; }
+            }
+            draw() {
+                let sx = (this.x / this.z) * width + width/2;
+                let sy = (this.y / this.z) * height + height/2;
+                let px = (this.x / this.pz) * width + width/2;
+                let py = (this.y / this.pz) * height + height/2;
+                this.pz = this.z;
+                if(sx < 0 || sx > width || sy < 0 || sy > height) return;
+                
+                let alpha = 1 - this.z/width;
+                ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy);
+                ctx.strokeStyle = `rgba(${starColor}, ${alpha})`;
+                ctx.lineWidth = alpha * 2; ctx.stroke();
+            }
+        }
+
+        function updateCanvasColors(theme) {
+            const map = {
+                'origin': '0, 255, 204', 'aero': '0, 122, 255', 'terminal': '0, 255, 0',
+                'brutal': '255, 94, 0', 'cyberdeck': '255, 0, 85', 'zen': '100, 100, 100',
+                'vapor': '255, 0, 255', 'void': '255, 255, 255', 'solar': '255, 189, 0',
+                'glitch': '255, 0, 0', 'paper': '50, 50, 50'
+            };
+            starColor = map[theme] || '0, 255, 204';
+        }
+
+        for(let i=0; i<200; i++) stars.push(new Star());
+        
+        function animate() {
+            // Trail effect (gets cleared completely for some themes like aero/paper)
+            const isLight = document.body.getAttribute('data-theme') === 'aero' || 
+                            document.body.getAttribute('data-theme') === 'paper' ||
+                            document.body.getAttribute('data-theme') === 'zen' ||
+                            document.body.getAttribute('data-theme') === 'brutal';
+            
+            ctx.fillStyle = isLight ? "rgba(240, 240, 240, 0.4)" : "rgba(5, 5, 5, 0.2)";
+            ctx.fillRect(0, 0, width, height);
+            
+            stars.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
     </script>
 </body>
 </html>
