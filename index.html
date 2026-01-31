@@ -3,303 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVUS // PROTOCOL</title>
+    <title>NOVUSFACE AI // PROTOCOL</title>
     <style>
-        /* --- CORE CYBERPUNK STYLING --- */
+        /* --- CYBERPUNK CORE STYLES --- */
         :root {
             --neon-cyan: #00ffcc;
             --neon-pink: #ff00ff;
             --dark-bg: #050a14;
-            --panel-bg: rgba(10, 20, 30, 0.85);
+            --glass-bg: rgba(10, 20, 30, 0.85);
         }
 
         body {
             background-color: var(--dark-bg);
             color: #fff;
-            font-family: 'Courier New', monospace; /* Hacker font */
+            font-family: 'Segoe UI', 'Courier New', monospace;
             margin: 0;
             overflow-x: hidden;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             /* Animated Grid Background */
             background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
             animation: gridScroll 20s linear infinite;
         }
 
         @keyframes gridScroll {
             0% { background-position: 0 0; }
-            100% { background-position: 0 400px; }
+            100% { background-position: 0 500px; }
         }
 
-        .container {
-            width: 100%;
-            max-width: 550px;
-            margin-top: 50px;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* --- GLITCH TITLE EFFECT --- */
-        h1 {
-            font-size: 3rem;
+        /* --- POWERFUL BRANDING --- */
+        .brand-container {
+            margin-top: 40px;
             text-align: center;
-            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan);
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            animation: glitch 1s infinite alternate;
+            position: relative;
+        }
+
+        h1.power-title {
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 8px;
+            color: #fff;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        h1.power-title::before {
+            content: "NOVUSFACE AI";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            overflow: hidden;
+            color: var(--neon-pink);
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            animation: glitch 2s infinite linear alternate-reverse;
+            opacity: 0.7;
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px var(--neon-cyan); }
+            100% { text-shadow: 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-cyan); }
         }
 
         @keyframes glitch {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(-2deg); }
-            40% { transform: skew(2deg); }
-            100% { transform: skew(0deg); }
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
 
-        /* --- NEON PANELS --- */
-        .cyber-panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            position: relative;
-            backdrop-filter: blur(5px);
+        /* --- MENU SYSTEM --- */
+        .nav-deck {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             transition: 0.3s;
-        }
-        
-        .cyber-panel:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
-            border-color: #fff;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Decorative Corners */
-        .cyber-panel::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px;
-            width: 20px; height: 20px;
-            border-top: 2px solid var(--neon-pink);
-            border-left: 2px solid var(--neon-pink);
-        }
-        .cyber-panel::after {
-            content: '';
-            position: absolute;
-            bottom: -2px; right: -2px;
-            width: 20px; height: 20px;
-            border-bottom: 2px solid var(--neon-pink);
-            border-right: 2px solid var(--neon-pink);
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-cyan);
         }
 
-        /* --- UPLOAD BOXES --- */
+        /* --- MAIN INTERFACE PANELS --- */
+        .cyber-container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            display: none; /* Hidden by default */
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .cyber-container.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- UPLOAD ZONES --- */
         .upload-zone {
-            border: 2px dashed rgba(0, 255, 204, 0.5);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
             padding: 20px;
+            margin-bottom: 20px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
-        }
-        .upload-zone:hover {
-            background: rgba(0, 255, 204, 0.1);
-            border-color: var(--neon-cyan);
-        }
-        .upload-zone p { margin: 0; color: #aaa; font-size: 0.9rem; }
-        
-        img.preview {
-            max-width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border: 1px solid var(--neon-pink);
-            margin-top: 10px;
-            display: none;
-            box-shadow: 0 0 10px var(--neon-pink);
+            position: relative;
         }
 
-        /* --- THE BIG BUTTON --- */
-        .cyber-btn {
-            background: transparent;
-            color: var(--neon-cyan);
-            font-family: 'Courier New', monospace;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 15px;
+        .upload-zone:hover {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 255, 0.05);
+        }
+
+        .preview-img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: contain;
+            display: none;
+            margin-top: 10px;
+            border: 1px solid var(--neon-cyan);
+        }
+
+        /* --- ACTION BUTTON --- */
+        .action-btn {
             width: 100%;
-            border: 2px solid var(--neon-cyan);
+            padding: 20px;
+            background: linear-gradient(90deg, #00ffcc, #009977);
+            border: none;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-            box-shadow: 0 0 10px var(--neon-cyan);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: transform 0.1s;
         }
 
-        .cyber-btn:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 40px var(--neon-cyan);
-        }
+        .action-btn:active { transform: scale(0.98); }
 
-        /* --- LOADER --- */
-        .loader-bar {
-            width: 100%;
-            height: 4px;
-            background: #333;
+        /* --- BATCH GALLERY --- */
+        .batch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
             margin-top: 20px;
-            position: relative;
-            display: none;
         }
-        .loader-progress {
-            width: 0%;
-            height: 100%;
-            background: var(--neon-pink);
-            box-shadow: 0 0 10px var(--neon-pink);
-            animation: load 2s infinite ease-in-out;
-        }
-        @keyframes load {
-            0% { width: 0%; margin-left: 0; }
-            50% { width: 100%; margin-left: 0; }
-            100% { width: 0%; margin-left: 100%; }
-        }
-
-        /* --- RESULT --- */
-        #resultArea { display: none; text-align: center; animation: fadeIn 1s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        #finalImage {
+        .batch-item {
             width: 100%;
-            border: 2px solid var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 1px solid var(--neon-cyan);
         }
 
-        .status-text {
-            color: var(--neon-pink);
-            font-size: 0.8rem;
-            margin-top: 5px;
-            text-transform: uppercase;
+        /* --- STATUS LOG --- */
+        .status-log {
+            font-family: 'Courier New', monospace;
+            color: var(--neon-cyan);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            min-height: 20px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>NOVUS<span style="color:var(--neon-pink)">//</span>FACE</h1>
-        <div style="text-align: center; margin-bottom: 20px; opacity: 0.7;">
-            [ SYSTEM STATUS: ONLINE ]<br>
-            [ ENGINE: NEURAL_V4 ]
+    <div class="brand-container">
+        <h1 class="power-title">NOVUSFACE AI</h1>
+        <p style="letter-spacing: 5px; opacity: 0.7; color: var(--neon-pink);">NEURAL ENGINE V2.0</p>
+    </div>
+
+    <div class="nav-deck">
+        <button class="nav-btn active" onclick="switchMode('single')">SINGLE PROTOCOL</button>
+        <button class="nav-btn" onclick="switchMode('batch')">BATCH PROTOCOL</button>
+    </div>
+
+    <div id="single-panel" class="cyber-container active">
+        <h3 style="color: var(--neon-cyan); border-bottom: 1px solid #333; padding-bottom: 10px;">>> SINGLE TARGET INJECTION</h3>
+        
+        <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
+            <p>1. UPLOAD SOURCE FACE</p>
+            <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
+            <img id="srcPrev" class="preview-img">
         </div>
 
-        <div class="cyber-panel">
-            <div class="upload-zone" onclick="document.getElementById('srcFile').click()">
-                <p>> UPLOAD SOURCE ID <</p>
-                <input type="file" id="srcFile" hidden accept="image/*" onchange="preview(this, 'srcPrev')">
-                <img id="srcPrev" class="preview">
-            </div>
+        <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
+            <p>2. UPLOAD TARGET PHOTO</p>
+            <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
+            <img id="tgtPrev" class="preview-img">
         </div>
 
-        <div class="cyber-panel">
-            <div class="upload-zone" onclick="document.getElementById('tgtFile').click()">
-                <p>> UPLOAD TARGET DATA <</p>
-                <input type="file" id="tgtFile" hidden accept="image/*" onchange="preview(this, 'tgtPrev')">
-                <img id="tgtPrev" class="preview">
-            </div>
+        <div style="margin: 20px 0;">
+            <label><input type="checkbox" id="single4k"> Force 4K Resolution</label>
         </div>
 
-        <div class="cyber-panel" style="display: flex; justify-content: space-between; align-items: center;">
-            <label style="cursor: pointer;">
-                <input type="checkbox" id="chk4k"> <span style="text-shadow: 0 0 5px white;">FORCE 4K RENDER</span>
-            </label>
-            <span style="color: var(--neon-cyan); font-size: 20px;">⚡</span>
-        </div>
+        <button class="action-btn" onclick="runSingleSwap()">INITIALIZE</button>
+        <div id="singleStatus" class="status-log"></div>
 
-        <button class="cyber-btn" onclick="runSwap()">INITIALIZE SWAP</button>
-
-        <div id="loader" class="loader-bar"><div class="loader-progress"></div></div>
-        <p id="statusMsg" class="status-text"></p>
-
-        <div id="resultArea">
-            <h3 style="color: var(--neon-cyan); letter-spacing: 3px;">// RENDER COMPLETE //</h3>
-            <img id="finalImage" src="">
+        <div id="singleResult" style="display:none; margin-top: 20px; text-align: center;">
+            <img id="finalSingle" style="max-width: 100%; border: 2px solid var(--neon-pink);">
             <br><br>
-            <a id="dlLink" href="#" download="Novus_Result.png">
-                <button class="cyber-btn" style="border-color: var(--neon-pink); color: var(--neon-pink);">DOWNLOAD DATA</button>
-            </a>
+            <a id="dlSingle" download="Novus_Result.png" style="color:#fff; text-decoration: none; border: 1px solid #fff; padding: 10px 20px;">DOWNLOAD</a>
         </div>
     </div>
 
+    <div id="batch-panel" class="cyber-container">
+        <h3 style="color: var(--neon-pink); border-bottom: 1px solid #333; padding-bottom: 10px;">>> MULTI-THREAD BATCHING</h3>
+        
+        <div class="upload-zone" onclick="document.getElementById('batchSrc').click()">
+            <p>1. UPLOAD MASTER FACE</p>
+            <input type="file" id="batchSrc" hidden accept="image/*" onchange="preview(this, 'batchSrcPrev')">
+            <img id="batchSrcPrev" class="preview-img">
+        </div>
+
+        <div class="upload-zone" onclick="document.getElementById('batchFiles').click()" style="border-color: var(--neon-pink);">
+            <p>2. UPLOAD MULTIPLE TARGETS (Select All)</p>
+            <input type="file" id="batchFiles" hidden accept="image/*" multiple onchange="updateBatchCount(this)">
+            <p id="batchCount" style="color: var(--neon-pink); margin-top: 5px;"></p>
+        </div>
+
+        <button class="action-btn" style="background: linear-gradient(90deg, #ff00ff, #aa00aa);" onclick="runBatchSwap()">RUN BATCH CYCLE</button>
+        
+        <div id="batchStatus" class="status-log"></div>
+        
+        <div id="batchGallery" class="batch-grid"></div>
+    </div>
+
     <script>
-        // *** CONNECTION SETTINGS ***
+        // --- CONFIGURATION ---
         const API_URL = "https://codewander-666-novusface-backend.hf.space/swap";
 
+        // --- UI LOGIC ---
+        function switchMode(mode) {
+            // Toggle Buttons
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Toggle Panels
+            document.getElementById('single-panel').classList.remove('active');
+            document.getElementById('batch-panel').classList.remove('active');
+
+            if(mode === 'single') document.getElementById('single-panel').classList.add('active');
+            if(mode === 'batch') document.getElementById('batch-panel').classList.add('active');
+        }
+
         function preview(input, id) {
-            const file = input.files[0];
-            if (file) {
+            if(input.files && input.files[0]) {
                 const img = document.getElementById(id);
-                img.src = URL.createObjectURL(file);
-                img.style.display = "block";
-                playSound('hover'); // Imaginary sound trigger
+                img.src = URL.createObjectURL(input.files[0]);
+                img.style.display = 'block';
             }
         }
 
-        async function runSwap() {
+        function updateBatchCount(input) {
+            document.getElementById('batchCount').innerText = `[ ${input.files.length} FILES SELECTED ]`;
+        }
+
+        // --- SINGLE SWAP LOGIC ---
+        async function runSingleSwap() {
             const src = document.getElementById('srcFile').files[0];
             const tgt = document.getElementById('tgtFile').files[0];
-            const status = document.getElementById('statusMsg');
-            const loader = document.getElementById('loader');
-            const resultArea = document.getElementById('resultArea');
+            const status = document.getElementById('singleStatus');
 
-            if (!src || !tgt) {
-                status.innerText = ">> ERROR: MISSING INPUT DATA <<";
-                status.style.color = "red";
-                return;
-            }
+            if(!src || !tgt) { status.innerText = ">> ERROR: MISSING DATA"; return; }
 
-            // UI UPDATES
-            resultArea.style.display = 'none';
-            loader.style.display = 'block';
-            status.innerText = ">> UPLOADING TO NEURAL NET... <<";
-            status.style.color = "#00ffcc";
-
-            // DATA PREP
+            status.innerText = ">> UPLOADING TO NEURAL NET...";
+            
             const formData = new FormData();
-            formData.append("source", src);
-            formData.append("target", tgt);
-            formData.append("enable_4k", document.getElementById('chk4k').checked);
-            formData.append("passes", 1);
-            formData.append("detail", 0.5);
+            formData.append('source', src);
+            formData.append('target', tgt);
+            formData.append('enable_4k', document.getElementById('single4k').checked);
+            formData.append('enhance', 1.0);
 
             try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    body: formData
-                });
-
-                if (response.ok) {
-                    status.innerText = ">> PROCESSING COMPLETE <<";
-                    const blob = await response.blob();
+                const res = await fetch(API_URL, { method: 'POST', body: formData });
+                if(res.ok) {
+                    const blob = await res.blob();
                     const url = URL.createObjectURL(blob);
-                    
-                    document.getElementById('finalImage').src = url;
-                    document.getElementById('dlLink').href = url;
-                    resultArea.style.display = 'block';
+                    document.getElementById('finalSingle').src = url;
+                    document.getElementById('dlSingle').href = url;
+                    document.getElementById('singleResult').style.display = 'block';
+                    status.innerText = ">> RENDER COMPLETE";
                 } else {
-                    const txt = await response.text();
-                    status.innerText = ">> CRITICAL SERVER ERROR: " + txt;
-                    status.style.color = "red";
+                    status.innerText = ">> SERVER ERROR";
                 }
-            } catch (error) {
-                status.innerText = ">> CONNECTION FAILED: BACKEND OFFLINE <<";
-                status.style.color = "red";
-            } finally {
-                loader.style.display = 'none';
+            } catch(e) { status.innerText = ">> CONNECTION FAILED"; }
+        }
+
+        // --- BATCH SWAP LOGIC (Client-Side Loop) ---
+        async function runBatchSwap() {
+            const src = document.getElementById('batchSrc').files[0];
+            const files = document.getElementById('batchFiles').files;
+            const status = document.getElementById('batchStatus');
+            const gallery = document.getElementById('batchGallery');
+
+            if(!src || files.length === 0) { status.innerText = ">> ERROR: MISSING BATCH DATA"; return; }
+
+            gallery.innerHTML = ""; // Clear old results
+            status.innerText = ">> STARTING BATCH CYCLE...";
+
+            // Loop through each file and send individually
+            for(let i=0; i<files.length; i++) {
+                status.innerText = `>> PROCESSING IMAGE ${i+1}/${files.length}...`;
+                
+                const formData = new FormData();
+                formData.append('source', src);
+                formData.append('target', files[i]);
+                formData.append('enable_4k', false); // Disable 4K for batch speed
+                formData.append('enhance', 1.0);
+
+                try {
+                    const res = await fetch(API_URL, { method: 'POST', body: formData });
+                    if(res.ok) {
+                        const blob = await res.blob();
+                        const url = URL.createObjectURL(blob);
+                        
+                        // Create Thumbnail
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.className = 'batch-item';
+                        
+                        // Make it downloadable on click
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `Batch_Result_${i}.png`;
+                        link.appendChild(img);
+                        
+                        gallery.appendChild(link);
+                    }
+                } catch(e) { console.log("Skipped failed image"); }
             }
+            status.innerText = ">> BATCH CYCLE COMPLETE";
         }
     </script>
 </body>
