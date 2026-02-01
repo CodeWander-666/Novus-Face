@@ -1,3 +1,35 @@
+# NOVUSFACE AI - GLOBAL ROBOTS DIRECTIVES
+# Target: 195 Countries | 50 Languages
+# Last Updated: 2026-02-02
+
 User-agent: *
 Allow: /
+Allow: /assets/
+Disallow: /private/
+Disallow: /admin/
+Disallow: /*?* # Block query parameters to save crawl budget
+Disallow: /cdn-cgi/
+
+# --- REGIONAL CRAWL RULES ---
+
+# Googlebot (Global)
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /us/
+Allow: /in/
+Allow: /jp/
+
+# Baidu (China)
+User-agent: Baiduspider
+Allow: /cn/
+Allow: /zh/
+Disallow: /en/
+
+# Yandex (Russia/East Europe)
+User-agent: Yandex
+Allow: /ru/
+Allow: /ua/
+Clean-param: session_id
+
+# --- SITEMAP INDEX ---
 Sitemap: https://novusfaceai.github.io/Novus-Face/sitemap.xml
