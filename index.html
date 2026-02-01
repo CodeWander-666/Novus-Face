@@ -3,265 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovusFace AI | Professional Online Face Swap & Neural Engine</title>
+    <title>NovusFace AI // GOD_MODE</title>
     
-    <meta name="description" content="Professional AI Face Swap Engine with 11D Neural Effects. Secure, high-accuracy portrait generation with Forensic Lock verification.">
+    <meta name="description" content="Immersive Neural Interface for Professional AI Face Swapping. God-Tier visuals. Zero Latency.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23000'/%3E%3Ctext x='50' y='70' font-family='Orbitron' font-weight='900' font-size='50' fill='%2300ffcc' text-anchor='middle'%3ENF%3C/text%3E%3C/svg%3E">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #00ffcc; --bg: #050505; --panel: rgba(10,10,10,0.92);
-            --border: 1px solid rgba(255,255,255,0.1); --radius: 12px;
-            --rotateX: 0deg; --rotateY: 0deg; --glow: 0 0 15px var(--primary);
+            --primary: #00ffcc; --bg: #020202; --panel: rgba(5,5,5,0.9);
+            --border: 1px solid rgba(0, 255, 204, 0.2); --radius: 0px;
+            --glow: 0 0 25px rgba(0, 255, 204, 0.3);
         }
 
-        /* 15 UNIQUE 11D THEMES */
-        [data-theme="cyber"] { --primary: #00f3ff; --bg: #05080a; --radius: 0px; }
-        [data-theme="desire"] { --primary: #ff0055; --bg: #120005; --radius: 40px; }
-        [data-theme="matrix"] { --primary: #00ff00; --bg: #000; --radius: 4px; }
-        [data-theme="royal"] { --primary: #d4af37; --bg: #0a0a0a; --radius: 20px; }
-        [data-theme="vapor"] { --primary: #ff00ff; --bg: #1a0033; --radius: 15px; }
-        [data-theme="glacier"] { --primary: #7df9ff; --bg: #f0faff; --panel: rgba(255,255,255,0.7); }
-        [data-theme="solar"] { --primary: #ffaa00; --bg: #101010; --radius: 0px; }
-        [data-theme="nebula"] { --primary: #9d00ff; --bg: #050010; --radius: 30px; }
-        [data-theme="forest"] { --primary: #00ff88; --bg: #000d05; --radius: 25px; }
-        [data-theme="deepsea"] { --primary: #0044ff; --bg: #000510; }
-        [data-theme="hazard"] { --primary: #ffee00; --bg: #0a0a0a; --radius: 0px; }
-        [data-theme="crimson"] { --primary: #dc143c; --bg: #0a0000; }
-        [data-theme="amber"] { --primary: #ffb000; --bg: #0d0a00; }
+        /* 15 NEURAL DIMENSIONS (GOD_MODE COLORS) */
+        [data-theme="cyber"] { --primary: #00f3ff; --bg: #000508; }
+        [data-theme="desire"] { --primary: #ff0055; --bg: #0a0002; --radius: 50px; }
+        [data-theme="matrix"] { --primary: #00ff00; --bg: #000; --radius: 0px; }
+        [data-theme="royal"] { --primary: #ffd700; --bg: #050500; --radius: 15px; }
+        [data-theme="glacier"] { --primary: #7df9ff; --bg: #f0ffff; --panel: rgba(255,255,255,0.1); }
         [data-theme="void"] { --primary: #ffffff; --bg: #000; --radius: 0px; }
-        [data-theme="nordic"] { --primary: #A3C1DA; --bg: #1A2634; }
 
-        body { background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; margin: 0; transition: 0.8s all; overflow-x: hidden; perspective: 1200px; }
-        #neuralCanvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.5; pointer-events: none; }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; 
+            margin: 0; overflow: hidden; height: 100vh;
+            perspective: 2000px;
+        }
 
-        /* SIDEBAR & PROFILE */
-        .sidebar { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: rgba(0,0,0,0.96); border-left: var(--border); transform: translateX(100%); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000; padding: 25px; backdrop-filter: blur(20px); overflow-y: auto; }
+        canvas#neural { position: fixed; top: 0; left: 0; z-index: -1; }
+
+        /* THE SIDEBAR COMMAND CENTER */
+        .sidebar { 
+            position: fixed; top: 0; right: 0; width: 420px; height: 100%; 
+            background: rgba(0,0,0,0.98); border-left: var(--border); 
+            transform: translateX(100%); transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2000; padding: 30px; backdrop-filter: blur(40px);
+            box-shadow: -20px 0 50px rgba(0,0,0,0.9);
+        }
         .sidebar.active { transform: translateX(0); }
-        .menu-btn { position: fixed; top: 25px; right: 25px; z-index: 1001; cursor: pointer; color: var(--primary); font-size: 1.8rem; background: none; border: none; }
-
-        /* UI CONTAINERS */
-        .container { max-width: 850px; margin: 60px auto; padding: 20px; transition: 0.1s transform ease-out; }
-        .glass { background: var(--panel); border: var(--border); border-radius: var(--radius); padding: 40px; box-shadow: var(--glow); position: relative; transform-style: preserve-3d; }
         
-        .nf-logo { border: 2px solid var(--primary); padding: 10px; display: inline-block; font-weight: 900; margin-bottom: 20px; box-shadow: var(--glow); text-transform: uppercase; }
+        .menu-trigger {
+            position: fixed; top: 30px; right: 30px; z-index: 2001;
+            cursor: pointer; padding: 10px; border: var(--border);
+            background: var(--panel); color: var(--primary); font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        .menu-trigger:hover { box-shadow: var(--glow); transform: scale(1.1); }
 
-        /* UPLOAD & CONTROLS */
-        .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
-        .u-box { border: 1px solid #333; height: 160px; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; background: rgba(0,0,0,0.4); transition: 0.3s; }
-        .u-box:hover { border-color: var(--primary); transform: translateZ(20px); }
-        .u-box img { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+        /* THE GOD PANEL */
+        .container { 
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            transform-style: preserve-3d;
+        }
+        
+        .god-panel { 
+            width: 850px; background: var(--panel); border: var(--border);
+            border-radius: var(--radius); padding: 50px;
+            box-shadow: var(--glow), inset 0 0 50px rgba(0, 255, 204, 0.05);
+            backdrop-filter: blur(20px); transition: 0.1s linear;
+        }
 
-        .btn-pro { width: 100%; padding: 1.5rem; background: var(--primary); color: #000; border: none; border-radius: var(--radius); font-weight: 900; cursor: pointer; letter-spacing: 5px; text-transform: uppercase; transition: 0.3s; }
-        .btn-pro:hover { letter-spacing: 8px; filter: brightness(1.2); }
+        .nf-header { text-align: center; margin-bottom: 40px; }
+        .glitch-text { 
+            font-size: 2.5rem; font-weight: 900; letter-spacing: 15px;
+            color: var(--primary); text-shadow: var(--glow);
+            position: relative; display: inline-block;
+        }
 
-        /* VAULT & THEME GRID */
-        .vault-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .vault-item { aspect-ratio: 1/1; border-radius: 8px; border: 1px solid #222; overflow: hidden; cursor: pointer; }
-        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-        .t-btn { padding: 10px 5px; font-size: 8px; border: 1px solid #333; text-align: center; cursor: pointer; border-radius: 4px; font-weight: 900; background: rgba(255,255,255,0.02); }
-        .t-btn:hover { border-color: var(--primary); color: var(--primary); }
+        /* BIO-REACTIVE UPLOAD BLOCKS */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+        .u-block {
+            height: 200px; border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02); cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .u-block:hover { 
+            border-color: var(--primary); background: rgba(0, 255, 204, 0.05);
+            transform: translateZ(50px);
+        }
+        .u-block p { font-size: 0.7rem; letter-spacing: 4px; color: #555; transition: 0.3s; }
+        .u-block:hover p { color: var(--primary); }
+        .u-block img { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: 0.5s; }
+        .u-block.ready img { opacity: 1; }
+
+        /* ACTION BUTTONS */
+        .btn-god {
+            width: 100%; padding: 20px; background: var(--primary); color: #000;
+            border: none; font-family: 'Orbitron'; font-weight: 900; font-size: 1rem;
+            letter-spacing: 8px; cursor: pointer; transition: 0.4s;
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+        }
+        .btn-god:hover { 
+            letter-spacing: 12px; filter: brightness(1.2); 
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        .face-selector-strip {
+            display: flex; gap: 15px; overflow-x: auto; padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;
+        }
+        .face-node {
+            width: 70px; height: 70px; border-radius: 50%; border: 3px solid transparent;
+            cursor: pointer; transition: 0.3s; background-size: cover; flex-shrink: 0;
+        }
+        .face-node.active { border-color: var(--primary); box-shadow: var(--glow); transform: scale(1.1); }
+
+        /* VAULT & THEME OPTIONS */
+        .vault-item { 
+            aspect-ratio: 1/1; border: 1px solid #111; cursor: pointer; 
+            transition: 0.3s; filter: grayscale(1);
+        }
+        .vault-item:hover { filter: grayscale(0); border-color: var(--primary); }
+
+        #status-log { font-family: 'JetBrains Mono'; font-size: 10px; color: #444; margin-top: 20px; text-align: center; }
     </style>
 </head>
 <body data-theme="cyber">
 
-<canvas id="neuralCanvas"></canvas>
-<button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('active')">▤</button>
+<canvas id="neural"></canvas>
+<div class="menu-trigger" onclick="document.querySelector('.sidebar').classList.toggle('active')">▤</div>
 
-<div class="sidebar" id="sidebar">
-    <div class="nf-logo">NF</div>
-    <p style="font-size:10px; color:#555; letter-spacing: 2px;">OPERATOR_PROFILE</p>
-    <input type="text" id="opName" style="background:none; border:none; color:var(--primary); font-size:1.2rem; outline:none; border-bottom: 1px dashed var(--primary); width: 100%;" value="NIKHIL_SINGH" onchange="saveName()">
+<div class="sidebar">
+    <h2 style="font-size: 1rem; letter-spacing: 5px; color: var(--primary);">SYSTEM_PROFILE</h2>
+    <input type="text" id="opName" style="background:none; border:none; color:#fff; font-size:1.5rem; font-family:'Orbitron'; outline:none; border-bottom:1px solid #333; width:100%;" value="GOD_OPERATOR">
+    
+    <div style="margin-top: 40px;">
+        <p style="font-size: 10px; color: #444;">IDENTITY_VAULT</p>
+        <div id="vault" class="vault-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:5px;"></div>
+    </div>
 
-    <p style="font-size:10px; color:#555; margin-top:30px; letter-spacing: 2px;">IDENTITY_VAULT (SOURCE FACES)</p>
-    <div id="vault" class="vault-grid"></div>
-
-    <p style="font-size:10px; color:#555; margin-top:30px; letter-spacing: 2px;">NEURAL_HISTORY (PREVIOUS SWAPS)</p>
-    <div id="history" class="vault-grid"></div>
-
-    <p style="font-size:10px; color:#555; margin-top:30px; letter-spacing: 2px;">11D_AESTHETIC_MATRIX</p>
-    <div class="theme-grid" id="themeList"></div>
+    <div style="margin-top: 40px;">
+        <p style="font-size: 10px; color: #444;">DIMENSION_MATRIX</p>
+        <div id="themes" style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;"></div>
+    </div>
 </div>
 
-<div class="container" id="mainUI">
-    <div class="glass">
-        <center>
-            <div class="nf-logo">NF</div>
-            <h1 style="font-size: 1.6rem; letter-spacing: 10px; color: var(--primary); margin: 0;">NOVUSFACE AI</h1>
-            <p id="status" style="font-size: 0.6rem; color: #666; font-family:'JetBrains Mono'; margin-top: 10px;">>> STANDBY_FOR_NEURAL_LINK</p>
-        </center>
+<div class="container">
+    <div class="god-panel" id="panel">
+        <div class="nf-header">
+            <div class="glitch-text" id="logo">NOVUSFACE</div>
+            <p id="status-log">>> INITIALIZING NEURAL CORE...</p>
+        </div>
 
-        <div class="upload-grid">
-            <div class="u-box" onclick="document.getElementById('srcIn').click()">
-                <p style="font-size: 0.7rem; letter-spacing: 2px;">1. UPLOAD SOURCE FACE</p>
-                <input type="file" id="srcIn" hidden onchange="handleSrcPreview(this)">
-                <img id="sp" style="display:none">
+        <div class="grid">
+            <div class="u-block" onclick="document.getElementById('srcIn').click()">
+                <p>SOURCE_IDENTITY</p>
+                <input type="file" id="srcIn" hidden onchange="handleSrc(this)">
+                <img id="sp">
             </div>
-            <div class="u-box" onclick="document.getElementById('tgtIn').click()">
-                <p style="font-size: 0.7rem; letter-spacing: 2px;">2. UPLOAD TARGET MEDIA</p>
-                <input type="file" id="tgtIn" hidden onchange="handleTgtUpload(this)">
-                <img id="tp" style="display:none">
+            <div class="u-block" onclick="document.getElementById('tgtIn').click()">
+                <p>TARGET_MATRIX</p>
+                <input type="file" id="tgtIn" hidden onchange="handleTgt(this)">
+                <img id="tp">
             </div>
         </div>
 
-        <div id="facePick" style="display:none; margin-bottom: 25px; border-top: 1px solid #222; padding-top: 20px;">
-            <p style="font-size: 10px; color: #555; letter-spacing: 1px;">SELECT TARGET FACE INDEX:</p>
-            <div id="faceList" style="display:flex; gap:12px; overflow-x:auto; padding: 10px 0;"></div>
+        <div id="selection-zone" style="display:none;">
+            <p style="font-size: 9px; color: #555;">NEURAL_MAPPING_TARGETS:</p>
+            <div id="faceStrip" class="face-selector-strip"></div>
         </div>
 
-        <button class="btn-pro" onclick="executeSwap()">GENERATE FACE SWAP</button>
+        <button class="btn-god" onclick="startTheSwap()">GENERATE NEURAL SWAP</button>
 
-        <div id="res" style="display:none; margin-top:40px; text-align:center;">
-            <div style="display: inline-block; padding: 10px; background: #000; border: 1px solid var(--primary); border-radius: var(--radius);">
-                <img id="ri" style="max-width:100%; border-radius: calc(var(--radius) - 4px);">
+        <div id="result-view" style="display:none; margin-top: 40px; text-align: center;">
+            <div style="padding: 15px; border: 1px solid var(--primary); display: inline-block;">
+                <img id="ri" style="max-width: 100%; height: auto; display: block;">
             </div>
             <br>
-            <a id="db" class="btn-pro" style="display:inline-block; margin-top:15px; text-decoration:none; width:auto; padding:15px 40px;" download="novusface_ai_result.png">DOWNLOAD_MEDIA</a>
+            <a id="db" class="btn-god" style="display:inline-block; margin-top: 20px; text-decoration: none; width: auto; padding: 15px 50px;" download="god_mode_swap.png">EXTRACT_MEDIA</a>
         </div>
     </div>
 </div>
 
 <script>
     const API = "https://codewander-666-novusface-backend.hf.space";
-    let selectedFaceId = 0, db;
+    let activeFace = 0, db;
 
-    // --- RECTIVE NEURAL BACKGROUND ENGINE ---
-    const canvas = document.getElementById('neuralCanvas');
+    // --- GOD MODE BACKGROUND ENGINE ---
+    const canvas = document.getElementById('neural');
     const ctx = canvas.getContext('2d');
+    let pts = [];
+
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.onresize = resize; resize();
-    
-    let particles = [];
-    for(let i=0; i<70; i++) particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:Math.random()*0.6-0.3, vy:Math.random()*0.6-0.3});
 
-    function animate() {
+    for(let i=0; i<80; i++) pts.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:Math.random()*1-0.5, vy:Math.random()*1-0.5, b:Math.random()*100});
+
+    function render() {
         ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg');
         ctx.fillRect(0,0,canvas.width,canvas.height);
         ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--primary');
         ctx.lineWidth = 0.5;
-        particles.forEach(p => {
+
+        pts.forEach(p => {
             p.x += p.vx; p.y += p.vy;
-            if(p.x<0 || p.x>canvas.width) p.vx*=-1; if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-            ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
-            particles.forEach(p2 => {
+            if(p.x<0 || p.x>canvas.width) p.vx*=-1;
+            if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+            
+            p.b++;
+            if(p.b > 200) { // Neural Pulse Effect
+                ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2); 
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--primary');
+                ctx.fill(); p.b = 0;
+            }
+
+            pts.forEach(p2 => {
                 let d = Math.hypot(p.x-p2.x, p.y-p2.y);
-                if(d<100) { ctx.globalAlpha = 1 - (d/100); ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
+                if(d < 150) {
+                    ctx.globalAlpha = 1 - (d/150);
+                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                }
             });
         });
         ctx.globalAlpha = 1;
-        requestAnimationFrame(animate);
+        requestAnimationFrame(render);
     }
-    animate();
+    render();
 
-    // --- PERSISTENT DATA (INDEXEDDB) ---
-    const request = indexedDB.open("NovusFaceDB", 1);
-    request.onupgradeneeded = (e) => {
-        let d = e.target.result;
-        d.createObjectStore("vault", { keyPath: "id", autoIncrement: true });
-        d.createObjectStore("history", { keyPath: "id", autoIncrement: true });
-    };
-    request.onsuccess = (e) => { db = e.target.result; loadVault(); loadHistory(); };
+    // --- HYBRID PERSISTENCE ---
+    const request = indexedDB.open("NovusGod", 1);
+    request.onupgradeneeded = (e) => e.target.result.createObjectStore("vault", {keyPath:"id", autoIncrement:true});
+    request.onsuccess = (e) => { db = e.target.result; updateVault(); };
 
-    function saveToStore(storeName, blob) {
-        db.transaction(storeName, "readwrite").objectStore(storeName).add({ blob, time: new Date().getTime() });
-        storeName === "vault" ? loadVault() : loadHistory();
+    function saveToVault(blob) {
+        db.transaction("vault","readwrite").objectStore("vault").add({blob, date: Date.now()});
+        updateVault();
     }
 
-    function loadVault() {
+    function updateVault() {
         const v = document.getElementById('vault'); v.innerHTML = "";
         db.transaction("vault").objectStore("vault").openCursor(null, "prev").onsuccess = (e) => {
             const c = e.target.result;
             if(c) {
                 const u = URL.createObjectURL(c.value.blob);
-                const div = document.createElement('div'); div.className="vault-item"; div.innerHTML=`<img src="${u}" style="width:100%; height:100%; object-fit:cover">`;
-                div.onclick = () => { document.getElementById('sp').src=u; document.getElementById('sp').style.display='block'; window.currentSrc = c.value.blob; };
-                v.appendChild(div); c.continue();
+                const img = document.createElement('div'); img.className="vault-item";
+                img.innerHTML = `<img src="${u}" style="width:100%; height:100%; object-fit:cover;">`;
+                img.onclick = () => { document.getElementById('sp').src=u; document.getElementById('sp').parentNode.classList.add('ready'); window.currentSource = c.value.blob; };
+                v.appendChild(img); c.continue();
             }
         };
     }
 
-    function loadHistory() {
-        const h = document.getElementById('history'); h.innerHTML = "";
-        db.transaction("history").objectStore("history").openCursor(null, "prev").onsuccess = (e) => {
-            const c = e.target.result;
-            if(c) {
-                const u = URL.createObjectURL(c.value.blob);
-                const div = document.createElement('div'); div.className="vault-item"; div.innerHTML=`<img src="${u}" style="width:100%; height:100%; object-fit:cover">`;
-                div.onclick = () => { document.getElementById('ri').src=u; document.getElementById('db').href=u; document.getElementById('res').style.display='block'; };
-                h.appendChild(div); c.continue();
-            }
-        };
-    }
-
-    // --- APP CORE LOGIC ---
-    function saveName() { localStorage.setItem('nvName', document.getElementById('opName').value); }
-    function setTheme(t) { document.body.setAttribute('data-theme', t); }
-
-    function handleSrcPreview(input) {
-        if(input.files[0]) {
-            const u = URL.createObjectURL(input.files[0]);
+    // --- CORE LOGIC ---
+    function handleSrc(i) {
+        if(i.files[0]) {
+            const u = URL.createObjectURL(i.files[0]);
             document.getElementById('sp').src = u;
-            document.getElementById('sp').style.display = 'block';
-            window.currentSrc = input.files[0];
-            saveToStore('vault', input.files[0]);
+            document.getElementById('sp').parentNode.classList.add('ready');
+            window.currentSource = i.files[0];
+            saveToVault(i.files[0]);
         }
     }
 
-    async function handleTgtUpload(input) {
-        const file = input.files[0];
-        document.getElementById('tp').src = URL.createObjectURL(file);
-        document.getElementById('tp').style.display = 'block';
-        document.getElementById('status').innerText = ">> SCANNING_TARGET_NODES...";
+    async function handleTgt(i) {
+        const f = i.files[0];
+        document.getElementById('tp').src = URL.createObjectURL(f);
+        document.getElementById('tp').parentNode.classList.add('ready');
+        document.getElementById('status-log').innerText = ">> SCANNING BIOMETRIC NODES...";
         
-        const fd = new FormData(); fd.append('target', file);
-        try {
-            const res = await fetch(`${API}/detect-target-faces`, { method: 'POST', body: fd });
-            const data = await res.json();
-            const list = document.getElementById('faceList'); list.innerHTML = "";
-            document.getElementById('facePick').style.display = 'block';
-            data.faces.forEach((f, i) => {
-                const div = document.createElement('div'); div.style="width:55px; height:55px; border-radius:50%; border:2px solid transparent; flex-shrink:0; background-size:cover;";
-                div.style.backgroundImage = `url(${f.thumbnail})`;
-                if(i===0) div.style.borderColor = "var(--primary)";
-                div.onclick = () => { selectedFaceId = f.face_id; document.querySelectorAll('#faceList div').forEach(x=>x.style.borderColor="transparent"); div.style.borderColor="var(--primary)"; };
-                list.appendChild(div);
-            });
-            selectedFaceId = data.faces[0].face_id;
-            document.getElementById('status').innerText = ">> MAPPING_COMPLETE";
-        } catch(e) { document.getElementById('status').innerText = ">> ERROR_SCANNING"; }
+        const fd = new FormData(); fd.append('target', f);
+        const r = await fetch(`${API}/detect-target-faces`, {method:'POST', body:fd});
+        const d = await r.json();
+        
+        const strip = document.getElementById('faceStrip'); strip.innerHTML = "";
+        document.getElementById('selection-zone').style.display = "block";
+        
+        d.faces.forEach((face, idx) => {
+            const node = document.createElement('div');
+            node.className = `face-node ${idx===0?'active':''}`;
+            node.style.backgroundImage = `url(${face.thumbnail})`;
+            node.onclick = () => {
+                activeFace = face.face_id;
+                document.querySelectorAll('.face-node').forEach(n=>n.classList.remove('active'));
+                node.classList.add('active');
+            };
+            strip.appendChild(node);
+        });
+        activeFace = d.faces[0].face_id;
+        document.getElementById('status-log').innerText = ">> NODES MAPPED. READY FOR SWAP.";
     }
 
-    async function executeSwap() {
-        const src = window.currentSrc, tgt = document.getElementById('tgtIn').files[0];
-        if(!src || !tgt) return alert("Please upload Source and Target first.");
-        document.getElementById('status').innerText = ">> INJECTING_NEURAL_DNA...";
+    async function startTheSwap() {
+        const s = window.currentSource, t = document.getElementById('tgtIn').files[0];
+        if(!s || !t) return alert("NO IDENTITY DETECTED.");
+        document.getElementById('status-log').innerText = ">> INJECTING NEURAL STRAND...";
         
-        const fd = new FormData(); fd.append('source', src); fd.append('target', tgt); fd.append('target_face_id', selectedFaceId);
+        const fd = new FormData(); fd.append('source', s); fd.append('target', t); fd.append('target_face_id', activeFace);
         try {
-            const res = await fetch(`${API}/swap`, { method: 'POST', body: fd });
-            const blob = await res.blob(); const url = URL.createObjectURL(blob);
-            document.getElementById('ri').src=url; document.getElementById('db').href=url;
-            document.getElementById('res').style.display='block';
-            document.getElementById('status').innerText = ">> SUCCESSFUL_SWAP";
-            saveToStore('history', blob);
-        } catch(e) { document.getElementById('status').innerText = ">> FAILED_PROCESS"; }
+            const res = await fetch(`${API}/swap`, {method:'POST', body:fd});
+            const b = await res.blob(); const u = URL.createObjectURL(b);
+            document.getElementById('ri').src = u; document.getElementById('db').href = u;
+            document.getElementById('result-view').style.display = "block";
+            document.getElementById('status-log').innerText = ">> INJECTION SUCCESSFUL.";
+        } catch(e) { document.getElementById('status-log').innerText = ">> SYSTEM CRITICAL ERROR."; }
     }
 
-    // INIT THEMES
-    const themes = ['cyber','desire','matrix','royal','glacier','solar','vapor','nebula','forest','void','amber','crimson','nordic','hazard','deepsea'];
-    const tl = document.getElementById('themeList');
-    themes.forEach(t => { tl.innerHTML += `<div class="t-btn" onclick="setTheme('${t}')">${t.toUpperCase()}</div>`; });
-
-    // 3D PARALLAX EFFECT
-    document.addEventListener('mousemove', (e) => {
-        let x = (window.innerWidth / 2 - e.pageX) / 45;
-        let y = (window.innerHeight / 2 - e.pageY) / 45;
-        document.querySelector('.glass').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    // DIMENSION MATRIX (THEMES)
+    const ths = ['cyber','desire','matrix','royal','glacier','void'];
+    ths.forEach(t => {
+        const b = document.createElement('div'); b.className = "t-btn";
+        b.style = "padding:10px; border:1px solid #111; cursor:pointer; font-size:9px; text-align:center;";
+        b.innerText = t.toUpperCase();
+        b.onclick = () => document.body.setAttribute('data-theme', t);
+        document.getElementById('themes').appendChild(b);
     });
 
-    window.onload = () => { if(localStorage.getItem('nvName')) document.getElementById('opName').value = localStorage.getItem('nvName'); };
+    // 3D MOTION SHADER
+    document.addEventListener('mousemove', (e) => {
+        let x = (window.innerWidth / 2 - e.pageX) / 50;
+        let y = (window.innerHeight / 2 - e.pageY) / 50;
+        document.getElementById('panel').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
 </script>
 </body>
 </html>
