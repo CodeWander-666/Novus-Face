@@ -3,268 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVUSFACE // PRO INFINITY</title>
+    <title>NF // NOVUSFACE PRO</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23000'/%3E%3Ctext x='50' y='70' font-family='Orbitron' font-weight='900' font-size='50' fill='%2300ffcc' text-anchor='middle'%3ENF%3C/text%3E%3C/svg%3E">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #00ffcc; --bg: #050505; --panel: rgba(15, 15, 20, 0.98);
-            --border: 1px solid rgba(255, 255, 255, 0.1); --radius: 14px;
+            --primary: #00ffcc; --bg: #050505; --panel: rgba(10,10,10,0.9);
+            --border: 1px solid rgba(255,255,255,0.1); --radius: 12px; --skew: 0deg;
+            --font: 'Orbitron'; --glow: 0 0 10px var(--primary);
         }
 
-        /* --- 15 THEME DEFINITIONS --- */
-        [data-theme="origin"] { --primary: #00ffcc; --bg: #050505; }
-        [data-theme="cyber"] { --primary: #00f3ff; --bg: #0b1015; }
-        [data-theme="blood"] { --primary: #ff3333; --bg: #110505; }
-        [data-theme="matrix"] { --primary: #00ff00; --bg: #000000; }
-        [data-theme="amber"] { --primary: #ffb000; --bg: #1a1200; }
-        [data-theme="vapor"] { --primary: #ff00ff; --bg: #1a0033; }
-        [data-theme="royal"] { --primary: #d4af37; --bg: #0a0a0a; }
-        [data-theme="forest"] { --primary: #2ecc71; --bg: #0a140f; }
-        [data-theme="glacier"] { --primary: #e0ffff; --bg: #101520; }
-        [data-theme="solar"] { --primary: #ffaa00; --bg: #1b1b1b; }
-        [data-theme="obsidian"] { --primary: #ffffff; --bg: #000000; }
-        [data-theme="nebula"] { --primary: #9d00ff; --bg: #0d001a; }
-        [data-theme="crimson"] { --primary: #dc143c; --bg: #120000; }
-        [data-theme="oasis"] { --primary: #48D1CC; --bg: #0F2027; }
-        [data-theme="void"] { --primary: #555555; --bg: #000000; }
+        /* --- 15 UNIQUE ARCHITECTURES --- */
+        [data-theme="cyber"] { --primary: #00f3ff; --bg: #080c10; --radius: 0px; --skew: -2deg; --font: 'Orbitron'; }
+        [data-theme="blood"] { --primary: #ff0033; --bg: #0f0505; --radius: 40px; --skew: 0deg; --font: 'Inter'; }
+        [data-theme="matrix"] { --primary: #00ff00; --bg: #000; --radius: 4px; --skew: 0deg; --font: 'JetBrains Mono'; }
+        [data-theme="royal"] { --primary: #d4af37; --bg: #0a0a0a; --radius: 50% 20% / 10% 40%; --skew: 1deg; --font: 'Georgia'; }
+        [data-theme="vapor"] { --primary: #ff00ff; --bg: #1a0033; --radius: 20px; --skew: 5deg; --font: 'Orbitron'; }
+        [data-theme="glacier"] { --primary: #7df9ff; --bg: #f0faff; --panel: rgba(255,255,255,0.8); --border: 1px solid #7df9ff; --radius: 15px; }
+        [data-theme="solar"] { --primary: #ffaa00; --bg: #1b1b1b; --radius: 0px; --skew: 0deg; --border: 4px solid var(--primary); }
+        [data-theme="forest"] { --primary: #2ecc71; --bg: #0a140f; --radius: 30px; --font: 'Inter'; }
+        [data-theme="obsidian"] { --primary: #fff; --bg: #000; --radius: 0px; --glow: none; }
+        [data-theme="nebula"] { --primary: #9d00ff; --bg: #0d001a; --radius: 10px; --skew: -5deg; }
+        [data-theme="crimson"] { --primary: #dc143c; --bg: #120000; --radius: 0px; }
+        [data-theme="oasis"] { --primary: #48D1CC; --bg: #0F2027; --radius: 25px; }
+        [data-theme="void"] { --primary: #333; --bg: #000; --radius: 0px; }
+        [data-theme="amber"] { --primary: #ffb000; --bg: #1a1200; --radius: 2px; --font: 'JetBrains Mono'; }
+        [data-theme="nordic"] { --primary: #A3C1DA; --bg: #1A2634; --radius: 12px; }
 
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; transition: 0.5s ease; }
+        body { background: var(--bg); color: #fff; font-family: var(--font), sans-serif; margin: 0; transition: 0.6s all cubic-bezier(0.23, 1, 0.32, 1); overflow-x: hidden; }
         
+        /* --- BRANDING --- */
+        .nf-logo { font-family: 'Orbitron'; font-weight: 900; color: var(--primary); font-size: 1.5rem; letter-spacing: -2px; border: 2px solid var(--primary); padding: 5px 10px; display: inline-block; margin-bottom: 10px; box-shadow: var(--glow); }
+
         /* --- SIDEBAR --- */
-        .sidebar { 
-            position: fixed; top: 0; right: 0; width: 380px; height: 100%; 
-            background: #080808; border-left: var(--border); z-index: 100;
-            transform: translateX(100%); transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 2rem; overflow-y: auto;
-        }
-        .sidebar.active { transform: translateX(0); box-shadow: -20px 0 60px rgba(0,0,0,0.8); }
-        .menu-btn { position: fixed; top: 25px; right: 25px; z-index: 101; cursor: pointer; background: var(--panel); border: var(--border); padding: 12px; border-radius: 50%; color: var(--primary); }
-
-        /* --- USER DATA & HISTORY --- */
-        .section-label { font-size: 10px; color: #555; letter-spacing: 2px; margin: 20px 0 10px 0; display: block; }
-        .name-input { background: none; border: none; color: var(--primary); font-family: 'Orbitron'; font-size: 1.1rem; width: 100%; outline: none; border-bottom: 1px dashed transparent; }
-        .name-input:focus { border-bottom-color: var(--primary); }
-        
-        .history-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .history-card { aspect-ratio: 1/1; border-radius: 8px; border: 1px solid #222; overflow: hidden; cursor: pointer; position: relative; }
-        .history-card img { width: 100%; height: 100%; object-fit: cover; }
-        .history-card:hover { border-color: var(--primary); }
-        .history-card .date-tag { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.7); font-size: 8px; padding: 2px; text-align: center; color: var(--primary); }
+        .sidebar { position: fixed; top: 0; right: 0; width: 350px; height: 100%; background: #000; border-left: var(--border); transform: translateX(100%); transition: 0.5s; z-index: 100; padding: 20px; overflow-y: auto; }
+        .sidebar.active { transform: translateX(0); }
+        .menu-btn { position: fixed; top: 20px; right: 20px; z-index: 101; cursor: pointer; color: var(--primary); font-size: 2rem; background: none; border: none; }
 
         /* --- MAIN UI --- */
-        .dashboard { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .glass { background: var(--panel); border: var(--border); border-radius: var(--radius); padding: 40px; backdrop-filter: blur(15px); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-        .logo h1 { font-family: 'Orbitron'; letter-spacing: 10px; color: var(--primary); text-align: center; margin: 0; font-size: 2.5rem; text-shadow: 0 0 20px rgba(0, 255, 204, 0.3); }
+        .container { max-width: 800px; margin: 50px auto; padding: 20px; transform: skewY(var(--skew)); }
+        .glass { background: var(--panel); border: var(--border); border-radius: var(--radius); padding: 40px; box-shadow: var(--glow); backdrop-filter: blur(10px); }
         
-        .upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
-        .upload-box { border: 2px dashed #222; height: 160px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; background: #0a0a0a; transition: 0.3s; }
-        .upload-box:hover { border-color: var(--primary); }
-        .preview { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 2; }
+        .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
+        .box { border: 2px dashed #333; height: 140px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; background: rgba(0,0,0,0.3); }
+        .box img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
 
-        .target-face { width: 70px; height: 70px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; background-size: cover; flex-shrink: 0; }
-        .target-face.selected { border-color: var(--primary); box-shadow: 0 0 15px var(--primary); transform: scale(1.1); }
+        .target-thumb { width: 60px; height: 60px; border-radius: var(--radius); border: 2px solid transparent; cursor: pointer; flex-shrink: 0; background-size: cover; }
+        .target-thumb.selected { border-color: var(--primary); box-shadow: var(--glow); }
 
-        .btn-pro { width: 100%; padding: 1.2rem; background: var(--primary); color: #000; border: none; border-radius: 10px; font-family: 'Orbitron'; font-weight: 900; cursor: pointer; margin-top: 15px; letter-spacing: 2px; transition: 0.3s; }
-        .btn-pro:hover { filter: brightness(1.2); transform: translateY(-2px); }
-
-        .result-stage { display: none; margin-top: 30px; text-align: center; }
-        .final-img { max-width: 100%; border-radius: 12px; border: var(--border); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        .btn-exe { width: 100%; padding: 1.2rem; background: var(--primary); color: #000; border: none; border-radius: var(--radius); font-weight: 900; cursor: pointer; letter-spacing: 3px; font-family: var(--font); }
         
-        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-        .theme-opt { padding: 8px; font-size: 9px; font-weight: 800; border: 1px solid #333; text-align: center; cursor: pointer; border-radius: 4px; }
-        .theme-opt:hover { border-color: var(--primary); }
+        /* --- HISTORY --- */
+        .history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .history-item { aspect-ratio: 1/1; border-radius: var(--radius); border: 1px solid #222; overflow: hidden; cursor: pointer; }
+        .history-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .t-chip { padding: 8px; font-size: 8px; text-align: center; border: 1px solid #333; cursor: pointer; border-radius: var(--radius); }
     </style>
 </head>
-<body data-theme="origin">
+<body data-theme="cyber">
 
-<div class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('active')">☰</div>
+<button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('active')">▤</button>
 
 <div class="sidebar" id="sidebar">
-    <span class="section-label">OPERATOR_IDENTITY</span>
-    <input type="text" id="opName" class="name-input" value="USER_666" onchange="saveName()">
+    <div class="nf-logo">NF</div>
+    <p style="font-size: 10px; color: #555;">OPERATOR: <input type="text" id="opName" style="background:none; border:none; color:var(--primary); outline:none;" value="NIKHIL_666" onchange="localStorage.setItem('nv_name', this.value)"></p>
+    
+    <p style="font-size: 10px; color: #555; margin-top: 20px;">NEURAL_VAULT</p>
+    <div id="history" class="history-grid"></div>
 
-    <span class="section-label">NEURAL_HISTORY_LOG</span>
-    <button onclick="clearHistory()" style="background:none; border:none; color:#f33; font-size:9px; cursor:pointer;">[ WIPE DATA ]</button>
-    <div id="historyGrid" class="history-grid">
-        </div>
-
-    <span class="section-label">VISUAL_MATRIX_CONTROL</span>
+    <p style="font-size: 10px; color: #555; margin-top: 20px;">GEOMETRY_MATRIX</p>
     <div class="theme-grid">
-        <div class="theme-opt" onclick="setTheme('origin')">ORIGIN</div>
-        <div class="theme-opt" onclick="setTheme('cyber')">CYBER</div>
-        <div class="theme-opt" onclick="setTheme('blood')">BLOOD</div>
-        <div class="theme-opt" onclick="setTheme('matrix')">MATRIX</div>
-        <div class="theme-opt" onclick="setTheme('royal')">ROYAL</div>
-        <div class="theme-opt" onclick="setTheme('amber')">AMBER</div>
-        <div class="theme-opt" onclick="setTheme('vapor')">VAPOR</div>
-        <div class="theme-opt" onclick="setTheme('solar')">SOLAR</div>
-        <div class="theme-opt" onclick="setTheme('obsidian')">WHITE</div>
-        <div class="theme-opt" onclick="setTheme('nebula')">NEBULA</div>
-        <div class="theme-opt" onclick="setTheme('crimson')">CRIMSON</div>
-        <div class="theme-opt" onclick="setTheme('forest')">FOREST</div>
-        <div class="theme-opt" onclick="setTheme('glacier')">GLACIER</div>
-        <div class="theme-opt" onclick="setTheme('oasis')">OASIS</div>
-        <div class="theme-opt" onclick="setTheme('void')">VOID</div>
+        <div class="t-chip" onclick="setT('origin')">ORIGIN</div>
+        <div class="t-chip" onclick="setT('cyber')">CYBER</div>
+        <div class="t-chip" onclick="setT('blood')">BLOOD</div>
+        <div class="t-chip" onclick="setT('matrix')">MATRIX</div>
+        <div class="t-chip" onclick="setT('royal')">ROYAL</div>
+        <div class="t-chip" onclick="setT('vapor')">VAPOR</div>
+        <div class="t-chip" onclick="setT('solar')">SOLAR</div>
+        <div class="t-chip" onclick="setT('forest')">FOREST</div>
+        <div class="t-chip" onclick="setT('glacier')">GLACIER</div>
+        <div class="t-chip" onclick="setT('obsidian')">VOID</div>
+        <div class="t-chip" onclick="setT('nebula')">NEBULA</div>
+        <div class="t-chip" onclick="setT('crimson')">CRIMSON</div>
+        <div class="t-chip" onclick="setT('oasis')">OASIS</div>
+        <div class="t-chip" onclick="setT('amber')">AMBER</div>
+        <div class="t-chip" onclick="setT('nordic')">NORDIC</div>
     </div>
 </div>
 
-<div class="dashboard">
+<div class="container">
     <div class="glass">
-        <div class="logo">
-            <h1>NOVUSFACE</h1>
-            <p id="status" style="text-align:center; font-family:'JetBrains Mono'; font-size:9px; color:var(--primary);">>> IDLE_STANDBY</p>
-        </div>
+        <center>
+            <div class="nf-logo">NF</div>
+            <h2 id="status" style="font-size: 0.6rem; color: var(--primary); letter-spacing: 5px;">>> SYSTEM_IDLE</h2>
+        </center>
 
-        <div class="upload-row">
-            <div class="upload-box" onclick="document.getElementById('srcIn').click()">
-                <p>SRC_IDENTITY</p>
-                <input type="file" id="srcIn" hidden onchange="handleSrc(this)">
-                <img id="srcPrev" class="preview" style="display:none">
+        <div class="upload-grid">
+            <div class="box" onclick="document.getElementById('si').click()">
+                <span>SRC_ID</span>
+                <input type="file" id="si" hidden onchange="p(this, 'sp')">
+                <img id="sp" style="display:none">
             </div>
-            <div class="upload-box" onclick="document.getElementById('tgtIn').click()">
-                <p>TGT_MEDIA</p>
-                <input type="file" id="tgtIn" hidden onchange="handleTgt(this)">
-                <img id="tgtPrev" class="preview" style="display:none">
+            <div class="box" onclick="document.getElementById('ti').click()">
+                <span>TGT_MEDIA</span>
+                <input type="file" id="ti" hidden onchange="hT(this)">
+                <img id="tp" style="display:none">
             </div>
         </div>
 
-        <div id="faceTargetArea" style="display:none;">
-            <p style="font-size:10px; color:#555;">MAP_FACE_TARGET:</p>
-            <div id="faceScroll" style="display:flex; gap:10px; overflow-x:auto; padding:10px 0;"></div>
+        <div id="faceSelection" style="display:none; margin-bottom: 20px;">
+            <p style="font-size: 10px; color: #555;">SELECT_TARGET_NODE:</p>
+            <div id="faceList" style="display:flex; gap:10px; overflow-x:auto;"></div>
         </div>
 
-        <button class="btn-pro" onclick="executeSwap()">INITIALIZE NEURAL SWAP</button>
+        <button class="btn-exe" onclick="run()">INJECT IDENTITY</button>
 
-        <div id="resultArea" class="result-stage">
-            <img id="resImg" class="final-img">
+        <div id="res" style="display:none; margin-top: 30px; text-align: center;">
+            <img id="ri" style="max-width: 100%; border-radius: var(--radius); border: var(--border);">
             <br>
-            <a id="dlBtn" class="btn-pro" style="display:inline-block; width:auto; text-decoration:none; padding:12px 30px;" download="novus_swapped.png">DOWNLOAD_RESULT</a>
+            <a id="db" class="btn-exe" style="display:inline-block; margin-top:10px; text-decoration:none; width:auto; padding: 10px 30px;" download="nf_swap.png">DOWNLOAD</a>
         </div>
     </div>
 </div>
 
 <script>
     const API = "https://codewander-666-novusface-backend.hf.space";
-    let selectedFaceId = 0;
-    let db;
+    let fId = 0, db;
 
-    // --- INDEXED DB (PERSISTENT IMAGE STORAGE) ---
-    const request = indexedDB.open("NovusDB", 1);
-    request.onupgradeneeded = (e) => {
-        db = e.target.result;
-        db.createObjectStore("history", { keyPath: "id", autoIncrement: true });
-    };
-    request.onsuccess = (e) => {
-        db = e.target.result;
-        loadHistory();
-    };
+    // --- DB STORAGE ---
+    const req = indexedDB.open("NFDB", 1);
+    req.onupgradeneeded = (e) => e.target.result.createObjectStore("h", { keyPath: "id", autoIncrement: true });
+    req.onsuccess = (e) => { db = e.target.result; loadH(); };
 
-    function saveToHistory(blob) {
-        const transaction = db.transaction(["history"], "readwrite");
-        const store = transaction.objectStore("history");
-        store.add({ blob, date: new Date().toLocaleTimeString() });
-        transaction.oncomplete = () => loadHistory();
+    function saveH(blob) {
+        const s = db.transaction("h", "readwrite").objectStore("h");
+        s.add({ blob }); loadH();
     }
 
-    function loadHistory() {
-        const store = db.transaction("history").objectStore("history");
-        const grid = document.getElementById('historyGrid');
-        grid.innerHTML = "";
-        store.openCursor(null, "prev").onsuccess = (e) => {
-            const cursor = e.target.result;
-            if (cursor) {
-                const url = URL.createObjectURL(cursor.value.blob);
-                const card = document.createElement('div');
-                card.className = 'history-card';
-                card.innerHTML = `<img src="${url}"><div class="date-tag">${cursor.value.date}</div>`;
-                card.onclick = () => {
-                    document.getElementById('resImg').src = url;
-                    document.getElementById('dlBtn').href = url;
-                    document.getElementById('resultArea').style.display = 'block';
-                };
-                grid.appendChild(card);
-                cursor.continue();
+    function loadH() {
+        const g = document.getElementById('history'); g.innerHTML = "";
+        db.transaction("h").objectStore("h").openCursor(null, "prev").onsuccess = (e) => {
+            const c = e.target.result;
+            if(c) {
+                const u = URL.createObjectURL(c.value.blob);
+                const i = document.createElement('div'); i.className="history-item"; i.innerHTML=`<img src="${u}">`;
+                i.onclick = () => { document.getElementById('ri').src = u; document.getElementById('db').href = u; document.getElementById('res').style.display='block'; };
+                g.appendChild(i); c.continue();
             }
         };
     }
 
-    function clearHistory() {
-        const transaction = db.transaction(["history"], "readwrite");
-        transaction.objectStore("history").clear();
-        transaction.oncomplete = () => loadHistory();
-    }
+    // --- LOGIC ---
+    function setT(t) { document.body.setAttribute('data-theme', t); }
+    function p(i, id) { if(i.files[0]) { const u = URL.createObjectURL(i.files[0]); document.getElementById(id).src=u; document.getElementById(id).style.display='block'; } }
 
-    // --- APP LOGIC ---
-    function saveName() { localStorage.setItem('nvName', document.getElementById('opName').value); }
-    window.onload = () => { if(localStorage.getItem('nvName')) document.getElementById('opName').value = localStorage.getItem('nvName'); };
-
-    function setTheme(t) { document.body.setAttribute('data-theme', t); }
-
-    function handleSrc(input) {
-        if(input.files[0]) {
-            document.getElementById('srcPrev').src = URL.createObjectURL(input.files[0]);
-            document.getElementById('srcPrev').style.display = 'block';
-        }
-    }
-
-    async function handleTgt(input) {
-        const file = input.files[0];
-        document.getElementById('tgtPrev').src = URL.createObjectURL(file);
-        document.getElementById('tgtPrev').style.display = 'block';
-        const status = document.getElementById('status');
-        status.innerText = ">> SCANNING_NODES...";
-
-        const fd = new FormData();
-        fd.append('target', file);
+    async function hT(i) {
+        p(i, 'tp'); const st = document.getElementById('status'); st.innerText = ">> SCANNING_NODES...";
+        const fd = new FormData(); fd.append('target', i.files[0]);
         try {
-            const res = await fetch(`${API}/detect-target-faces`, { method: 'POST', body: fd });
-            const data = await res.json();
-            const scroll = document.getElementById('faceScroll');
-            scroll.innerHTML = "";
-            document.getElementById('faceTargetArea').style.display = 'block';
-            data.faces.forEach((f, i) => {
-                const div = document.createElement('div');
-                div.className = `target-face ${i===0?'selected':''}`;
+            const r = await fetch(`${API}/detect-target-faces`, { method: 'POST', body: fd });
+            const d = await r.json();
+            const l = document.getElementById('faceList'); l.innerHTML = "";
+            document.getElementById('faceSelection').style.display = 'block';
+            d.faces.forEach((f, idx) => {
+                const div = document.createElement('div'); div.className=`target-thumb ${idx===0?'selected':''}`;
                 div.style.backgroundImage = `url(${f.thumbnail})`;
-                div.onclick = () => {
-                    selectedFaceId = f.face_id;
-                    document.querySelectorAll('.target-face').forEach(tf => tf.classList.remove('selected'));
-                    div.classList.add('selected');
-                };
-                scroll.appendChild(div);
+                div.onclick = () => { fId = f.face_id; document.querySelectorAll('.target-thumb').forEach(t=>t.classList.remove('selected')); div.classList.add('selected'); };
+                l.appendChild(div);
             });
-            selectedFaceId = data.faces[0].face_id;
-            status.innerText = ">> MAPPING_READY";
-        } catch(e) { status.innerText = ">> SCAN_FAILED"; }
+            fId = d.faces[0].face_id; st.innerText = ">> NODES_READY";
+        } catch(e) { st.innerText = ">> SCAN_FAILED"; }
     }
 
-    async function executeSwap() {
-        const src = document.getElementById('srcIn').files[0];
-        const tgt = document.getElementById('tgtIn').files[0];
-        if(!src || !tgt) return alert("Select Images First!");
-        
-        const status = document.getElementById('status');
-        status.innerText = ">> INJECTING_DNA...";
-        
-        const fd = new FormData();
-        fd.append('source', src);
-        fd.append('target', tgt);
-        fd.append('target_face_id', selectedFaceId);
-
+    async function run() {
+        const s = document.getElementById('si').files[0], t = document.getElementById('ti').files[0];
+        if(!s || !t) return;
+        const st = document.getElementById('status'); st.innerText = ">> INJECTING...";
+        const fd = new FormData(); fd.append('source', s); fd.append('target', t); fd.append('target_face_id', fId);
         try {
-            const res = await fetch(`${API}/swap`, { method: 'POST', body: fd });
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            
-            document.getElementById('resImg').src = url;
-            document.getElementById('dlBtn').href = url;
-            document.getElementById('resultArea').style.display = 'block';
-            status.innerText = ">> SWAP_SUCCESSFUL";
-            
-            saveToHistory(blob);
-        } catch(e) { status.innerText = ">> PROCESS_CRASH"; }
+            const r = await fetch(`${API}/swap`, { method: 'POST', body: fd });
+            const b = await r.blob(); const u = URL.createObjectURL(b);
+            document.getElementById('ri').src = u; document.getElementById('db').href = u;
+            document.getElementById('res').style.display = 'block';
+            st.innerText = ">> SUCCESS"; saveH(b);
+        } catch(e) { st.innerText = ">> ERROR"; }
     }
+
+    window.onload = () => { if(localStorage.getItem('nv_name')) document.getElementById('opName').value = localStorage.getItem('nv_name'); };
 </script>
 </body>
 </html>
