@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NOVUSFACE AI - Free High-Accuracy Face Swap Tool</title>
+    
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23000'/%3E%3Ctext x='50' y='70' font-family='sans-serif' font-weight='900' font-size='50' fill='%2300f3ff' text-anchor='middle'%3ENF%3C/text%3E%3C/svg%3E">
-    <meta name="description" content="Professional face swapping with forensic accuracy verification. 100% free, no registration required. persiFstent vaults.">
-    <meta name="keywords" content="AI face swap, face swapping, identity accuracy, neural face swap, free AI tool, deepfake free, novusface">
-    <meta name="author" content="NovusFace Architect">
-    <meta property="og:title" content="NOVUSFACE AI - FREE FACE SWAP">
-    <meta property="og:description" content="Professional identity Swapping engine. Glitch into a new reality.">
-    <meta property="og:type" content="website">
+
+    <meta name="description" content="Professional face swapping with forensic accuracy. Features Image, Batch, and Video swapping with 11D neural injection.">
+    <meta name="keywords" content="AI face swap, video face swap, batch swap, free AI tool, deepfake free, novusface">
+    <meta property="og:title" content="NOVUSFACE AI - ULTIMATE SUITE">
+    <meta property="og:description" content="Professional neural identity injection engine. Now with Video & Batch processing.">
     <meta name="theme-color" content="#00f3ff">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,10 +19,7 @@
     <style>
         /* --- [CORE_CSS_VARIABLES] --- */
         :root {
-            /* CYBERPUNK_NEON (DEFAULT) */
-            --hue: 180;
-            --sat: 100%;
-            --lig: 50%;
+            --hue: 180; --sat: 100%; --lig: 50%;
             --primary: hsl(var(--hue), var(--sat), var(--lig));
             --secondary: #ff00ff;
             --bg-deep: #020202;
@@ -30,15 +27,13 @@
             --text-main: #fff;
             --text-dim: #889;
             --border: 1px solid rgba(255, 255, 255, 0.1);
-            --border-glow: 1px solid var(--primary);
             --font-head: 'Orbitron', sans-serif;
             --font-ui: 'Audiowide', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --anim-speed: 0.3s;
             --scanline-opt: 0.05;
         }
 
-        /* --- [THEME_OVERRIDES_GENERATED_BY_JS] --- */
+        /* --- [THEME_OVERRIDES] --- */
         [data-theme="deep_ocean"] { --hue: 200; --secondary: #00ff88; --bg-deep: #000510; }
         [data-theme="solar_flare"] { --hue: 30; --secondary: #ff0000; --bg-deep: #100500; }
         [data-theme="forest_king"] { --hue: 120; --secondary: #ccff00; --bg-deep: #001005; }
@@ -49,11 +44,10 @@
         [data-theme="electric_violet"] { --hue: 270; --secondary: #00ffff; --bg-deep: #0a0010; }
         [data-theme="obsidian"] { --hue: 0; --sat: 0%; --lig: 100%; --secondary: #555; --bg-deep: #000; }
         
-        /* --- [RESET_&_LAYOUT] --- */
+        /* --- [LAYOUT_RESET] --- */
         * { box-sizing: border-box; outline: none; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; background: var(--bg-deep); color: var(--text-main); font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; display: flex; transition: background 0.5s; }
         
-        /* --- [BACKGROUND_LAYERS] --- */
         #anim-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
         #crt-overlay { position: fixed; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%); background-size: 100% 4px; pointer-events: none; z-index: 9999; opacity: var(--scanline-opt); }
 
@@ -73,7 +67,7 @@
         .nav-label { margin-left: 15px; font-family: var(--font-ui); font-size: 12px; opacity: 0; transition: 0.2s; white-space: nowrap; }
         .sidebar:hover .nav-label { opacity: 1; }
 
-        /* --- [MAIN_WORKSPACE] --- */
+        /* --- [WORKSPACE] --- */
         .workspace { flex: 1; padding: 30px; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-width: none; }
         .workspace::-webkit-scrollbar { display: none; }
         
@@ -84,42 +78,46 @@
         .panel { background: var(--bg-panel); border: var(--border); padding: 25px; border-radius: 4px; position: relative; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .panel h2 { font-family: var(--font-head); margin-top: 0; color: var(--primary); letter-spacing: 2px; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
         
-        /* --- [UI_COMPONENTS] --- */
+        /* --- [COMPONENTS] --- */
         .btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 12px 24px; font-family: var(--font-ui); text-transform: uppercase; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; font-size: 0.8rem; letter-spacing: 1px; }
         .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        .btn-danger { border-color: red; color: red; } .btn-danger:hover { background: red; color: #fff; box-shadow: 0 0 20px red; }
         
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--secondary); margin-bottom: 8px; letter-spacing: 1px; }
         input[type="text"], input[type="file"], select { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; padding: 12px; font-family: var(--font-mono); transition: 0.3s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
-
-        /* --- [SWAP_INTERFACE] --- */
-        .swap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
         .upload-zone { height: 300px; border: 2px dashed #333; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; background: rgba(0,0,0,0.2); }
         .upload-zone:hover { border-color: var(--secondary); background: rgba(255, 0, 255, 0.05); }
-        .upload-zone img { width: 100%; height: 100%; object-fit: contain; z-index: 2; display: none; }
-        .upload-zone.has-img img { display: block; }
+        .upload-zone img, .upload-zone video { width: 100%; height: 100%; object-fit: contain; z-index: 2; display: none; }
+        .upload-zone.has-media img, .upload-zone.has-media video { display: block; }
         .upload-zone .placeholder { text-align: center; color: #555; z-index: 1; pointer-events: none; }
         .upload-zone .placeholder i { font-size: 40px; margin-bottom: 10px; display: block; }
+
+        /* --- [GRIDS & LISTS] --- */
+        .swap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .history-item { aspect-ratio: 1; background: #000; border: 1px solid #333; position: relative; cursor: pointer; transition: 0.3s; overflow: hidden; }
+        .history-item img, .history-item video { width: 100%; height: 100%; object-fit: cover; }
+        .history-item:hover { border-color: var(--primary); transform: scale(1.02); }
         
         .face-selector { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; border-top: 1px solid #333; margin-top: 10px; min-height: 70px; }
         .face-thumb { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #333; flex-shrink: 0; background-size: cover; cursor: pointer; transition: 0.2s; }
         .face-thumb.selected { border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 10px var(--primary); }
 
-        /* --- [HISTORY_VAULT] --- */
-        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .history-item { aspect-ratio: 1; background: #000; border: 1px solid #333; position: relative; cursor: pointer; transition: 0.3s; overflow: hidden; }
-        .history-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .history-item:hover { border-color: var(--primary); }
-        .history-item:hover img { transform: scale(1.1); }
-        .history-meta { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 5px; font-size: 10px; font-family: var(--font-mono); transform: translateY(100%); transition: 0.3s; }
-        .history-item:hover .history-meta { transform: translateY(0); }
+        /* --- [NEW: BATCH & VIDEO STYLES] --- */
+        .batch-list { max-height: 150px; overflow-y: auto; background: rgba(0,0,0,0.5); padding: 10px; border: 1px solid #333; margin-top: 10px; font-family: var(--font-mono); font-size: 0.8rem; }
+        .batch-item { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #222; }
+        
+        .progress-container { margin-top: 20px; background: rgba(0,0,0,0.5); padding: 15px; border: 1px solid var(--secondary); display: none; }
+        .progress-bar-track { width: 100%; height: 4px; background: #333; margin-top: 10px; position: relative; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--secondary); width: 0%; transition: width 0.3s; box-shadow: 0 0 10px var(--secondary); }
+        .progress-stats { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; margin-top: 5px; color: var(--text-dim); }
 
-        /* --- [THEME_MATRIX] --- */
         .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
         .theme-card { padding: 15px; border: 1px solid #333; text-align: center; cursor: pointer; transition: 0.2s; background: rgba(0,0,0,0.3); }
-        .theme-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.05); }
+        .theme-card:hover { border-color: var(--primary); }
         .color-dot { width: 15px; height: 15px; border-radius: 50%; display: inline-block; margin: 2px; }
 
         /* --- [LOADER] --- */
@@ -130,10 +128,10 @@
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .sidebar { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; flex-direction: row; border-right: none; border-top: var(--border); padding: 0; justify-content: space-around; }
+            .sidebar { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; flex-direction: row; border-right: none; border-top: var(--border); padding: 0; overflow-x: auto; justify-content: flex-start; }
             .sidebar:hover { width: 100%; height: 60px; }
             .brand { display: none; }
-            .nav-item { width: auto; flex-direction: column; justify-content: center; padding: 0; }
+            .nav-item { min-width: 60px; flex-direction: column; justify-content: center; padding: 0; }
             .nav-label { display: none !important; }
             .nav-icon { font-size: 24px; }
             .workspace { padding-bottom: 80px; }
@@ -149,14 +147,22 @@
     <div id="global-loader" class="loader-overlay">
         <div style="font-family: var(--font-head); font-size: 2rem; color: var(--primary);">NOVUSFACE AI</div>
         <div class="scanner-bar"></div>
-        <div id="loader-text" style="font-family: var(--font-mono); margin-top: 10px; color: var(--text-dim);">INITIALIZING CORE ENGINE...</div>
+        <div id="loader-text" style="font-family: var(--font-mono); margin-top: 10px; color: var(--text-dim);">INITIALIZING NEURAL CORE...</div>
     </div>
 
     <nav class="sidebar">
         <div class="brand">NF<span>NOVUSFACE</span></div>
         <div class="nav-item active" onclick="app.nav('swap')">
             <div class="nav-icon">⚡</div>
-            <div class="nav-label">FACE SWAP</div>
+            <div class="nav-label">IMAGE SWAP</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('batch')">
+            <div class="nav-icon">📊</div>
+            <div class="nav-label">BATCH SWAP</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('video')">
+            <div class="nav-icon">🎬</div>
+            <div class="nav-label">VIDEO SWAP</div>
         </div>
         <div class="nav-item" onclick="app.nav('vault')">
             <div class="nav-icon">📂</div>
@@ -172,7 +178,7 @@
         </div>
         <div class="nav-item" onclick="app.nav('status')">
             <div class="nav-icon">📡</div>
-            <div class="nav-label">SYSTEM STATUS</div>
+            <div class="nav-label">STATUS</div>
         </div>
         <div class="nav-item" onclick="app.nav('about')">
             <div class="nav-icon">ℹ️</div>
@@ -185,14 +191,14 @@
         <div id="view-swap" class="widget-container active">
             <div class="panel">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h2>AI FACE SWAPPING ENGINE</h2>
-                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--secondary);">V.2026.11</span>
+                    <h2>IMAGE SWAP ENGINE</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--secondary);">V.4.5.2</span>
                 </div>
                 
                 <div class="swap-grid">
                     <div>
                         <div class="input-group">
-                            <label>01 // SOURCE IDENTITY (FACE TO COPY)</label>
+                            <label>01 // SOURCE IDENTITY</label>
                             <div class="upload-zone" id="zone-src" onclick="document.getElementById('in-src').click()">
                                 <div class="placeholder"><i>👤</i>CLICK TO UPLOAD<br>SOURCE FACE</div>
                                 <img id="img-src">
@@ -200,17 +206,16 @@
                             </div>
                         </div>
                     </div>
-
                     <div>
                         <div class="input-group">
-                            <label>02 // TARGET REALITY (SCENE)</label>
+                            <label>02 // TARGET SCENE</label>
                             <div class="upload-zone" id="zone-tgt" onclick="document.getElementById('in-tgt').click()">
-                                <div class="placeholder"><i>🖼️</i>CLICK TO UPLOAD<br>TARGET SCENE</div>
+                                <div class="placeholder"><i>🖼️</i>CLICK TO UPLOAD<br>TARGET IMAGE</div>
                                 <img id="img-tgt">
                                 <input type="file" id="in-tgt" hidden accept="image/*" onchange="app.handleUpload('tgt', this)">
                             </div>
                             <div id="face-list-container" style="display:none;">
-                                <label style="margin-top:10px;">>> DETECTED FACES</label>
+                                <label style="margin-top:10px;">>> DETECTED HOSTS</label>
                                 <div class="face-selector" id="face-list"></div>
                             </div>
                         </div>
@@ -218,9 +223,9 @@
                 </div>
 
                 <div class="input-group" style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px;">
-                    <label>03 // PARAMETERS</label>
+                    <label>03 // ACCURACY WEIGHT (0.0 - 1.0)</label>
                     <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-family:var(--font-mono); font-size:0.8rem;">
-                        <span>DEEPFAKE ACCURACY </span>
+                        <span>IDENTITY STRENGTH</span>
                         <span id="acc-val" style="color:var(--primary)">0.70</span>
                     </div>
                     <input type="range" id="rng-acc" min="0" max="1" step="0.05" value="0.70" style="width:100%; accent-color: var(--primary);" oninput="document.getElementById('acc-val').innerText=this.value">
@@ -232,9 +237,89 @@
                     <h3 style="font-family:var(--font-head); color:var(--secondary);">>> OUTPUT MATERIALIZED</h3>
                     <img id="img-res" style="max-width:100%; border:1px solid var(--secondary); box-shadow:0 0 20px rgba(255,0,255,0.2);">
                     <div style="margin-top:15px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                        <button class="btn" onclick="app.downloadResult()">DOWNLOAD ARTIFACT</button>
-                        <button class="btn" onclick="app.saveToVault()">SAVE TO VAULT</button>
+                        <button class="btn" onclick="app.downloadResult()">DOWNLOAD</button>
+                        <button class="btn" onclick="app.saveToVault('image')">SAVE TO VAULT</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-batch" class="widget-container">
+            <div class="panel">
+                <h2>MATRIX BATCH PROCESSOR</h2>
+                <div class="swap-grid">
+                    <div>
+                        <label>SOURCE ARRAY (MAX 5)</label>
+                        <div class="upload-zone" id="zone-batch-src" onclick="document.getElementById('in-batch-src').click()">
+                            <div class="placeholder"><i>👥</i>SELECT MULTIPLE<br>SOURCES</div>
+                            <input type="file" id="in-batch-src" hidden multiple accept="image/*" onchange="app.batch.handleFiles('src', this)">
+                        </div>
+                        <div id="list-batch-src" class="batch-list"></div>
+                    </div>
+                    <div>
+                        <label>TARGET ARRAY (MAX 10)</label>
+                        <div class="upload-zone" id="zone-batch-tgt" onclick="document.getElementById('in-batch-tgt').click()">
+                            <div class="placeholder"><i>🏙️</i>SELECT MULTIPLE<br>TARGETS</div>
+                            <input type="file" id="in-batch-tgt" hidden multiple accept="image/*" onchange="app.batch.handleFiles('tgt', this)">
+                        </div>
+                        <div id="list-batch-tgt" class="batch-list"></div>
+                    </div>
+                </div>
+                
+                <div id="batch-progress" class="progress-container">
+                    <div style="color:var(--primary)">PROCESSING MATRIX...</div>
+                    <div class="progress-bar-track"><div id="batch-bar" class="progress-bar-fill"></div></div>
+                    <div class="progress-stats"><span id="batch-stat-count">0/0</span><span id="batch-stat-pct">0%</span></div>
+                </div>
+
+                <button class="btn" style="width:100%; margin-top:20px;" onclick="app.batch.execute()">RUN MATRIX BATCH</button>
+                
+                <div id="batch-results" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <div id="view-video" class="widget-container">
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>VIDEO SYNTHESIS ENGINE</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: red;">MAX 6 SECONDS</span>
+                </div>
+
+                <div class="swap-grid">
+                    <div>
+                        <label>01 // SOURCE FACE</label>
+                        <div class="upload-zone" id="zone-vid-src" onclick="document.getElementById('in-vid-src').click()">
+                            <div class="placeholder"><i>👤</i>SOURCE IMG</div>
+                            <img id="img-vid-src">
+                            <input type="file" id="in-vid-src" hidden accept="image/*" onchange="app.video.handleSrc(this)">
+                        </div>
+                    </div>
+                    <div>
+                        <label>02 // TARGET VIDEO (MP4/WEBM)</label>
+                        <div class="upload-zone" id="zone-vid-tgt" onclick="document.getElementById('in-vid-tgt').click()">
+                            <div class="placeholder"><i>🎥</i>VIDEO FILE<br>&lt; 6 SECONDS</div>
+                            <video id="vid-preview" controls style="max-height:100%; width:100%; display:none;"></video>
+                            <input type="file" id="in-vid-tgt" hidden accept="video/*" onchange="app.video.handleTgt(this)">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vid-progress" class="progress-container">
+                    <div style="color:var(--secondary); animation: blink 1s infinite;">>> RENDERING FRAMES...</div>
+                    <div class="progress-bar-track"><div id="vid-bar" class="progress-bar-fill"></div></div>
+                    <div class="progress-stats">
+                        <span id="vid-stat-frame">FRAME: 0/0</span>
+                        <span id="vid-stat-eta">ETA: --s</span>
+                    </div>
+                </div>
+
+                <button class="btn" id="btn-vid-run" style="width:100%; margin-top:20px;" onclick="app.video.execute()">RENDER VIDEO</button>
+
+                <div id="vid-result-area" style="display:none; margin-top:20px; text-align:center;">
+                    <h3>OUTPUT VIDEO</h3>
+                    <video id="vid-result" controls style="width:100%; border:1px solid var(--primary);"></video>
+                    <button class="btn" style="margin-top:10px;" onclick="app.video.download()">DOWNLOAD VIDEO</button>
+                    <button class="btn" onclick="app.saveToVault('video')">SAVE TO VAULT</button>
                 </div>
             </div>
         </div>
@@ -243,9 +328,13 @@
             <div class="panel">
                 <div style="display:flex; justify-content:space-between;">
                     <h2>IDENTITY VAULT</h2>
-                    <button class="btn" style="padding:5px 10px; font-size:10px;" onclick="db.clearStore('history'); app.refreshVault()">PURGE ALL</button>
+                    <div>
+                        <button class="btn" style="padding:5px 10px; font-size:10px;" onclick="app.showVault('history')">IMAGES</button>
+                        <button class="btn" style="padding:5px 10px; font-size:10px;" onclick="app.showVault('video_history')">VIDEOS</button>
+                        <button class="btn btn-danger" style="padding:5px 10px; font-size:10px;" onclick="app.clearVault()">PURGE</button>
+                    </div>
                 </div>
-                <div id="vault-grid" class="history-grid"></div>
+                <div id="vault-grid" class="history-grid" style="margin-top:15px;"></div>
                 <p id="vault-empty" style="text-align:center; color:#555; display:none;">// VAULT_EMPTY</p>
             </div>
         </div>
@@ -255,8 +344,7 @@
                 <h2>REALITY FILTER MATRIX</h2>
                 <div class="input-group">
                     <label>BACKGROUND ANIMATION PROTOCOL</label>
-                    <select id="anim-select" onchange="anim.setMode(parseInt(this.value))">
-                        </select>
+                    <select id="anim-select" onchange="anim.setMode(parseInt(this.value))"></select>
                 </div>
                 <div id="theme-grid" class="theme-grid"></div>
             </div>
@@ -279,14 +367,14 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
                     <div style="background:rgba(0,0,0,0.5); padding:10px; border:1px solid #333;">
                         <div style="font-size:2rem; color:var(--primary)" id="stat-swaps">0</div>
-                        <div style="font-size:0.6rem; color:#888;">SWAPS PERFORMED</div>
+                        <div style="font-size:0.6rem; color:#888;">TOTAL OPERATIONS</div>
                     </div>
                     <div style="background:rgba(0,0,0,0.5); padding:10px; border:1px solid #333;">
                         <div style="font-size:2rem; color:var(--secondary)" id="stat-date">0</div>
                         <div style="font-size:0.6rem; color:#888;">DAYS ACTIVE</div>
                     </div>
                 </div>
-                <button class="btn" style="margin-top:20px; border-color: red; color: red;" onclick="localStorage.clear(); location.reload()">RESET SYSTEM</button>
+                <button class="btn btn-danger" style="margin-top:20px; width:100%" onclick="localStorage.clear(); location.reload()">FACTORY RESET SYSTEM</button>
             </div>
         </div>
 
@@ -302,12 +390,12 @@
         <div id="view-about" class="widget-container">
             <div class="panel">
                 <h2>ABOUT NOVUSFACE</h2>
-                <p>NovusFace AI is an powerfull Engine designed for high-fidelity face swapping .Developed by Nikhil Singh</p>
+                <p>NovusFace AI is an 11D Neural Injection Engine designed for high-fidelity identity reconstruction.</p>
                 <ul style="line-height: 1.8; color: var(--text-dim);">
-                    <li><strong>Backend:</strong> FastAPI / PyTorch / InsightFace</li>
-                    <li><strong>Frontend:</strong> Vanilla JS / IndexedDB / Canvas API</li>
-                    <li><strong>Privacy:</strong> Zero-Log Policy. All images stored locally in your browser.</li>
-                    <li><strong>Version:</strong> 4.5.2 (God Mode)</li>
+                    <li><strong>Image Engine:</strong> InsightFace + GFPGAN (Restoration)</li>
+                    <li><strong>Video Engine:</strong> Frame Tracking + Temporal Smoothing (Beta)</li>
+                    <li><strong>Privacy:</strong> Local storage via IndexedDB. No server logs.</li>
+                    <li><strong>Version:</strong> 4.6.0 (Ultimate Edition)</li>
                 </ul>
             </div>
         </div>
@@ -358,10 +446,12 @@
             conn: null,
             init: async () => {
                 return new Promise((resolve, reject) => {
-                    const req = indexedDB.open("NovusFace_DB", 2);
+                    const req = indexedDB.open("NovusFace_DB", 3); // Bump version for new stores
                     req.onupgradeneeded = (e) => {
                         const d = e.target.result;
                         if(!d.objectStoreNames.contains('history')) d.createObjectStore('history', {keyPath:'id', autoIncrement:true});
+                        if(!d.objectStoreNames.contains('video_history')) d.createObjectStore('video_history', {keyPath:'id', autoIncrement:true});
+                        if(!d.objectStoreNames.contains('batch_history')) d.createObjectStore('batch_history', {keyPath:'id', autoIncrement:true});
                         if(!d.objectStoreNames.contains('profile')) d.createObjectStore('profile', {keyPath:'key'});
                     };
                     req.onsuccess = (e) => { db.conn = e.target.result; resolve(); };
@@ -399,19 +489,16 @@
 
         /**
          * MODULE 3: ANIMATION ENGINE
-         * Generates 50 variations using 5 parametric algorithms
          */
         const anim = {
             ctx: $('anim-canvas').getContext('2d'),
             w: 0, h: 0,
             mode: 0,
             particles: [],
-            raf: null,
             
             init: () => {
                 window.addEventListener('resize', anim.resize);
                 anim.resize();
-                // Generate UI options
                 const sel = $('anim-select');
                 const cats = ['PARTICLE', 'GEOMETRIC', 'FLOW', 'NOISE', 'INTERACTIVE'];
                 for(let i=0; i<50; i++) {
@@ -435,10 +522,8 @@
                 anim.mode = m;
                 localStorage.setItem('nf_anim', m);
                 anim.particles = [];
-                // Initialize based on category
                 const cat = Math.floor(m/10);
                 const count = (m%10) * 20 + 50;
-                
                 for(let i=0; i<count; i++) {
                     anim.particles.push({
                         x: Math.random() * anim.w,
@@ -453,65 +538,36 @@
             loop: () => {
                 const ctx = anim.ctx;
                 ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg-deep');
-                // Trail effect varies by mode
                 ctx.globalAlpha = anim.mode < 10 ? 0.2 : 0.05;
                 ctx.fillRect(0,0,anim.w,anim.h);
                 ctx.globalAlpha = 1;
 
                 const cat = Math.floor(anim.mode/10);
-                const sub = anim.mode % 10;
-
                 anim.particles.forEach((p, i) => {
                     p.x += p.vx; p.y += p.vy;
                     if(p.x<0||p.x>anim.w) p.vx*=-1;
                     if(p.y<0||p.y>anim.h) p.vy*=-1;
-
                     ctx.fillStyle = p.c;
                     ctx.beginPath();
-                    
-                    // ALGORITHM 1: PARTICLES (0-9)
-                    if(cat === 0) {
-                        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                        // Connections
-                        if(sub > 5) {
-                            anim.particles.slice(i+1, i+5).forEach(p2 => {
-                                const d = Math.hypot(p.x-p2.x, p.y-p2.y);
-                                if(d<100) {
-                                    ctx.strokeStyle = p.c;
-                                    ctx.lineWidth = 0.2;
-                                    ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke();
-                                }
-                            });
-                        }
-                    } 
-                    // ALGORITHM 2: GEOMETRIC (10-19)
-                    else if(cat === 1) {
-                        ctx.strokeStyle = p.c;
-                        ctx.lineWidth = 1;
-                        ctx.strokeRect(p.x, p.y, p.size + Math.sin(Date.now()/1000)*10, p.size + Math.cos(Date.now()/1000)*10);
-                    }
-                    // ALGORITHM 3: FLOW (20-29)
-                    else if(cat === 2) {
-                        p.vx = Math.sin(p.y/100 + Date.now()/1000);
-                        ctx.fillRect(p.x, p.y, 2, 20);
-                    }
-                    
+                    if(cat === 0) ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                    else if(cat === 1) { ctx.strokeStyle = p.c; ctx.lineWidth = 1; ctx.strokeRect(p.x, p.y, p.size, p.size); }
+                    else if(cat === 2) { p.vx = Math.sin(p.y/100 + Date.now()/1000); ctx.fillRect(p.x, p.y, 2, 20); }
                     ctx.fill();
                 });
-                
                 requestAnimationFrame(anim.loop);
             }
         };
 
         /**
-         * MODULE 4: APPLICATION CONTROLLER
+         * MODULE 4: MAIN APP CONTROLLER
          */
         const app = {
             state: {
                 srcFile: null,
                 tgtFile: null,
                 tgtFaceId: 0,
-                resultBlob: null
+                resultBlob: null,
+                activeVault: 'history'
             },
 
             init: async () => {
@@ -523,19 +579,15 @@
                 const user = localStorage.getItem('nf_username');
                 if(user) $('username-in').value = user;
                 
-                // Load Avatar
                 const av = await db.get('profile', 'avatar');
                 if(av) $('profile-avatar').src = URL.createObjectURL(av.blob);
                 
-                // Build Theme Matrix
+                // Build Theme Grid
                 const tGrid = $('theme-grid');
                 CFG.themes.forEach(t => {
                     const d = document.createElement('div');
                     d.className = 'theme-card';
-                    d.innerHTML = `
-                        <div style="font-size:0.7rem; font-weight:bold; margin-bottom:5px;">${t.name}</div>
-                        <div><span class="color-dot" style="background:${t.c1}"></span><span class="color-dot" style="background:${t.c2}"></span></div>
-                    `;
+                    d.innerHTML = `<div style="font-size:0.7rem; font-weight:bold; margin-bottom:5px;">${t.name}</div><div><span class="color-dot" style="background:${t.c1}"></span><span class="color-dot" style="background:${t.c2}"></span></div>`;
                     d.onclick = () => app.setTheme(t.id);
                     tGrid.appendChild(d);
                 });
@@ -553,24 +605,22 @@
                 $(`view-${view}`).classList.add('active');
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 event.currentTarget.classList.add('active');
-                if(view === 'vault') app.refreshVault();
+                if(view === 'vault') app.showVault('history');
             },
 
             setTheme: (id) => {
                 document.body.setAttribute('data-theme', id);
                 localStorage.setItem('nf_theme', id);
-                // Force update canvas colors
-                anim.setMode(anim.mode);
+                anim.setMode(anim.mode); // Refresh canvas colors
             },
 
+            // --- IMAGE SWAP LOGIC ---
             handleUpload: async (type, input) => {
                 if(!input.files[0]) return;
                 const file = input.files[0];
                 const url = URL.createObjectURL(file);
-                
                 $(`img-${type}`).src = url;
-                $(`zone-${type}`).classList.add('has-img');
-                
+                $(`zone-${type}`).classList.add('has-media');
                 if(type === 'src') app.state.srcFile = file;
                 if(type === 'tgt') {
                     app.state.tgtFile = file;
@@ -579,20 +629,16 @@
             },
 
             detectFaces: async (file) => {
-                $('loader-text').innerText = "SCANNING FOR TARGET FACES...";
+                $('loader-text').innerText = "SCANNING TARGET HOSTS...";
                 $('global-loader').style.display = 'flex';
-                
                 const fd = new FormData();
                 fd.append('target', file);
-                
                 try {
                     const res = await fetch(`${CFG.api}/detect-target-faces`, {method:'POST', body:fd});
                     const data = await res.json();
-                    
                     const list = $('face-list');
                     list.innerHTML = '';
                     $('face-list-container').style.display = 'block';
-                    
                     if(data.faces && data.faces.length > 0) {
                         data.faces.forEach((f, i) => {
                             const d = document.createElement('div');
@@ -607,92 +653,77 @@
                             if(i===0) app.state.tgtFaceId = f.face_id;
                         });
                         log(`TARGET_SCAN: ${data.faces.length} HOSTS IDENTIFIED.`, "succ");
-                    } else {
-                        log("TARGET_SCAN: NO FACES DETECTED.", "err");
-                    }
-                } catch(e) {
-                    log("SCAN_ERROR: API UNREACHABLE", "err");
-                } finally {
-                    $('global-loader').style.display = 'none';
-                }
+                    } else log("TARGET_SCAN: NO FACES DETECTED.", "err");
+                } catch(e) { log("SCAN_ERROR: API UNREACHABLE", "err"); } finally { $('global-loader').style.display = 'none'; }
             },
 
             executeSwap: async () => {
                 if(!app.state.srcFile || !app.state.tgtFile) return alert("MISSING INPUT DATA");
-                
-                $('loader-text').innerText = "SWAPPING IDENTITY...";
+                $('loader-text').innerText = "INJECTING NEURAL IDENTITY...";
                 $('global-loader').style.display = 'flex';
-                
                 const fd = new FormData();
                 fd.append('source', app.state.srcFile);
                 fd.append('target', app.state.tgtFile);
                 fd.append('target_face_id', app.state.tgtFaceId);
                 fd.append('accuracy_weight', $('rng-acc').value);
-                
                 try {
                     const start = Date.now();
                     const res = await fetch(`${CFG.api}/swap`, {method:'POST', body:fd});
                     if(!res.ok) throw new Error("API_ERROR");
-                    
                     const blob = await res.blob();
                     app.state.resultBlob = blob;
-                    
                     $('img-res').src = URL.createObjectURL(blob);
                     $('result-area').style.display = 'block';
-                    
-                    // Stats
-                    const count = (parseInt(localStorage.getItem('nf_swaps')) || 0) + 1;
-                    localStorage.setItem('nf_swaps', count);
-                    app.updateStats();
-                    
+                    app.incrementStats();
                     log(`SWAP_COMPLETE: ${((Date.now()-start)/1000).toFixed(2)}s`, "succ");
                     $('result-area').scrollIntoView({behavior:'smooth'});
-                } catch(e) {
-                    log("SWAP_FAILED: CHECK CONNECTION", "err");
-                    alert("SWAP FAILED. Ensure backend is active.");
-                } finally {
-                    $('global-loader').style.display = 'none';
-                }
+                } catch(e) { log("SWAP_FAILED: CHECK CONNECTION", "err"); } finally { $('global-loader').style.display = 'none'; }
             },
 
             downloadResult: () => {
+                if(!app.state.resultBlob) return;
                 const a = document.createElement('a');
-                a.href = $('img-res').src;
-                a.download = `NOVUSFACE_RESULT_${Date.now()}.png`;
+                a.href = URL.createObjectURL(app.state.resultBlob);
+                a.download = `NOVUSFACE_IMG_${Date.now()}.png`;
                 a.click();
             },
 
-            saveToVault: async () => {
+            saveToVault: async (type = 'image') => {
                 if(app.state.resultBlob) {
-                    await db.add('history', {blob: app.state.resultBlob, date: Date.now()});
+                    const store = type === 'video' ? 'video_history' : 'history';
+                    await db.add(store, {blob: app.state.resultBlob, date: Date.now()});
                     log("ARTIFACT_SECURED_IN_VAULT", "succ");
                 }
             },
 
-            refreshVault: async () => {
-                const items = await db.getAll('history');
+            showVault: async (store) => {
+                app.state.activeVault = store;
+                const items = await db.getAll(store);
                 const grid = $('vault-grid');
                 grid.innerHTML = '';
-                
-                if(items.length === 0) {
-                    $('vault-empty').style.display = 'block';
-                    return;
-                }
+                if(items.length === 0) { $('vault-empty').style.display = 'block'; return; }
                 $('vault-empty').style.display = 'none';
-                
                 items.forEach(item => {
                     const d = document.createElement('div');
                     d.className = 'history-item';
-                    d.innerHTML = `
-                        <img src="${URL.createObjectURL(item.blob)}" loading="lazy">
-                        <div class="history-meta">${new Date(item.date).toLocaleDateString()}</div>
-                    `;
-                    d.onclick = () => {
-                        const win = window.open("");
-                        win.document.write(`<img src="${URL.createObjectURL(item.blob)}" style="max-width:100%">`);
-                    };
+                    const url = URL.createObjectURL(item.blob);
+                    
+                    if(store === 'video_history') {
+                        d.innerHTML = `<video src="${url}" muted onmouseover="this.play()" onmouseout="this.pause()"></video><div class="history-meta">VIDEO | ${new Date(item.date).toLocaleDateString()}</div>`;
+                        d.onclick = () => { const win=window.open(""); win.document.write(`<video src="${url}" controls style="width:100%"></video>`); };
+                    } else {
+                        d.innerHTML = `<img src="${url}"><div class="history-meta">${new Date(item.date).toLocaleDateString()}</div>`;
+                        d.onclick = () => { const win=window.open(""); win.document.write(`<img src="${url}" style="width:100%">`); };
+                    }
                     grid.appendChild(d);
                 });
+            },
+            
+            clearVault: async () => {
+                if(confirm("DELETE ALL ITEMS IN CURRENT VAULT?")) {
+                    await db.clearStore(app.state.activeVault);
+                    app.showVault(app.state.activeVault);
+                }
             },
 
             updateAvatar: async (input) => {
@@ -703,13 +734,180 @@
                 }
             },
 
+            incrementStats: () => {
+                const count = (parseInt(localStorage.getItem('nf_swaps')) || 0) + 1;
+                localStorage.setItem('nf_swaps', count);
+                app.updateStats();
+            },
+
             updateStats: () => {
                 $('stat-swaps').innerText = localStorage.getItem('nf_swaps') || 0;
-                // Simple day counter
                 const firstRun = localStorage.getItem('nf_start') || Date.now();
                 if(!localStorage.getItem('nf_start')) localStorage.setItem('nf_start', firstRun);
                 const diff = Date.now() - firstRun;
                 $('stat-date').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            }
+        };
+
+        /**
+         * MODULE 5: BATCH PROCESSOR EXTENSION
+         */
+        app.batch = {
+            srcFiles: [],
+            tgtFiles: [],
+            
+            handleFiles: (type, input) => {
+                const files = Array.from(input.files);
+                const list = $(`list-batch-${type}`);
+                list.innerHTML = '';
+                if(type === 'src') {
+                    app.batch.srcFiles = files.slice(0,5);
+                    app.batch.srcFiles.forEach(f => list.innerHTML += `<div class="batch-item"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)}KB</span></div>`);
+                } else {
+                    app.batch.tgtFiles = files.slice(0,10);
+                    app.batch.tgtFiles.forEach(f => list.innerHTML += `<div class="batch-item"><span>${f.name}</span><span>${(f.size/1024).toFixed(1)}KB</span></div>`);
+                }
+            },
+            
+            execute: async () => {
+                if(app.batch.srcFiles.length === 0 || app.batch.tgtFiles.length === 0) return alert("SELECT SOURCES AND TARGETS");
+                const total = app.batch.srcFiles.length * app.batch.tgtFiles.length;
+                let count = 0;
+                $('batch-progress').style.display = 'block';
+                $('batch-results').innerHTML = '';
+                
+                for(let src of app.batch.srcFiles) {
+                    for(let tgt of app.batch.tgtFiles) {
+                        try {
+                            const fd = new FormData();
+                            fd.append('source', src);
+                            fd.append('target', tgt);
+                            fd.append('accuracy_weight', 0.7);
+                            
+                            const res = await fetch(`${CFG.api}/swap`, {method:'POST', body:fd});
+                            if(res.ok) {
+                                const blob = await res.blob();
+                                const url = URL.createObjectURL(blob);
+                                const img = document.createElement('img');
+                                img.src = url;
+                                img.style.width = "100%"; img.style.border="1px solid #333";
+                                $('batch-results').appendChild(img);
+                                app.incrementStats();
+                            }
+                        } catch(e) { console.error(e); }
+                        
+                        count++;
+                        const pct = Math.floor((count/total)*100);
+                        $('batch-bar').style.width = `${pct}%`;
+                        $('batch-stat-count').innerText = `${count}/${total}`;
+                        $('batch-stat-pct').innerText = `${pct}%`;
+                    }
+                }
+                log("BATCH_MATRIX_COMPLETE", "succ");
+            }
+        };
+
+        /**
+         * MODULE 6: VIDEO PROCESSOR EXTENSION
+         */
+        app.video = {
+            srcFile: null,
+            tgtFile: null,
+            
+            handleSrc: (input) => {
+                if(input.files[0]) {
+                    app.video.srcFile = input.files[0];
+                    $('img-vid-src').src = URL.createObjectURL(input.files[0]);
+                    $('zone-vid-src').classList.add('has-media');
+                }
+            },
+            
+            handleTgt: (input) => {
+                if(input.files[0]) {
+                    const file = input.files[0];
+                    if(file.size > 50 * 1024 * 1024) return alert("VIDEO > 50MB");
+                    
+                    const vid = $('vid-preview');
+                    vid.src = URL.createObjectURL(file);
+                    
+                    vid.onloadedmetadata = () => {
+                        if(vid.duration > 6.5) { // 0.5s tolerance
+                            alert("VIDEO EXCEEDS 6 SECONDS LIMIT");
+                            input.value = "";
+                            return;
+                        }
+                        $('zone-vid-tgt').classList.add('has-media');
+                        app.video.tgtFile = file;
+                    };
+                }
+            },
+            
+            execute: async () => {
+                if(!app.video.srcFile || !app.video.tgtFile) return alert("MISSING VIDEO INPUTS");
+                $('btn-vid-run').disabled = true;
+                $('vid-progress').style.display = 'block';
+                
+                const fd = new FormData();
+                fd.append('source', app.video.srcFile);
+                fd.append('target', app.video.tgtFile);
+                fd.append('target_face_id', 0); // Default primary face for now
+                
+                try {
+                    // Start Process
+                    const res = await fetch(`${CFG.api}/video/process`, {method:'POST', body:fd});
+                    const data = await res.json();
+                    
+                    if(data.error) throw new Error(data.error);
+                    
+                    const sessId = data.session_id;
+                    log(`VIDEO_SESSION_STARTED: ${sessId}`, "succ");
+                    
+                    // WebSocket Progress
+                    const wsUrl = CFG.api.replace("https", "wss").replace("http", "ws") + data.websocket_url;
+                    const ws = new WebSocket(wsUrl);
+                    
+                    ws.onmessage = (msg) => {
+                        const d = JSON.parse(msg.data);
+                        if(d.status === 'PROCESSING') {
+                            $('vid-bar').style.width = `${d.progress}%`;
+                            $('vid-stat-frame').innerText = `FRAME: ${d.current_frame}/${d.total_frames}`;
+                            $('vid-stat-eta').innerText = `ETA: ${d.eta}s`;
+                        } else if(d.status === 'COMPLETED') {
+                            app.video.finish(sessId);
+                            ws.close();
+                        } else if(d.status === 'FAILED') {
+                            alert("VIDEO FAILED: " + d.error);
+                            ws.close();
+                            $('btn-vid-run').disabled = false;
+                        }
+                    };
+                    
+                } catch(e) {
+                    alert(e.message);
+                    $('btn-vid-run').disabled = false;
+                    $('vid-progress').style.display = 'none';
+                }
+            },
+            
+            finish: async (sessId) => {
+                const res = await fetch(`${CFG.api}/video/result/${sessId}`);
+                const blob = await res.blob();
+                app.state.resultBlob = blob; // Store for vault save
+                
+                const url = URL.createObjectURL(blob);
+                $('vid-result').src = url;
+                $('vid-result-area').style.display = 'block';
+                $('vid-progress').style.display = 'none';
+                $('btn-vid-run').disabled = false;
+                app.incrementStats();
+                log("VIDEO_SYNTHESIS_COMPLETE", "succ");
+            },
+            
+            download: () => {
+                const a = document.createElement('a');
+                a.href = $('vid-result').src;
+                a.download = `NOVUS_VID_${Date.now()}.mp4`;
+                a.click();
             }
         };
 
@@ -718,4 +916,3 @@
     </script>
 </body>
 </html>
-
