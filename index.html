@@ -2,281 +2,718 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovusFace AI | God Mode Neural Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NOVUSFACE AI - Free High-Accuracy Face Swap Tool</title>
+    <meta name="description" content="Professional face swapping with forensic accuracy verification. 100% free, no registration required. persiFstent vaults.">
+    <meta name="keywords" content="AI face swap, face swapping, identity accuracy, neural face swap, free AI tool, deepfake free, novusface">
+    <meta name="author" content="NovusFace Architect">
+    <meta property="og:title" content="NOVUSFACE AI - FREE FACE SWAP">
+    <meta property="og:description" content="Professional identity Swapping engine. Glitch into a new reality.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#00f3ff">
     
-    <meta name="description" content="Professional 11D AI Face Swap Engine. High-accuracy neural identity injection with persistent vault and forensic controls.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23000'/%3E%3Ctext x='50' y='70' font-family='Orbitron' font-weight='900' font-size='50' fill='%2300ffcc' text-anchor='middle'%3ENF%3C/text%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono&family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=JetBrains+Mono:wght@300;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;600&display=swap" rel="stylesheet">
 
     <style>
+        /* --- [CORE_CSS_VARIABLES] --- */
         :root {
-            --primary: #00ffcc; --bg: #020202; --panel: rgba(5,5,5,0.92);
-            --border: 1px solid rgba(0, 255, 204, 0.2); --radius: 12px;
-            --glow: 0 0 20px rgba(0, 255, 204, 0.3);
+            /* CYBERPUNK_NEON (DEFAULT) */
+            --hue: 180;
+            --sat: 100%;
+            --lig: 50%;
+            --primary: hsl(var(--hue), var(--sat), var(--lig));
+            --secondary: #ff00ff;
+            --bg-deep: #020202;
+            --bg-panel: rgba(10, 15, 20, 0.85);
+            --text-main: #fff;
+            --text-dim: #889;
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --border-glow: 1px solid var(--primary);
+            --font-head: 'Orbitron', sans-serif;
+            --font-ui: 'Audiowide', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --anim-speed: 0.3s;
+            --scanline-opt: 0.05;
         }
 
-        /* 15 NEURAL DIMENSIONS (THEMES) */
-        [data-theme="cyber"] { --primary: #00f3ff; --bg: #000508; --radius: 0px; }
-        [data-theme="desire"] { --primary: #ff0055; --bg: #0a0002; --radius: 40px; }
-        [data-theme="matrix"] { --primary: #00ff00; --bg: #000; --radius: 0px; }
-        [data-theme="royal"] { --primary: #ffd700; --bg: #050500; --radius: 15px; }
-        [data-theme="vapor"] { --primary: #ff00ff; --bg: #100020; --radius: 20px; }
-        [data-theme="solar"] { --primary: #ffaa00; --bg: #101010; --radius: 0px; }
-        [data-theme="glacier"] { --primary: #7df9ff; --bg: #f0ffff; --panel: rgba(255,255,255,0.1); }
-        [data-theme="nebula"] { --primary: #9d00ff; --bg: #050010; }
-        [data-theme="void"] { --primary: #ffffff; --bg: #000; --radius: 0px; }
-        [data-theme="forest"] { --primary: #00ff88; --bg: #000d05; }
-        [data-theme="deepsea"] { --primary: #0044ff; --bg: #000510; }
-        [data-theme="hazard"] { --primary: #ffee00; --bg: #0a0a00; --radius: 0px; }
-        [data-theme="crimson"] { --primary: #dc143c; --bg: #0a0000; }
-        [data-theme="amber"] { --primary: #ffb000; --bg: #0d0a00; }
-        [data-theme="nordic"] { --primary: #A3C1DA; --bg: #1A2634; }
-
-        body { background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; margin: 0; overflow-x: hidden; transition: 0.8s all; perspective: 1500px; }
-        #neuralCanvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.6; pointer-events: none; }
-
-        /* COMMAND SIDEBAR */
-        .sidebar { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: rgba(0,0,0,0.98); border-left: var(--border); transform: translateX(100%); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 2000; padding: 30px; backdrop-filter: blur(30px); overflow-y: auto; }
-        .sidebar.active { transform: translateX(0); }
-        .menu-trigger { position: fixed; top: 30px; right: 30px; z-index: 2001; cursor: pointer; color: var(--primary); font-size: 1.5rem; background: var(--panel); border: var(--border); padding: 10px; transition: 0.3s; }
-        .menu-trigger:hover { box-shadow: var(--glow); transform: scale(1.1); }
-
-        /* INTERFACE BOX */
-        .container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .glass { width: 100%; max-width: 850px; background: var(--panel); border: var(--border); border-radius: var(--radius); padding: 50px; box-shadow: var(--glow); transform-style: preserve-3d; will-change: transform; transition: 0.1s linear; }
+        /* --- [THEME_OVERRIDES_GENERATED_BY_JS] --- */
+        [data-theme="deep_ocean"] { --hue: 200; --secondary: #00ff88; --bg-deep: #000510; }
+        [data-theme="solar_flare"] { --hue: 30; --secondary: #ff0000; --bg-deep: #100500; }
+        [data-theme="forest_king"] { --hue: 120; --secondary: #ccff00; --bg-deep: #001005; }
+        [data-theme="midnight_matrix"] { --hue: 120; --sat: 100%; --lig: 40%; --secondary: #003300; --bg-deep: #000; }
+        [data-theme="royal_gold"] { --hue: 45; --secondary: #800080; --bg-deep: #100800; }
+        [data-theme="arctic_frost"] { --hue: 190; --secondary: #ffffff; --bg-deep: #081015; }
+        [data-theme="crimson_dawn"] { --hue: 350; --secondary: #ffaa00; --bg-deep: #100000; }
+        [data-theme="electric_violet"] { --hue: 270; --secondary: #00ffff; --bg-deep: #0a0010; }
+        [data-theme="obsidian"] { --hue: 0; --sat: 0%; --lig: 100%; --secondary: #555; --bg-deep: #000; }
         
-        .nf-logo { border: 2px solid var(--primary); padding: 10px; display: inline-block; font-weight: 900; margin-bottom: 20px; box-shadow: var(--glow); letter-spacing: 5px; }
+        /* --- [RESET_&_LAYOUT] --- */
+        * { box-sizing: border-box; outline: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--bg-deep); color: var(--text-main); font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; display: flex; transition: background 0.5s; }
+        
+        /* --- [BACKGROUND_LAYERS] --- */
+        #anim-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+        #crt-overlay { position: fixed; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%); background-size: 100% 4px; pointer-events: none; z-index: 9999; opacity: var(--scanline-opt); }
 
-        /* BIO-REACTIVE UPLOAD BLOCKS (FIXED) */
-        .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
-        .u-box { 
-            height: 180px; border: 1px solid rgba(255,255,255,0.05); border-radius: var(--radius); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            cursor: pointer !important; position: relative; overflow: hidden; background: rgba(255,255,255,0.02); 
-            transition: 0.4s; z-index: 10;
+        /* --- [SIDEBAR] --- */
+        .sidebar { width: 80px; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border-right: var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; z-index: 100; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .sidebar:hover { width: 240px; }
+        .brand { width: 50px; height: 50px; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 900; font-size: 24px; color: var(--primary); margin-bottom: 40px; box-shadow: 0 0 15px var(--primary); transition: 0.3s; cursor: pointer; }
+        .sidebar:hover .brand { width: 100%; border: none; box-shadow: none; text-shadow: 0 0 10px var(--primary); }
+        .brand span { display: none; margin-left: 10px; font-size: 18px; letter-spacing: 2px; }
+        .sidebar:hover .brand span { display: inline; }
+
+        .nav-item { width: 100%; height: 60px; display: flex; align-items: center; padding: 0 25px; cursor: pointer; color: var(--text-dim); transition: 0.2s; position: relative; overflow: hidden; }
+        .nav-item:hover, .nav-item.active { color: var(--text-main); background: linear-gradient(90deg, rgba(var(--hue), 255, 255, 0.1), transparent); }
+        .nav-item::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--primary); transform: scaleY(0); transition: 0.2s; }
+        .nav-item.active::before { transform: scaleY(1); }
+        .nav-icon { font-size: 20px; width: 30px; text-align: center; }
+        .nav-label { margin-left: 15px; font-family: var(--font-ui); font-size: 12px; opacity: 0; transition: 0.2s; white-space: nowrap; }
+        .sidebar:hover .nav-label { opacity: 1; }
+
+        /* --- [MAIN_WORKSPACE] --- */
+        .workspace { flex: 1; padding: 30px; overflow-y: auto; overflow-x: hidden; position: relative; scrollbar-width: none; }
+        .workspace::-webkit-scrollbar { display: none; }
+        
+        .widget-container { display: none; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); max-width: 1200px; margin: 0 auto; }
+        .widget-container.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel { background: var(--bg-panel); border: var(--border); padding: 25px; border-radius: 4px; position: relative; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .panel h2 { font-family: var(--font-head); margin-top: 0; color: var(--primary); letter-spacing: 2px; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        
+        /* --- [UI_COMPONENTS] --- */
+        .btn { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 12px 24px; font-family: var(--font-ui); text-transform: uppercase; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; font-size: 0.8rem; letter-spacing: 1px; }
+        .btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--secondary); margin-bottom: 8px; letter-spacing: 1px; }
+        input[type="text"], input[type="file"], select { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; padding: 12px; font-family: var(--font-mono); transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+
+        /* --- [SWAP_INTERFACE] --- */
+        .swap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .upload-zone { height: 300px; border: 2px dashed #333; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; background: rgba(0,0,0,0.2); }
+        .upload-zone:hover { border-color: var(--secondary); background: rgba(255, 0, 255, 0.05); }
+        .upload-zone img { width: 100%; height: 100%; object-fit: contain; z-index: 2; display: none; }
+        .upload-zone.has-img img { display: block; }
+        .upload-zone .placeholder { text-align: center; color: #555; z-index: 1; pointer-events: none; }
+        .upload-zone .placeholder i { font-size: 40px; margin-bottom: 10px; display: block; }
+        
+        .face-selector { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; border-top: 1px solid #333; margin-top: 10px; min-height: 70px; }
+        .face-thumb { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #333; flex-shrink: 0; background-size: cover; cursor: pointer; transition: 0.2s; }
+        .face-thumb.selected { border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 10px var(--primary); }
+
+        /* --- [HISTORY_VAULT] --- */
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .history-item { aspect-ratio: 1; background: #000; border: 1px solid #333; position: relative; cursor: pointer; transition: 0.3s; overflow: hidden; }
+        .history-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .history-item:hover { border-color: var(--primary); }
+        .history-item:hover img { transform: scale(1.1); }
+        .history-meta { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 5px; font-size: 10px; font-family: var(--font-mono); transform: translateY(100%); transition: 0.3s; }
+        .history-item:hover .history-meta { transform: translateY(0); }
+
+        /* --- [THEME_MATRIX] --- */
+        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+        .theme-card { padding: 15px; border: 1px solid #333; text-align: center; cursor: pointer; transition: 0.2s; background: rgba(0,0,0,0.3); }
+        .theme-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.05); }
+        .color-dot { width: 15px; height: 15px; border-radius: 50%; display: inline-block; margin: 2px; }
+
+        /* --- [LOADER] --- */
+        .loader-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; display: none; align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(5px); }
+        .scanner-bar { width: 300px; height: 4px; background: #333; position: relative; overflow: hidden; margin-top: 20px; }
+        .scanner-bar::after { content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 50%; background: var(--primary); animation: scan 1s infinite linear; box-shadow: 0 0 20px var(--primary); }
+        @keyframes scan { 0% { left: -50%; } 100% { left: 100%; } }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; flex-direction: row; border-right: none; border-top: var(--border); padding: 0; justify-content: space-around; }
+            .sidebar:hover { width: 100%; height: 60px; }
+            .brand { display: none; }
+            .nav-item { width: auto; flex-direction: column; justify-content: center; padding: 0; }
+            .nav-label { display: none !important; }
+            .nav-icon { font-size: 24px; }
+            .workspace { padding-bottom: 80px; }
+            .swap-grid { grid-template-columns: 1fr; }
         }
-        .u-box:hover { border-color: var(--primary); background: rgba(0, 255, 204, 0.05); transform: translateZ(40px); box-shadow: var(--glow); }
-        .u-box p { font-size: 0.7rem; letter-spacing: 3px; pointer-events: none; transition: 0.3s; }
-        .u-box:hover p { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
-        /* Fix: Images must not block clicks */
-        .u-box img { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 2; pointer-events: none; opacity: 0; transition: 0.5s; }
-        .u-box.ready img { opacity: 1; }
-
-        /* GOD MODE SLIDER */
-        .slider-wrap { margin: 25px 0; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); }
-        input[type=range] { width: 100%; accent-color: var(--primary); cursor: pointer; height: 5px; }
-
-        /* BUTTONS */
-        .btn-god { width: 100%; padding: 1.5rem; background: var(--primary); color: #000; border: none; border-radius: var(--radius); font-weight: 900; cursor: pointer; letter-spacing: 6px; text-transform: uppercase; transition: 0.4s; }
-        .btn-god:hover { letter-spacing: 10px; filter: brightness(1.2); box-shadow: 0 0 30px var(--primary); }
-
-        /* VAULT & THEMES */
-        .vault-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
-        .vault-item { aspect-ratio: 1/1; border: 1px solid #222; overflow: hidden; cursor: pointer; transition: 0.3s; }
-        .vault-item:hover { border-color: var(--primary); transform: scale(1.1); box-shadow: var(--glow); }
     </style>
 </head>
-<body data-theme="cyber">
+<body>
 
-<canvas id="neuralCanvas"></canvas>
-<div class="menu-trigger" onclick="document.querySelector('.sidebar').classList.toggle('active')">▤</div>
+    <div id="crt-overlay"></div>
+    <canvas id="anim-canvas"></canvas>
 
-<div class="sidebar">
-    <div class="nf-logo">NF</div>
-    <p style="font-size:10px; color:#555;">OPERATOR_ID</p>
-    <input type="text" id="opName" style="background:none; border:none; color:var(--primary); font-size:1.5rem; font-family:'Orbitron'; outline:none; border-bottom:1px solid #333; width:100%;" value="GOD_OPERATOR" onchange="saveName()">
-
-    <p style="font-size:10px; color:#555; margin-top:30px;">IDENTITY_VAULT (SOURCE)</p>
-    <div id="vault" class="vault-grid"></div>
-
-    <p style="font-size:10px; color:#555; margin-top:30px;">SWAP_GALLERY (HISTORY)</p>
-    <div id="history" class="vault-grid"></div>
-
-    <p style="font-size:10px; color:#555; margin-top:30px;">DIMENSION_MATRIX (THEMES)</p>
-    <div id="themeList" style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;"></div>
-</div>
-
-<div class="container">
-    <div class="glass" id="mainUI">
-        <center>
-            <div class="nf-logo">NF</div>
-            <h1 style="font-size: 1.8rem; letter-spacing: 12px; color: var(--primary); margin: 0;">NOVUSFACE AI</h1>
-            <p id="status" style="font-size: 0.6rem; color: #666; font-family:'JetBrains Mono'; margin-top: 10px;">>> SYSTEM_ONLINE_READY_FOR_INJECTION</p>
-        </center>
-
-        <div class="upload-grid">
-            <div class="u-box" onclick="document.getElementById('srcIn').click()">
-                <p>SOURCE IDENTITY</p>
-                <input type="file" id="srcIn" hidden onchange="handleSrc(this)">
-                <img id="sp">
-            </div>
-            <div class="u-box" onclick="document.getElementById('tgtIn').click()">
-                <p>TARGET SCENE</p>
-                <input type="file" id="tgtIn" hidden onchange="handleTgt(this)">
-                <img id="tp">
-            </div>
-        </div>
-
-        <div id="selectionArea" style="display:none; margin-bottom: 25px;">
-            <p style="font-size: 9px; color: #555;">NEURAL_MAPPING_TARGETS:</p>
-            <div id="faceList" style="display:flex; gap:10px; overflow-x:auto; padding:10px 0;"></div>
-        </div>
-
-        <div class="slider-wrap">
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                <span style="font-size:9px; color:var(--primary); letter-spacing:2px;">FORENSIC_WEIGHT</span>
-                <span id="wVal" style="font-size:10px; color:var(--primary); font-family:'JetBrains Mono';">0.70</span>
-            </div>
-            <input type="range" id="accSlider" min="0" max="1" step="0.05" value="0.70" oninput="document.getElementById('wVal').innerText=this.value">
-        </div>
-
-        <button class="btn-god" onclick="runSwap()">GENERATE NEURAL SWAP</button>
-
-        <div id="res" style="display:none; margin-top:40px; text-align:center;">
-            <div style="display:inline-block; border:1px solid var(--primary); padding:10px; border-radius:var(--radius);">
-                <img id="ri" style="max-width:100%; display:block; border-radius: calc(var(--radius) - 5px);">
-            </div>
-            <br>
-            <a id="db" class="btn-god" style="display:inline-block; width:auto; text-decoration:none; padding:15px 50px; margin-top:20px;" download="novusface_godmode.png">EXTRACT_MEDIA</a>
-        </div>
+    <div id="global-loader" class="loader-overlay">
+        <div style="font-family: var(--font-head); font-size: 2rem; color: var(--primary);">NOVUSFACE AI</div>
+        <div class="scanner-bar"></div>
+        <div id="loader-text" style="font-family: var(--font-mono); margin-top: 10px; color: var(--text-dim);">INITIALIZING CORE ENGINE...</div>
     </div>
-</div>
 
-<script>
-    const API = "https://codewander-666-novusface-backend.hf.space";
-    let fId = 0, db;
+    <nav class="sidebar">
+        <div class="brand">NF<span>NOVUSFACE</span></div>
+        <div class="nav-item active" onclick="app.nav('swap')">
+            <div class="nav-icon">⚡</div>
+            <div class="nav-label">FACE SWAP</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('vault')">
+            <div class="nav-icon">📂</div>
+            <div class="nav-label">HISTORY VAULT</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('themes')">
+            <div class="nav-icon">🎨</div>
+            <div class="nav-label">THEME MATRIX</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('profile')">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">PROFILE</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('status')">
+            <div class="nav-icon">📡</div>
+            <div class="nav-label">SYSTEM STATUS</div>
+        </div>
+        <div class="nav-item" onclick="app.nav('about')">
+            <div class="nav-icon">ℹ️</div>
+            <div class="nav-label">ABOUT</div>
+        </div>
+    </nav>
 
-    // --- 11D NEURAL BACKGROUND ENGINE ---
-    const canvas = document.getElementById('neuralCanvas');
-    const ctx = canvas.getContext('2d');
-    let pts = [];
-    function resz() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.onresize = resz; resz();
+    <main class="workspace">
+        
+        <div id="view-swap" class="widget-container active">
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>AI FACE SWAPPING ENGINE</h2>
+                    <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--secondary);">V.2026.11</span>
+                </div>
+                
+                <div class="swap-grid">
+                    <div>
+                        <div class="input-group">
+                            <label>01 // SOURCE IDENTITY (FACE TO COPY)</label>
+                            <div class="upload-zone" id="zone-src" onclick="document.getElementById('in-src').click()">
+                                <div class="placeholder"><i>👤</i>CLICK TO UPLOAD<br>SOURCE FACE</div>
+                                <img id="img-src">
+                                <input type="file" id="in-src" hidden accept="image/*" onchange="app.handleUpload('src', this)">
+                            </div>
+                        </div>
+                    </div>
 
-    for(let i=0; i<80; i++) pts.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:Math.random()-0.5, vy:Math.random()-0.5});
+                    <div>
+                        <div class="input-group">
+                            <label>02 // TARGET REALITY (SCENE)</label>
+                            <div class="upload-zone" id="zone-tgt" onclick="document.getElementById('in-tgt').click()">
+                                <div class="placeholder"><i>🖼️</i>CLICK TO UPLOAD<br>TARGET SCENE</div>
+                                <img id="img-tgt">
+                                <input type="file" id="in-tgt" hidden accept="image/*" onchange="app.handleUpload('tgt', this)">
+                            </div>
+                            <div id="face-list-container" style="display:none;">
+                                <label style="margin-top:10px;">>> DETECTED FACES</label>
+                                <div class="face-selector" id="face-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    function render() {
-        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg');
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--primary');
-        ctx.lineWidth = 0.5;
-        pts.forEach(p => {
-            p.x += p.vx; p.y += p.vy;
-            if(p.x<0 || p.x>canvas.width) p.vx*=-1; if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-            pts.forEach(p2 => {
-                let d = Math.hypot(p.x-p2.x, p.y-p2.y);
-                if(d<130) { ctx.globalAlpha = 1 - (d/130); ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke(); }
-            });
-        });
-        ctx.globalAlpha = 1; requestAnimationFrame(render);
-    }
-    render();
+                <div class="input-group" style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px;">
+                    <label>03 // PARAMETERS</label>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-family:var(--font-mono); font-size:0.8rem;">
+                        <span>DEEPFAKE ACCURACY </span>
+                        <span id="acc-val" style="color:var(--primary)">0.70</span>
+                    </div>
+                    <input type="range" id="rng-acc" min="0" max="1" step="0.05" value="0.70" style="width:100%; accent-color: var(--primary);" oninput="document.getElementById('acc-val').innerText=this.value">
+                </div>
 
-    // --- PERSISTENCE (INDEXEDDB) ---
-    const req = indexedDB.open("NovusFaceGod", 1);
-    req.onupgradeneeded = (e) => {
-        let d = e.target.result;
-        d.createObjectStore("vault", {keyPath:"id", autoIncrement:true});
-        d.createObjectStore("history", {keyPath:"id", autoIncrement:true});
-    };
-    req.onsuccess = (e) => { db = e.target.result; loadVault(); loadHistory(); };
+                <button class="btn" style="width:100%; font-size:1.2rem; font-weight:900;" onclick="app.executeSwap()">INITIATE SWAP SEQUENCE</button>
 
-    function saveTo(store, blob) {
-        db.transaction(store, "readwrite").objectStore(store).add({blob, date: Date.now()});
-        store === "vault" ? loadVault() : loadHistory();
-    }
+                <div id="result-area" style="display:none; margin-top:30px; border-top:1px solid #333; padding-top:20px; text-align:center;">
+                    <h3 style="font-family:var(--font-head); color:var(--secondary);">>> OUTPUT MATERIALIZED</h3>
+                    <img id="img-res" style="max-width:100%; border:1px solid var(--secondary); box-shadow:0 0 20px rgba(255,0,255,0.2);">
+                    <div style="margin-top:15px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <button class="btn" onclick="app.downloadResult()">DOWNLOAD ARTIFACT</button>
+                        <button class="btn" onclick="app.saveToVault()">SAVE TO VAULT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    function loadVault() {
-        const v = document.getElementById('vault'); v.innerHTML = "";
-        db.transaction("vault").objectStore("vault").openCursor(null, "prev").onsuccess = (e) => {
-            const c = e.target.result;
-            if(c) {
-                const u = URL.createObjectURL(c.value.blob);
-                const d = document.createElement('div'); d.className="vault-item"; d.innerHTML=`<img src="${u}" style="width:100%; height:100%; object-fit:cover">`;
-                d.onclick = () => { document.getElementById('sp').src=u; document.getElementById('sp').parentNode.classList.add('ready'); window.curSrc = c.value.blob; };
-                v.appendChild(d); c.continue();
+        <div id="view-vault" class="widget-container">
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between;">
+                    <h2>IDENTITY VAULT</h2>
+                    <button class="btn" style="padding:5px 10px; font-size:10px;" onclick="db.clearStore('history'); app.refreshVault()">PURGE ALL</button>
+                </div>
+                <div id="vault-grid" class="history-grid"></div>
+                <p id="vault-empty" style="text-align:center; color:#555; display:none;">// VAULT_EMPTY</p>
+            </div>
+        </div>
+
+        <div id="view-themes" class="widget-container">
+            <div class="panel">
+                <h2>REALITY FILTER MATRIX</h2>
+                <div class="input-group">
+                    <label>BACKGROUND ANIMATION PROTOCOL</label>
+                    <select id="anim-select" onchange="anim.setMode(parseInt(this.value))">
+                        </select>
+                </div>
+                <div id="theme-grid" class="theme-grid"></div>
+            </div>
+        </div>
+
+        <div id="view-profile" class="widget-container">
+            <div class="panel" style="max-width: 600px; margin: 0 auto;">
+                <h2>OPERATOR PROFILE</h2>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--primary); margin: 0 auto; overflow: hidden; position: relative;">
+                        <img id="profile-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111'/%3E%3Ctext x='50' y='65' fill='%23333' font-size='50' text-anchor='middle' font-family='sans-serif'%3E?%3C/text%3E%3C/svg%3E" style="width:100%; height:100%; object-fit: cover;">
+                    </div>
+                    <input type="file" id="avatar-up" hidden onchange="app.updateAvatar(this)">
+                    <button class="btn" style="margin-top:10px; padding: 5px 15px;" onclick="document.getElementById('avatar-up').click()">UPLOAD AVATAR</button>
+                </div>
+                <div class="input-group">
+                    <label>CODENAME</label>
+                    <input type="text" id="username-in" onchange="localStorage.setItem('nf_username', this.value)">
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
+                    <div style="background:rgba(0,0,0,0.5); padding:10px; border:1px solid #333;">
+                        <div style="font-size:2rem; color:var(--primary)" id="stat-swaps">0</div>
+                        <div style="font-size:0.6rem; color:#888;">SWAPS PERFORMED</div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.5); padding:10px; border:1px solid #333;">
+                        <div style="font-size:2rem; color:var(--secondary)" id="stat-date">0</div>
+                        <div style="font-size:0.6rem; color:#888;">DAYS ACTIVE</div>
+                    </div>
+                </div>
+                <button class="btn" style="margin-top:20px; border-color: red; color: red;" onclick="localStorage.clear(); location.reload()">RESET SYSTEM</button>
+            </div>
+        </div>
+
+        <div id="view-status" class="widget-container">
+            <div class="panel">
+                <h2>SYSTEM DIAGNOSTICS</h2>
+                <div id="status-log" style="font-family: var(--font-mono); font-size: 0.8rem; background: #000; padding: 15px; height: 300px; overflow-y: auto; border: 1px solid #333; color: var(--text-dim);">
+                    <div style="color:var(--primary)">> INITIALIZING DIAGNOSTIC SUBROUTINES...</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-about" class="widget-container">
+            <div class="panel">
+                <h2>ABOUT NOVUSFACE</h2>
+                <p>NovusFace AI is an powerfull Engine designed for high-fidelity face swapping .Developed by Nikhil Singh</p>
+                <ul style="line-height: 1.8; color: var(--text-dim);">
+                    <li><strong>Backend:</strong> FastAPI / PyTorch / InsightFace</li>
+                    <li><strong>Frontend:</strong> Vanilla JS / IndexedDB / Canvas API</li>
+                    <li><strong>Privacy:</strong> Zero-Log Policy. All images stored locally in your browser.</li>
+                    <li><strong>Version:</strong> 4.5.2 (God Mode)</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        /**
+         * MODULE 1: CONFIG & UTILS
+         */
+        const CFG = {
+            api: "https://codewander-666-novusface-backend.hf.space",
+            themes: [
+                {id:"cyberpunk", name:"CYBERPUNK NEON", c1:"#00f3ff", c2:"#ff00ff"},
+                {id:"deep_ocean", name:"DEEP OCEAN", c1:"#00aaff", c2:"#00ff88"},
+                {id:"solar_flare", name:"SOLAR FLARE", c1:"#ffaa00", c2:"#ff0000"},
+                {id:"forest_king", name:"FOREST KING", c1:"#00ff00", c2:"#ccff00"},
+                {id:"midnight_matrix", name:"MIDNIGHT MATRIX", c1:"#00ff00", c2:"#003300"},
+                {id:"royal_gold", name:"ROYAL GOLD", c1:"#ffd700", c2:"#800080"},
+                {id:"arctic_frost", name:"ARCTIC FROST", c1:"#00ffff", c2:"#ffffff"},
+                {id:"crimson_dawn", name:"CRIMSON DAWN", c1:"#ff0033", c2:"#ffaa00"},
+                {id:"electric_violet", name:"ELECTRIC VIOLET", c1:"#aa00ff", c2:"#00ffff"},
+                {id:"obsidian", name:"OBSIDIAN", c1:"#ffffff", c2:"#555555"},
+                {id:"sunset_gradient", name:"SUNSET", c1:"#ff4e50", c2:"#f9d423"},
+                {id:"nordic_light", name:"NORDIC", c1:"#a3c1da", c2:"#1a2634"},
+                {id:"cyber_terminal", name:"TERMINAL", c1:"#33ff00", c2:"#000000"},
+                {id:"galactic_core", name:"GALACTIC", c1:"#ff0099", c2:"#493240"},
+                {id:"bio_luminescent", name:"BIO LUMINESCENT", c1:"#00ffcc", c2:"#0a0a2a"},
+                {id:"monochrome_pro", name:"MONOCHROME", c1:"#aaaaaa", c2:"#111111"},
+                {id:"vaporwave", name:"VAPORWAVE", c1:"#ff71ce", c2:"#01cdfe"}
+            ]
+        };
+
+        const $ = (id) => document.getElementById(id);
+        const log = (msg, type='info') => {
+            const el = document.createElement('div');
+            el.innerHTML = `<span style="opacity:0.5">[${new Date().toLocaleTimeString()}]</span> ${msg}`;
+            if(type==='err') el.style.color = 'red';
+            if(type==='succ') el.style.color = 'var(--primary)';
+            $('status-log').appendChild(el);
+            $('status-log').scrollTop = $('status-log').scrollHeight;
+        };
+
+        /**
+         * MODULE 2: DATABASE (IndexedDB)
+         */
+        const db = {
+            conn: null,
+            init: async () => {
+                return new Promise((resolve, reject) => {
+                    const req = indexedDB.open("NovusFace_DB", 2);
+                    req.onupgradeneeded = (e) => {
+                        const d = e.target.result;
+                        if(!d.objectStoreNames.contains('history')) d.createObjectStore('history', {keyPath:'id', autoIncrement:true});
+                        if(!d.objectStoreNames.contains('profile')) d.createObjectStore('profile', {keyPath:'key'});
+                    };
+                    req.onsuccess = (e) => { db.conn = e.target.result; resolve(); };
+                    req.onerror = (e) => reject(e);
+                });
+            },
+            add: (store, data) => {
+                const tx = db.conn.transaction(store, 'readwrite');
+                tx.objectStore(store).add(data);
+                return new Promise(r => tx.oncomplete = r);
+            },
+            getAll: (store) => {
+                return new Promise(resolve => {
+                    const items = [];
+                    const tx = db.conn.transaction(store, 'readonly');
+                    tx.objectStore(store).openCursor(null, 'prev').onsuccess = (e) => {
+                        const c = e.target.result;
+                        if(c) { items.push(c.value); c.continue(); } else resolve(items);
+                    };
+                });
+            },
+            put: (store, data) => {
+                const tx = db.conn.transaction(store, 'readwrite');
+                tx.objectStore(store).put(data);
+            },
+            get: (store, key) => {
+                return new Promise(resolve => {
+                    db.conn.transaction(store, 'readonly').objectStore(store).get(key).onsuccess = e => resolve(e.target.result);
+                });
+            },
+            clearStore: (store) => {
+                db.conn.transaction(store, 'readwrite').objectStore(store).clear();
             }
         };
-    }
 
-    function loadHistory() {
-        const h = document.getElementById('history'); h.innerHTML = "";
-        db.transaction("history").objectStore("history").openCursor(null, "prev").onsuccess = (e) => {
-            const c = e.target.result;
-            if(c) {
-                const u = URL.createObjectURL(c.value.blob);
-                const d = document.createElement('div'); d.className="vault-item"; d.innerHTML=`<img src="${u}" style="width:100%; height:100%; object-fit:cover">`;
-                d.onclick = () => { document.getElementById('ri').src=u; document.getElementById('db').href=u; document.getElementById('res').style.display='block'; };
-                h.appendChild(d); c.continue();
+        /**
+         * MODULE 3: ANIMATION ENGINE
+         * Generates 50 variations using 5 parametric algorithms
+         */
+        const anim = {
+            ctx: $('anim-canvas').getContext('2d'),
+            w: 0, h: 0,
+            mode: 0,
+            particles: [],
+            raf: null,
+            
+            init: () => {
+                window.addEventListener('resize', anim.resize);
+                anim.resize();
+                // Generate UI options
+                const sel = $('anim-select');
+                const cats = ['PARTICLE', 'GEOMETRIC', 'FLOW', 'NOISE', 'INTERACTIVE'];
+                for(let i=0; i<50; i++) {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.innerText = `[${cats[Math.floor(i/10)]}] VAR_0${i}`;
+                    sel.appendChild(opt);
+                }
+                const savedAnim = localStorage.getItem('nf_anim') || 0;
+                sel.value = savedAnim;
+                anim.setMode(parseInt(savedAnim));
+                anim.loop();
+            },
+            resize: () => {
+                $('anim-canvas').width = window.innerWidth;
+                $('anim-canvas').height = window.innerHeight;
+                anim.w = window.innerWidth;
+                anim.h = window.innerHeight;
+            },
+            setMode: (m) => {
+                anim.mode = m;
+                localStorage.setItem('nf_anim', m);
+                anim.particles = [];
+                // Initialize based on category
+                const cat = Math.floor(m/10);
+                const count = (m%10) * 20 + 50;
+                
+                for(let i=0; i<count; i++) {
+                    anim.particles.push({
+                        x: Math.random() * anim.w,
+                        y: Math.random() * anim.h,
+                        vx: (Math.random()-0.5) * (cat===0?1:0.2),
+                        vy: (Math.random()-0.5) * (cat===0?1:0.2),
+                        size: Math.random() * (cat===1 ? 50 : 3),
+                        c: Math.random() > 0.5 ? getComputedStyle(document.body).getPropertyValue('--primary') : getComputedStyle(document.body).getPropertyValue('--secondary')
+                    });
+                }
+            },
+            loop: () => {
+                const ctx = anim.ctx;
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg-deep');
+                // Trail effect varies by mode
+                ctx.globalAlpha = anim.mode < 10 ? 0.2 : 0.05;
+                ctx.fillRect(0,0,anim.w,anim.h);
+                ctx.globalAlpha = 1;
+
+                const cat = Math.floor(anim.mode/10);
+                const sub = anim.mode % 10;
+
+                anim.particles.forEach((p, i) => {
+                    p.x += p.vx; p.y += p.vy;
+                    if(p.x<0||p.x>anim.w) p.vx*=-1;
+                    if(p.y<0||p.y>anim.h) p.vy*=-1;
+
+                    ctx.fillStyle = p.c;
+                    ctx.beginPath();
+                    
+                    // ALGORITHM 1: PARTICLES (0-9)
+                    if(cat === 0) {
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                        // Connections
+                        if(sub > 5) {
+                            anim.particles.slice(i+1, i+5).forEach(p2 => {
+                                const d = Math.hypot(p.x-p2.x, p.y-p2.y);
+                                if(d<100) {
+                                    ctx.strokeStyle = p.c;
+                                    ctx.lineWidth = 0.2;
+                                    ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p2.x,p2.y); ctx.stroke();
+                                }
+                            });
+                        }
+                    } 
+                    // ALGORITHM 2: GEOMETRIC (10-19)
+                    else if(cat === 1) {
+                        ctx.strokeStyle = p.c;
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(p.x, p.y, p.size + Math.sin(Date.now()/1000)*10, p.size + Math.cos(Date.now()/1000)*10);
+                    }
+                    // ALGORITHM 3: FLOW (20-29)
+                    else if(cat === 2) {
+                        p.vx = Math.sin(p.y/100 + Date.now()/1000);
+                        ctx.fillRect(p.x, p.y, 2, 20);
+                    }
+                    
+                    ctx.fill();
+                });
+                
+                requestAnimationFrame(anim.loop);
             }
         };
-    }
 
-    // --- CORE LOGIC ---
-    function saveName() { localStorage.setItem('opName', document.getElementById('opName').value); }
-    window.onload = () => { if(localStorage.getItem('opName')) document.getElementById('opName').value = localStorage.getItem('opName'); };
+        /**
+         * MODULE 4: APPLICATION CONTROLLER
+         */
+        const app = {
+            state: {
+                srcFile: null,
+                tgtFile: null,
+                tgtFaceId: 0,
+                resultBlob: null
+            },
 
-    function handleSrc(i) {
-        if(i.files[0]) {
-            const u = URL.createObjectURL(i.files[0]);
-            document.getElementById('sp').src = u;
-            document.getElementById('sp').parentNode.classList.add('ready');
-            window.curSrc = i.files[0]; saveTo("vault", i.files[0]);
-        }
-    }
+            init: async () => {
+                $('global-loader').style.display = 'flex';
+                await db.init();
+                anim.init();
+                
+                // Load User Data
+                const user = localStorage.getItem('nf_username');
+                if(user) $('username-in').value = user;
+                
+                // Load Avatar
+                const av = await db.get('profile', 'avatar');
+                if(av) $('profile-avatar').src = URL.createObjectURL(av.blob);
+                
+                // Build Theme Matrix
+                const tGrid = $('theme-grid');
+                CFG.themes.forEach(t => {
+                    const d = document.createElement('div');
+                    d.className = 'theme-card';
+                    d.innerHTML = `
+                        <div style="font-size:0.7rem; font-weight:bold; margin-bottom:5px;">${t.name}</div>
+                        <div><span class="color-dot" style="background:${t.c1}"></span><span class="color-dot" style="background:${t.c2}"></span></div>
+                    `;
+                    d.onclick = () => app.setTheme(t.id);
+                    tGrid.appendChild(d);
+                });
+                
+                const savedTheme = localStorage.getItem('nf_theme') || 'cyberpunk';
+                app.setTheme(savedTheme);
+                app.updateStats();
 
-    async function handleTgt(i) {
-        const f = i.files[0];
-        document.getElementById('tp').src = URL.createObjectURL(f);
-        document.getElementById('tp').parentNode.classList.add('ready');
-        document.getElementById('status').innerText = ">> MAPPING_TARGET_NODES...";
-        
-        const fd = new FormData(); fd.append('target', f);
-        try {
-            const r = await fetch(`${API}/detect-target-faces`, {method:'POST', body:fd});
-            const d = await r.json();
-            const list = document.getElementById('faceList'); list.innerHTML = "";
-            document.getElementById('selectionArea').style.display = "block";
-            d.faces.forEach((face, idx) => {
-                const div = document.createElement('div'); div.style="width:55px; height:55px; border-radius:50%; border:3px solid transparent; flex-shrink:0; background-size:cover; cursor:pointer; transition:0.3s;";
-                div.style.backgroundImage = `url(${face.thumbnail})`;
-                if(idx===0) { div.style.borderColor = "var(--primary)"; div.style.boxShadow = "var(--glow)"; }
-                div.onclick = () => { 
-                    fId = face.face_id; 
-                    document.querySelectorAll('#faceList div').forEach(n=>{ n.style.borderColor="transparent"; n.style.boxShadow="none"; }); 
-                    div.style.borderColor="var(--primary)"; div.style.boxShadow="var(--glow)";
-                };
-                list.appendChild(div);
-            });
-            fId = d.faces[0].face_id; document.getElementById('status').innerText = ">> NODES_READY";
-        } catch(e) { document.getElementById('status').innerText = ">> SCAN_FAILED"; }
-    }
+                setTimeout(() => $('global-loader').style.display = 'none', 1000);
+                log("SYSTEM_ONLINE. NEURAL_CORE_READY.", "succ");
+            },
 
-    async function runSwap() {
-        const s = window.curSrc, t = document.getElementById('tgtIn').files[0], w = document.getElementById('accSlider').value;
-        if(!s || !t) return alert("NO IDENTITY DETECTED.");
-        document.getElementById('status').innerText = ">> INJECTING_DNA...";
-        
-        const fd = new FormData(); fd.append('source', s); fd.append('target', t); fd.append('target_face_id', fId); fd.append('accuracy_weight', w);
-        try {
-            const res = await fetch(`${API}/swap`, {method:'POST', body:fd});
-            const b = await res.blob(); const u = URL.createObjectURL(b);
-            document.getElementById('ri').src=u; document.getElementById('db').href=u;
-            document.getElementById('res').style.display='block';
-            document.getElementById('status').innerText = ">> SUCCESSFUL"; saveTo("history", b);
-        } catch(e) { document.getElementById('status').innerText = ">> PROCESS_ERROR"; }
-    }
+            nav: (view) => {
+                document.querySelectorAll('.widget-container').forEach(el => el.classList.remove('active'));
+                $(`view-${view}`).classList.add('active');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+                if(view === 'vault') app.refreshVault();
+            },
 
-    // THEMES & TILT
-    const ths = ['cyber','desire','matrix','royal','vapor','solar','glacier','nebula','void','forest','deepsea','hazard','crimson','amber','nordic'];
-    ths.forEach(t => { document.getElementById('themeList').innerHTML += `<div style="padding:10px; border:1px solid #222; cursor:pointer; font-size:9px; text-align:center; transition:0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#222'" onclick="document.body.setAttribute('data-theme','${t}')">${t.toUpperCase()}</div>`; });
+            setTheme: (id) => {
+                document.body.setAttribute('data-theme', id);
+                localStorage.setItem('nf_theme', id);
+                // Force update canvas colors
+                anim.setMode(anim.mode);
+            },
 
-    document.addEventListener('mousemove', (e) => {
-        let x = (window.innerWidth / 2 - e.pageX) / 45;
-        let y = (window.innerHeight / 2 - e.pageY) / 45;
-        document.getElementById('mainUI').style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-    });
-</script>
+            handleUpload: async (type, input) => {
+                if(!input.files[0]) return;
+                const file = input.files[0];
+                const url = URL.createObjectURL(file);
+                
+                $(`img-${type}`).src = url;
+                $(`zone-${type}`).classList.add('has-img');
+                
+                if(type === 'src') app.state.srcFile = file;
+                if(type === 'tgt') {
+                    app.state.tgtFile = file;
+                    await app.detectFaces(file);
+                }
+            },
+
+            detectFaces: async (file) => {
+                $('loader-text').innerText = "SCANNING FOR TARGET FACES...";
+                $('global-loader').style.display = 'flex';
+                
+                const fd = new FormData();
+                fd.append('target', file);
+                
+                try {
+                    const res = await fetch(`${CFG.api}/detect-target-faces`, {method:'POST', body:fd});
+                    const data = await res.json();
+                    
+                    const list = $('face-list');
+                    list.innerHTML = '';
+                    $('face-list-container').style.display = 'block';
+                    
+                    if(data.faces && data.faces.length > 0) {
+                        data.faces.forEach((f, i) => {
+                            const d = document.createElement('div');
+                            d.className = `face-thumb ${i===0?'selected':''}`;
+                            d.style.backgroundImage = `url(${f.thumbnail})`;
+                            d.onclick = () => {
+                                document.querySelectorAll('.face-thumb').forEach(x => x.classList.remove('selected'));
+                                d.classList.add('selected');
+                                app.state.tgtFaceId = f.face_id;
+                            };
+                            list.appendChild(d);
+                            if(i===0) app.state.tgtFaceId = f.face_id;
+                        });
+                        log(`TARGET_SCAN: ${data.faces.length} HOSTS IDENTIFIED.`, "succ");
+                    } else {
+                        log("TARGET_SCAN: NO FACES DETECTED.", "err");
+                    }
+                } catch(e) {
+                    log("SCAN_ERROR: API UNREACHABLE", "err");
+                } finally {
+                    $('global-loader').style.display = 'none';
+                }
+            },
+
+            executeSwap: async () => {
+                if(!app.state.srcFile || !app.state.tgtFile) return alert("MISSING INPUT DATA");
+                
+                $('loader-text').innerText = "SWAPPING IDENTITY...";
+                $('global-loader').style.display = 'flex';
+                
+                const fd = new FormData();
+                fd.append('source', app.state.srcFile);
+                fd.append('target', app.state.tgtFile);
+                fd.append('target_face_id', app.state.tgtFaceId);
+                fd.append('accuracy_weight', $('rng-acc').value);
+                
+                try {
+                    const start = Date.now();
+                    const res = await fetch(`${CFG.api}/swap`, {method:'POST', body:fd});
+                    if(!res.ok) throw new Error("API_ERROR");
+                    
+                    const blob = await res.blob();
+                    app.state.resultBlob = blob;
+                    
+                    $('img-res').src = URL.createObjectURL(blob);
+                    $('result-area').style.display = 'block';
+                    
+                    // Stats
+                    const count = (parseInt(localStorage.getItem('nf_swaps')) || 0) + 1;
+                    localStorage.setItem('nf_swaps', count);
+                    app.updateStats();
+                    
+                    log(`SWAP_COMPLETE: ${((Date.now()-start)/1000).toFixed(2)}s`, "succ");
+                    $('result-area').scrollIntoView({behavior:'smooth'});
+                } catch(e) {
+                    log("SWAP_FAILED: CHECK CONNECTION", "err");
+                    alert("SWAP FAILED. Ensure backend is active.");
+                } finally {
+                    $('global-loader').style.display = 'none';
+                }
+            },
+
+            downloadResult: () => {
+                const a = document.createElement('a');
+                a.href = $('img-res').src;
+                a.download = `NOVUSFACE_RESULT_${Date.now()}.png`;
+                a.click();
+            },
+
+            saveToVault: async () => {
+                if(app.state.resultBlob) {
+                    await db.add('history', {blob: app.state.resultBlob, date: Date.now()});
+                    log("ARTIFACT_SECURED_IN_VAULT", "succ");
+                }
+            },
+
+            refreshVault: async () => {
+                const items = await db.getAll('history');
+                const grid = $('vault-grid');
+                grid.innerHTML = '';
+                
+                if(items.length === 0) {
+                    $('vault-empty').style.display = 'block';
+                    return;
+                }
+                $('vault-empty').style.display = 'none';
+                
+                items.forEach(item => {
+                    const d = document.createElement('div');
+                    d.className = 'history-item';
+                    d.innerHTML = `
+                        <img src="${URL.createObjectURL(item.blob)}" loading="lazy">
+                        <div class="history-meta">${new Date(item.date).toLocaleDateString()}</div>
+                    `;
+                    d.onclick = () => {
+                        const win = window.open("");
+                        win.document.write(`<img src="${URL.createObjectURL(item.blob)}" style="max-width:100%">`);
+                    };
+                    grid.appendChild(d);
+                });
+            },
+
+            updateAvatar: async (input) => {
+                if(input.files[0]) {
+                    const f = input.files[0];
+                    $('profile-avatar').src = URL.createObjectURL(f);
+                    await db.put('profile', {key:'avatar', blob:f});
+                }
+            },
+
+            updateStats: () => {
+                $('stat-swaps').innerText = localStorage.getItem('nf_swaps') || 0;
+                // Simple day counter
+                const firstRun = localStorage.getItem('nf_start') || Date.now();
+                if(!localStorage.getItem('nf_start')) localStorage.setItem('nf_start', firstRun);
+                const diff = Date.now() - firstRun;
+                $('stat-date').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            }
+        };
+
+        // --- INIT ---
+        window.addEventListener('load', app.init);
+    </script>
 </body>
 </html>
